@@ -2,17 +2,16 @@
 <html lang="ka">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Gvaska - SITE</title>
   <style>
-    /* Basic Reset */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    
-    /* Canvas Background for Falling Stars */
+
+    /* Background Stars */
     #starsCanvas {
       position: fixed;
       top: 0;
@@ -22,76 +21,66 @@
       z-index: -1;
       background: radial-gradient(circle, #0f0f0f, #1a1a1a, #0f0f0f);
     }
-    
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow-x: hidden;
       text-align: center;
-      padding: 50px;
-      position: relative;
+      padding: 50px 10px;
       background: transparent;
       color: #fff;
+      position: relative;
+      z-index: 10;
     }
 
     header {
-      padding: 30px;
-      margin-bottom: 40px;
+      padding: 20px;
+      margin-bottom: 30px;
       background: rgba(0, 0, 0, 0.5);
       border-radius: 10px;
       box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
     }
 
     header h1 {
-      font-size: 3.5rem;
-      letter-spacing: 5px;
-      text-transform: uppercase;
+      font-size: 3rem;
+      letter-spacing: 3px;
       color: #00fff2;
       animation: neonGlow 1.5s ease-in-out infinite alternate;
     }
 
     @keyframes neonGlow {
       from {
-        text-shadow: 
-          0 0 10px #00fff2,
-          0 0 20px #00fff2,
-          0 0 30px #00fff2,
-          0 0 40px #00fff2;
+        text-shadow: 0 0 10px #00fff2, 0 0 20px #00fff2;
       }
       to {
-        text-shadow: 
-          0 0 20px #00ffe1,
-          0 0 30px #00ffe1,
-          0 0 40px #00ffe1,
-          0 0 50px #00ffe1;
+        text-shadow: 0 0 20px #00ffe1, 0 0 30px #00ffe1;
       }
     }
 
     section {
-      max-width: 800px;
-      margin: 0 auto 40px auto;
-      padding: 30px;
+      max-width: 90%;
+      margin: 0 auto 30px;
+      padding: 20px;
       background: rgba(10, 10, 10, 0.6);
       border-radius: 10px;
       box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
     }
 
     h2 {
-      margin-bottom: 20px;
-      font-size: 2.2rem;
-      text-transform: uppercase;
+      margin-bottom: 15px;
+      font-size: 2rem;
       color: #fff;
     }
 
     p {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       line-height: 1.6;
       color: #fff;
     }
 
     .button {
       display: inline-block;
-      padding: 15px 30px;
-      margin: 10px;
+      padding: 12px 25px;
+      margin: 8px;
       background: linear-gradient(45deg, #00fff2, #00ffe1);
       color: #1a1a1a;
       text-decoration: none;
@@ -106,64 +95,71 @@
     }
 
     footer {
-      margin-top: 40px;
+      margin-top: 30px;
       font-size: 0.8rem;
       opacity: 0.7;
       color: #fff;
+    }
+
+    /* Responsive Design Fixes */
+    @media (max-width: 768px) {
+      body {
+        padding: 30px 5px;
+      }
+      header h1 {
+        font-size: 2rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
   <canvas id="starsCanvas"></canvas>
-  
+
   <header>
     <h1>Gvaska</h1>
     <p>მოგესალმებით GVASKA და DR Rokva-ს საიტზე</p>
   </header>
-  
+
   <section>
     <h2>Gvaska-ს შესახებ</h2>
     <p>Gvaska ON YOUTUBE</p>
   </section>
-  
+
   <section>
     <h2>YOUTUBE AND TIKTOK</h2>
     <p>გადახედეთ ჩემს YOUTUBE არხს და არ დაგავიწყდეთ გამოწერა:</p>
     <a class="button" href="https://www.youtube.com/@Gvaska" target="_blank">YouTube</a>
     <a class="button" href="https://www.tiktok.com/@saba_gvaska" target="_blank">TikTok</a>
   </section>
-  
-  <!-- New Section for DRRokva -->
+
   <section>
     <h2>DRRokva Social Media</h2>
     <p>გადახედეთ DRRokva-ს YouTube არხს და TikTok-ს:</p>
     <a class="button" href="https://www.youtube.com/@DRRokva" target="_blank">YouTube</a>
     <a class="button" href="https://www.tiktok.com/@DRRokva" target="_blank">TikTok</a>
   </section>
-  
+
   <footer>
     &copy; 2025 Gvaska. ყველა უფლება დაცულია.
   </footer>
-  
+
   <script>
-    // Enhanced Falling Stars Animation with Multi-colored Stars
     const canvas = document.getElementById('starsCanvas');
     const ctx = canvas.getContext('2d');
 
-    // Set canvas size to full window
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    // Update canvas size on window resize
-    window.addEventListener('resize', () => {
+    function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-    });
+    }
 
-    // Array of neon colors for stars
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
     const neonColors = ['#00fff2', '#00ffe1', '#ff00ff', '#00ff00', '#ffff00'];
 
-    // Star class definition
     class Star {
       constructor() {
         this.reset();
@@ -175,7 +171,6 @@
         this.size = Math.random() * 1.5 + 0.5;
         this.speed = Math.random() * 1.5 + 0.5;
         this.opacity = Math.random() * 0.5 + 0.5;
-        // Randomly choose a neon color for each star
         this.color = neonColors[Math.floor(Math.random() * neonColors.length)];
       }
 
@@ -195,9 +190,7 @@
       }
     }
 
-    // Helper function to convert hex color to rgb values
     function hexToRgb(hex) {
-      // Remove the hash if present
       hex = hex.replace(/^#/, '');
       let bigint = parseInt(hex, 16);
       let r = (bigint >> 16) & 255;
@@ -206,13 +199,11 @@
       return r + ", " + g + ", " + b;
     }
 
-    // Create multiple stars
     const stars = [];
     for (let i = 0; i < 150; i++) {
       stars.push(new Star());
     }
 
-    // Animation loop
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (let star of stars) {
@@ -221,6 +212,7 @@
       }
       requestAnimationFrame(animate);
     }
+
     animate();
   </script>
 </body>
