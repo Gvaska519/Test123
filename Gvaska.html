@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gvaska - SITE</title>
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    /* Canvas Background for Falling Stars */
+    #starsCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle, #0f0f0f, #1a1a1a, #0f0f0f);
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+      text-align: center;
+      padding: 50px;
+      position: relative;
+      background: transparent;
+      color: #fff;
+    }
+
+    header {
+      padding: 30px;
+      margin-bottom: 40px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
+    }
+
+    header h1 {
+      font-size: 3.5rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #00fff2;
+      animation: neonGlow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes neonGlow {
+      from {
+        text-shadow: 
+          0 0 10px #00fff2,
+          0 0 20px #00fff2,
+          0 0 30px #00fff2,
+          0 0 40px #00fff2;
+      }
+      to {
+        text-shadow: 
+          0 0 20px #00ffe1,
+          0 0 30px #00ffe1,
+          0 0 40px #00ffe1,
+          0 0 50px #00ffe1;
+      }
+    }
+
+    section {
+      max-width: 800px;
+      margin: 0 auto 40px auto;
+      padding: 30px;
+      background: rgba(10, 10, 10, 0.6);
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 2.2rem;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    p {
+      margin-bottom: 20px;
+      line-height: 1.6;
+      color: #fff;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 15px 30px;
+      margin: 10px;
+      background: linear-gradient(45deg, #00fff2, #00ffe1);
+      color: #1a1a1a;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 50px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 16px rgba(0, 255, 255, 0.3);
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.8rem;
+      opacity: 0.7;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="starsCanvas"></canvas>
+  
+  <header>
+    <h1>Gvaska</h1>
+    <p>მოგესალმებით GVASKA და DR Rokva-ს საიტზე</p>
+  </header>
+  
+  <section>
+    <h2>Gvaska-ს შესახებ</h2>
+    <p>Gvaska ON YOUTUBE</p>
+  </section>
+  
+  <section>
+    <h2>YOUTUBE AND TIKTOK</h2>
+    <p>გადახედეთ ჩემს YOUTUBE არხს და არ დაგავიწყდეთ გამოწერა:</p>
+    <a class="button" href="https://www.youtube.com/@Gvaska" target="_blank">YouTube</a>
+    <a class="button" href="https://www.tiktok.com/@saba_gvaska" target="_blank">TikTok</a>
+  </section>
+  
+  <!-- New Section for DRRokva -->
+  <section>
+    <h2>DRRokva Social Media</h2>
+    <p>გადახედეთ DRRokva-ს YouTube არხს და TikTok-ს:</p>
+    <a class="button" href="https://www.youtube.com/@DRRokva" target="_blank">YouTube</a>
+    <a class="button" href="https://www.tiktok.com/@DRRokva" target="_blank">TikTok</a>
+  </section>
+  
+  <footer>
+    &copy; 2025 Gvaska. ყველა უფლება დაცულია.
+  </footer>
+  
+  <script>
+    // Enhanced Falling Stars Animation with Multi-colored Stars
+    const canvas = document.getElementById('starsCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Set canvas size to full window
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Update canvas size on window resize
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // Array of neon colors for stars
+    const neonColors = ['#00fff2', '#00ffe1', '#ff00ff', '#00ff00', '#ffff00'];
+
+    // Star class definition
+    class Star {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 1.5 + 0.5;
+        this.speed = Math.random() * 1.5 + 0.5;
+        this.opacity = Math.random() * 0.5 + 0.5;
+        // Randomly choose a neon color for each star
+        this.color = neonColors[Math.floor(Math.random() * neonColors.length)];
+      }
+
+      update() {
+        this.y += this.speed;
+        if (this.y > canvas.height) {
+          this.y = 0;
+          this.x = Math.random() * canvas.width;
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(' + hexToRgb(this.color) + ',' + this.opacity + ')';
+        ctx.fill();
+      }
+    }
+
+    // Helper function to convert hex color to rgb values
+    function hexToRgb(hex) {
+      // Remove the hash if present
+      hex = hex.replace(/^#/, '');
+      let bigint = parseInt(hex, 16);
+      let r = (bigint >> 16) & 255;
+      let g = (bigint >> 8) & 255;
+      let b = bigint & 255;
+      return r + ", " + g + ", " + b;
+    }
+
+    // Create multiple stars
+    const stars = [];
+    for (let i = 0; i < 150; i++) {
+      stars.push(new Star());
+    }
+
+    // Animation loop
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let star of stars) {
+        star.update();
+        star.draw();
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>
