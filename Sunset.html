@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>კაფე - პრემიუმ შეკვეთის სისტემა</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap">
+    <style>
+        :root {
+            --primary: #6D4C41;
+            --secondary: #8D6E63;
+            --accent: #D7CCC8;
+            --light: #EFEBE9;
+            --dark: #3E2723;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--light) 0%, #ffffff 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><text x="10" y="50" font-family="Arial" font-size="20" fill="rgba(255,255,255,0.05)">☕</text></svg>');
+            opacity: 0.1;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 3rem;
+        }
+        
+        .product-category {
+            margin-bottom: 2rem;
+        }
+        
+        .product {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .product h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+        
+        .product .description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .price {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .price::before {
+            content: "₾";
+            margin-right: 3px;
+        }
+        
+        .barcode {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--light);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--dark);
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+        }
+        
+        .order-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            margin-top: 2rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .input-group {
+            display: flex;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        #barcode-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 15px;
+            font-size: 1rem;
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            transition: all 0.3s;
+            background: var(--light);
+        }
+        
+        #barcode-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(109, 76, 65, 0.2);
+        }
+        
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        button i {
+            font-size: 1.1rem;
+        }
+        
+        #add-btn {
+            background: var(--primary);
+            color: white;
+        }
+        
+        #add-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        #clear-btn {
+            background: var(--danger);
+            color: white;
+        }
+        
+        #clear-btn:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+        }
+        
+        #order-list {
+            list-style-type: none;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        #order-list li {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--light);
+            transition: all 0.3s;
+            background: white;
+        }
+        
+        #order-list li:nth-child(even) {
+            background: var(--light);
+        }
+        
+        #order-list li:hover {
+            background: #f5f5f5;
+        }
+        
+        #order-list li .item-name {
+            font-weight: 500;
+        }
+        
+        #order-list li .item-price {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        #total {
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-align: right;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        #total span {
+            color: var(--primary);
+        }
+        
+        .empty-order {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .empty-order i {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        
+        @media (max-width: 768px) {
+            .menu {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            #barcode-input, button {
+                width: 100%;
+            }
+        }
+        
+        /* ანიმაციები */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .product {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        .product:nth-child(1) { animation-delay: 0.1s; }
+        .product:nth-child(2) { animation-delay: 0.2s; }
+        .product:nth-child(3) { animation-delay: 0.3s; }
+        .product:nth-child(4) { animation-delay: 0.4s; }
+        .product:nth-child(5) { animation-delay: 0.5s; }
+        .product:nth-child(6) { animation-delay: 0.6s; }
+        .product:nth-child(7) { animation-delay: 0.7s; }
+        .product:nth-child(8) { animation-delay: 0.8s; }
+        .product:nth-child(9) { animation-delay: 0.9s; }
+        .product:nth-child(10) { animation-delay: 1.0s; }
+        
+        /* იქონების ეფექტები */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10,10);
+            opacity: 0;
+            transition: transform .5s, opacity 1s;
+        }
+        
+        .ripple:active:after {
+            transform: scale(0,0);
+            opacity: 0.3;
+            transition: 0s;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Artisan Café</h1>
+            <p class="subtitle">პრემიუმ ყავა და სნექები თქვენი კომფორტისთვის</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="menu">
+            <div class="product-category">
+                <h2><i class="fas fa-mug-hot"></i> ცხელი ყავები</h2>
+                <div class="product">
+                    <div class="barcode">001</div>
+                    <h3>კაპუჩინო</h3>
+                    <p class="description">ნაზი ყავა რძის ქაფით</p>
+                    <div class="price">3.50</div>
+                </div>
+                <div class="product">
+                    <div class="barcode">002</div>
+                    <h3>ლატე</h3>
+                    <p class="description">რბილი გემო მეტი რძით</p>
+                    <div class="price">3.00</div>
+                </div>
+                <div class="product">
+                    <div class="barcode">003</div>
+                    <h3>ამერიკანო</h3>
+                    <p class="description">კლასიკური ძლიერი ყავა</p>
+                    <div class="price">3.00</div>
+                </div>
+                <div class="product">
+                    <div class="barcode">004</div>
+                    <h3>თურქული ყავა</h3>
+                    <p class="description">ავთენტური მომზადების მეთოდი</p>
+                    <div class="price">3.00</div>
+                </div>
+            </div>
+
+            <div class="product-category">
+                <h2><i class="fas fa-glass-whiskey"></i> ცივი ყავები</h2>
+                <div class="product">
+                    <div class="barcode">005</div>
+                    <h3>პატარა ცივი ყავა</h3>
+                    <p class="description">გრილებული 300მლ</p>
+                    <div class="price">3.00</div>
+                </div>
+                <div class="product">
+                    <div class="barcode">006</div>
+                    <h3>ნორმალური ცივი ყავა</h3>
+                    <p class="description">გრილებული 450მლ</p>
+                    <div class="price">3.50</div>
+                </div>
+                <div class="product">
+                    <div class="barcode">007</div>
+                    <h3>ცივი ყავა ნაყინით</h3>
+                    <p class="description">გემრიელი კომბინაცია</p>
+                    <div class="price">4.00</div>
+                </div>
+            </div>
+
+            <div class="product-category">
+                <h2><i class="fas fa-hotdog"></i> ჰოთ დოგები</h2>
+                <div class="product">
+                    <div class="barcode">008</div>
+                    <h3>კლასიკური ჰოთ დოგი</h3>
+                    <p class="description">საქონლის ხორცით</p>
+                    <div class="price">8.00</div>
+                </div>
+                <div class="product">
+                    <div class="barcode">009</div>
+                    <h3>ჰოთ დოგი ქათმის ხორცით</h3>
+                    <p class="description">უფრო ნაზი ალტერნატივა</p>
+                    <div class="price">10.00</div>
+                </div>
+            </div>
+
+            <div class="product-category">
+                <h2><i class="fas fa-ice-cream"></i> ნაყინები</h2>
+                <div class="product">
+                    <div class="barcode">010</div>
+                    <h3>ვანილის ნაყინი</h3>
+                    <p class="description">კლასიკური გემო</p>
+                    <div class="price">2.50</div>
+                </div>
+                <div class="product">
+                    <div class="barcode">011</div>
+                    <h3>შოკოლადის ნაყინი</h3>
+                    <p class="description">შოკოლადის მოყვარულებისთვის</p>
+                    <div class="price">2.50</div>
+                </div>
+                <div class="product">
+                    <div class="barcode">012</div>
+                    <h3>შერეული ნაყინი</h3>
+                    <p class="description">ორი გემოს კომბინაცია</p>
+                    <div class="price">2.50</div>
+                </div>
+                <div class="product">
+                    <div class="barcode">013</div>
+                    <h3>ვანილის ნაყინი (დიდი)</h3>
+                    <p class="description">ტოფინგებით ჭიქაში</p>
+                    <div class="price">5.00</div>
+                </div>
+                <div class="product">
+                    <div class="barcode">014</div>
+                    <h3>ვანილის ნაყინი (სტანდარტული)</h3>
+                    <p class="description">ტოფინგებით ჭიქაში</p>
+                    <div class="price">3.00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="order-section">
+            <h2><i class="fas fa-receipt"></i> თქვენი შეკვეთა</h2>
+            <div class="input-group">
+                <input type="text" id="barcode-input" placeholder="შეიყვანეთ შტრიხკოდი (001-014)">
+                <button id="add-btn" class="ripple"><i class="fas fa-plus"></i> დამატება</button>
+                <button id="clear-btn" class="ripple"><i class="fas fa-trash"></i> გასუფთავება</button>
+            </div>
+            
+            <ul id="order-list">
+                <li class="empty-order">
+                    <i class="fas fa-coffee"></i>
+                    <div>შეკვეთა ცარიელია</div>
+                    <small>შეიყვანეთ პროდუქტის შტრიხკოდი</small>
+                </li>
+            </ul>
+            
+            <div id="total">ჯამური თანხა: <span>0.00</span> ლარი</div>
+        </div>
+    </div>
+
+    <script>
+        // პროდუქტების მონაცემები
+        const products = {
+            '001': { name: 'კაპუჩინო', price: 3.5 },
+            '002': { name: 'ლატე', price: 3 },
+            '003': { name: 'ამერიკანო', price: 3 },
+            '004': { name: 'თურქული ყავა', price: 3 },
+            '005': { name: 'პატარა ზომის ცივი ყავა', price: 3 },
+            '006': { name: 'ნორმალური ზომის ცივი ყავა', price: 3.5 },
+            '007': { name: 'ცივი ყავა ნაყინით', price: 4 },
+            '008': { name: 'კლასიკური ჰოთ დოგი (საქონლის ხორცი)', price: 8 },
+            '009': { name: 'ჰოთ დოგი ქათმის ხორცით', price: 10 },
+            '010': { name: 'ვანილის ნაყინი', price: 2.5 },
+            '011': { name: 'შოკოლადის ნაყინი', price: 2.5 },
+            '012': { name: 'შერეული ნაყინი', price: 2.5 },
+            '013': { name: 'ვანილის ნაყინი ჭიქაში (დიდი)', price: 5 },
+            '014': { name: 'ვანილის ნაყინი ჭიქაში (სტანდარტული)', price: 3 }
+        };
+
+        // შეკვეთის მასივი
+        let order = [];
+        
+        // DOM ელემენტები
+        const barcodeInput = document.getElementById('barcode-input');
+        const addBtn = document.getElementById('add-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const orderList = document.getElementById('order-list');
+        const totalElement = document.getElementById('total');
+        const emptyOrderElement = document.querySelector('.empty-order');
+
+        // პროდუქტის დამატება
+        function addProduct() {
+            const barcode = barcodeInput.value.trim();
+            
+            if (!barcode) {
+                showAlert('გთხოვთ შეიყვანეთ შტრიხკოდი', 'warning');
+                return;
+            }
+            
+            if (!products[barcode]) {
+                showAlert('არასწორი შტრიხკოდი', 'error');
+                barcodeInput.value = '';
+                return;
+            }
+            
+            order.push(products[barcode]);
+            updateOrderList();
+            barcodeInput.value = '';
+            barcodeInput.focus();
+            showAlert(`${products[barcode].name} დამატებულია შეკვეთაში`, 'success');
+        }
+        
+        // შეკვეთის სიის განახლება
+        function updateOrderList() {
+            if (order.length === 0) {
+                orderList.innerHTML = `
+                    <li class="empty-order">
+                        <i class="fas fa-coffee"></i>
+                        <div>შეკვეთა ცარიელია</div>
+                        <small>შეიყვანეთ პროდუქტის შტრიხკოდი</small>
+                    </li>
+                `;
+                totalElement.innerHTML = `ჯამური თანხა: <span>0.00</span> ლარი`;
+                return;
+            }
+            
+            orderList.innerHTML = '';
+            let total = 0;
+            
+            order.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span class="item-name">${item.name}</span>
+                    <span class="item-price">${item.price.toFixed(2)} ₾</span>
+                `;
+                orderList.appendChild(li);
+                total += item.price;
+            });
+            
+            totalElement.innerHTML = `ჯამური თანხა: <span>${total.toFixed(2)}</span> ლარი`;
+        }
+        
+        // შეკვეთის გასუფთავება
+        function clearOrder() {
+            if (order.length === 0) {
+                showAlert('შეკვეთა უკვე ცარიელია', 'info');
+                return;
+            }
+            
+            order = [];
+            updateOrderList();
+            showAlert('შეკვეთა გასუფთავებულია', 'success');
+        }
+        
+        // ალერტის ჩვენება
+        function showAlert(message, type) {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            alert.style.position = 'fixed';
+            alert.style.bottom = '20px';
+            alert.style.right = '20px';
+            alert.style.padding = '15px 25px';
+            alert.style.borderRadius = '8px';
+            alert.style.color = 'white';
+            alert.style.fontWeight = '500';
+            alert.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            alert.style.animation = 'fadeIn 0.3s ease forwards';
+            alert.style.zIndex = '1000';
+            
+            switch(type) {
+                case 'success':
+                    alert.style.background = 'var(--success)';
+                    break;
+                case 'error':
+                    alert.style.background = 'var(--danger)';
+                    break;
+                case 'warning':
+                    alert.style.background = 'var(--warning)';
+                    alert.style.color = 'var(--dark)';
+                    break;
+                case 'info':
+                    alert.style.background = 'var(--primary)';
+                    break;
+            }
+            
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.style.animation = 'fadeOut 0.3s ease forwards';
+                setTimeout(() => {
+                    alert.remove();
+                }, 300);
+            }, 3000);
+        }
+        
+        // მოვლენების დამატება
+        addBtn.addEventListener('click', addProduct);
+        clearBtn.addEventListener('click', clearOrder);
+        
+        // შტრიხკოდის ველზე Enter-ის დაჭერა
+        barcodeInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addProduct();
+            }
+        });
+        
+        // ფოკუსის დაყენება შტრიხკოდის ველზე გვერდის ჩატვირთვისას
+        window.addEventListener('load', function() {
+            barcodeInput.focus();
+        });
+        
+        // ანიმაციებისთვის CSS-ის დამატება
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
