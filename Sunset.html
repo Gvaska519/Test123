@@ -236,6 +236,7 @@
             border-bottom: 1px solid rgba(0,0,0,0.05);
             transition: all 0.3s;
             background: white;
+            position: relative;
         }
         
         #order-list li:nth-child(even) {
@@ -248,11 +249,33 @@
         
         #order-list li .item-name {
             font-weight: 600;
+            flex: 1;
         }
         
         #order-list li .item-price {
             font-weight: 700;
             color: var(--sunset-purple);
+            margin: 0 15px;
+        }
+        
+        .remove-item {
+            background: rgba(244, 67, 54, 0.1);
+            color: var(--danger);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .remove-item:hover {
+            background: var(--danger);
+            color: white;
+            transform: rotate(90deg);
         }
         
         #total {
@@ -531,10 +554,20 @@
                 }, 1000);
             }
             
-            order.push(products[barcode]);
+            order.push({
+                ...products[barcode],
+                id: Date.now() + Math.random().toString(36).substr(2, 9) // უნიკალური ID
+            });
             updateOrderList();
             showAlert(`${products[barcode].name} დამატებულია შეკვეთაში`, 'success');
             return true;
+        }
+        
+        // პროდუქტის მოშლა შეკვეთიდან
+        function removeProduct(id) {
+            order = order.filter(item => item.id !== id);
+            updateOrderList();
+            showAlert('პროდუქტი მოშლილია შეკვეთიდან', 'info');
         }
         
         // შეკვეთის სიის განახლება
@@ -554,14 +587,23 @@
             orderList.innerHTML = '';
             let total = 0;
             
-            order.forEach((item, index) => {
+            order.forEach((item) => {
                 const li = document.createElement('li');
                 li.innerHTML = `
                     <span class="item-name">${item.name}</span>
                     <span class="item-price">${item.price.toFixed(2)} ₾</span>
+                    <button class="remove-item" data-id="${item.id}">
+                        <i class="fas fa-times"></i>
+                    </button>
                 `;
                 orderList.appendChild(li);
                 total += item.price;
+                
+                // მოშლის ღილაკზე მოვლენის დამატება
+                li.querySelector('.remove-item').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    removeProduct(item.id);
+                });
             });
             
             totalElement.innerHTML = `ჯამური თანხა: <span>${total.toFixed(2)}</span> ლარი`;
@@ -571,6 +613,10 @@
         function clearOrder() {
             if (order.length === 0) {
                 showAlert('შეკვეთა უკვე ცარიელია', 'info');
+                return;
+            }
+            
+            if (!confirm('ნამდვილად გსურთ მთელი შეკვეთის გასუფთავება?')) {
                 return;
             }
             
