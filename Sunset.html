@@ -252,10 +252,48 @@
             flex: 1;
         }
         
+        .item-quantity {
+            background: rgba(106, 69, 127, 0.1);
+            color: var(--sunset-purple);
+            border-radius: 12px;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-left: 5px;
+        }
+        
         #order-list li .item-price {
             font-weight: 700;
             color: var(--sunset-purple);
             margin: 0 15px;
+            min-width: 60px;
+            text-align: right;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .quantity-btn {
+            background: rgba(106, 69, 127, 0.1);
+            color: var(--sunset-purple);
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 700;
+        }
+        
+        .quantity-btn:hover {
+            background: var(--sunset-purple);
+            color: white;
         }
         
         .remove-item {
@@ -270,6 +308,7 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s;
+            margin-left: 10px;
         }
         
         .remove-item:hover {
@@ -344,6 +383,16 @@
             
             #barcode-input, button {
                 width: 100%;
+            }
+            
+            #order-list li {
+                flex-wrap: wrap;
+            }
+            
+            .quantity-controls {
+                margin-top: 10px;
+                width: 100%;
+                justify-content: flex-end;
             }
         }
         
@@ -554,13 +603,47 @@
                 }, 1000);
             }
             
-            order.push({
-                ...products[barcode],
-                id: Date.now() + Math.random().toString(36).substr(2, 9) // უნიკალური ID
-            });
+            // შევამოწმოთ არის თუ არა უკვე შეკვეთაში ეს პროდუქტი
+            const existingItemIndex = order.findIndex(item => item.barcode === barcode);
+            
+            if (existingItemIndex >= 0) {
+                // თუ უკვე არსებობს, გავზარდოთ რაოდენობა
+                order[existingItemIndex].quantity++;
+                order[existingItemIndex].totalPrice = order[existingItemIndex].quantity * products[barcode].price;
+            } else {
+                // თუ არ არსებობს, დავამატოთ ახალი
+                order.push({
+                    ...products[barcode],
+                    barcode: barcode,
+                    quantity: 1,
+                    totalPrice: products[barcode].price,
+                    id: Date.now() + Math.random().toString(36).substr(2, 9) // უნიკალური ID
+                });
+            }
+            
             updateOrderList();
             showAlert(`${products[barcode].name} დამატებულია შეკვეთაში`, 'success');
             return true;
+        }
+        
+        // პროდუქტის რაოდენობის გაზრდა/შემცირება
+        function updateQuantity(id, change) {
+            const itemIndex = order.findIndex(item => item.id === id);
+            
+            if (itemIndex >= 0) {
+                order[itemIndex].quantity += change;
+                
+                // თუ რაოდენობა 0-ზე ნაკლები გახდა, მოვშალოთ
+                if (order[itemIndex].quantity <= 0) {
+                    order.splice(itemIndex, 1);
+                    showAlert('პროდუქტი მოშლილია შეკვეთიდან', 'info');
+                } else {
+                    // განვაახლოთ ჯამური ფასი
+                    order[itemIndex].totalPrice = order[itemIndex].quantity * products[order[itemIndex].barcode].price;
+                }
+                
+                updateOrderList();
+            }
         }
         
         // პროდუქტის მოშლა შეკვეთიდან
@@ -590,16 +673,33 @@
             order.forEach((item) => {
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    <span class="item-name">${item.name}</span>
-                    <span class="item-price">${item.price.toFixed(2)} ₾</span>
-                    <button class="remove-item" data-id="${item.id}">
-                        <i class="fas fa-times"></i>
-                    </button>
+                    <span class="item-name">
+                        ${item.name}
+                        ${item.quantity > 1 ? `<span class="item-quantity">X${item.quantity}</span>` : ''}
+                    </span>
+                    <span class="item-price">${item.totalPrice.toFixed(2)} ₾</span>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                        <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                        <button class="remove-item" data-id="${item.id}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
                 `;
                 orderList.appendChild(li);
-                total += item.price;
+                total += item.totalPrice;
                 
-                // მოშლის ღილაკზე მოვლენის დამატება
+                // მოვლენების დამატება
+                li.querySelector('.minus').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    updateQuantity(item.id, -1);
+                });
+                
+                li.querySelector('.plus').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    updateQuantity(item.id, 1);
+                });
+                
                 li.querySelector('.remove-item').addEventListener('click', (e) => {
                     e.stopPropagation();
                     removeProduct(item.id);
