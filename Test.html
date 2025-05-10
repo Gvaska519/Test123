@@ -3,667 +3,345 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oceanique - თევზების გურმანული რესტორანი</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>ოქროს თევზი - ცოცხალი და გაყინული თევზები</title>
     <style>
         :root {
-            --primary: #1a535c;
-            --secondary: #4ecdc4;
-            --accent: #ff6b6b;
-            --light: #f7fff7;
-            --dark: #292f36;
-            --text: #333;
-            --text-light: #6c757d;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            --primary: #FFD700;
+            --secondary: #005B96;
+            --accent: #E63946;
+            --light: #F8F9FA;
+            --dark: #212529;
         }
         
         body {
-            font-family: 'Playfair Display', Georgia, serif;
-            line-height: 1.6;
-            color: var(--text);
+            font-family: 'Noto Sans Georgian', sans-serif;
+            margin: 0;
+            padding: 0;
             background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.7;
         }
-        
-        /* Header Styles */
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+
+        header {
+            background: linear-gradient(rgba(0, 91, 150, 0.8), rgba(0, 91, 150, 0.8)), 
+                        url('https://images.unsplash.com/photo-1439405326854-014607f694d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-position: center;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            color: white;
+            padding: 80px 20px;
             text-align: center;
-            color: white;
-            padding: 0 20px;
+            position: relative;
         }
-        
-        .hero h1 {
-            font-size: 4.5rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-            letter-spacing: 2px;
-        }
-        
-        .hero p {
-            font-size: 1.8rem;
+
+        .header-content {
             max-width: 800px;
-            margin-bottom: 40px;
-            font-family: 'Montserrat', sans-serif;
-        }
-        
-        .btn {
-            display: inline-block;
-            background: var(--accent);
-            color: white;
-            padding: 15px 40px;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-family: 'Montserrat', sans-serif;
-            letter-spacing: 1px;
-        }
-        
-        .btn:hover {
-            background: #ff5252;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* Navigation */
-        nav {
-            background-color: rgba(26, 83, 92, 0.9);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
-        }
-        
-        nav.scrolled {
-            background-color: var(--primary);
-            padding: 10px 0;
-        }
-        
-        .nav-container {
-            max-width: 1200px;
             margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            margin: 0;
+            color: var(--primary);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        nav {
+            background-color: var(--secondary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
         }
-        
+
         .logo {
-            color: white;
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--primary);
             text-decoration: none;
-            font-family: 'Playfair Display', serif;
+            font-weight: bold;
         }
-        
-        .logo span {
-            color: var(--accent);
-        }
-        
+
         .nav-links {
             display: flex;
             list-style: none;
+            margin: 0;
+            padding: 0;
         }
-        
+
         .nav-links li {
-            margin-left: 40px;
+            margin-left: 30px;
         }
-        
+
         .nav-links a {
             color: white;
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-            font-family: 'Montserrat', sans-serif;
             font-size: 1.1rem;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
         }
-        
-        .nav-links a:hover {
-            color: var(--secondary);
-        }
-        
+
         .nav-links a:after {
             content: '';
             position: absolute;
             width: 0;
             height: 2px;
-            background: var(--secondary);
-            bottom: -5px;
+            background: var(--primary);
+            bottom: 0;
             left: 0;
             transition: width 0.3s;
         }
-        
+
         .nav-links a:hover:after {
             width: 100%;
         }
-        
-        /* Main Content */
+
         .container {
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 100px 20px;
+            margin: 60px auto;
+            padding: 0 20px;
         }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 70px;
-        }
-        
-        .section-title h2 {
-            font-size: 3rem;
-            color: var(--primary);
-            display: inline-block;
-            padding-bottom: 15px;
-            position: relative;
-        }
-        
-        .section-title h2:after {
-            content: '';
-            position: absolute;
-            width: 100px;
-            height: 4px;
-            background: var(--accent);
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .section-title p {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--text-light);
-            max-width: 700px;
-            margin: 20px auto 0;
-            font-size: 1.2rem;
-            line-height: 1.8;
-        }
-        
-        /* About Section */
-        .about {
-            background-color: white;
-        }
-        
-        .about-container {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .about-img {
-            flex: 1;
-            min-width: 300px;
-            padding: 20px;
-        }
-        
-        .about-img img {
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .about-content {
-            flex: 1;
-            min-width: 300px;
-            padding: 20px;
-        }
-        
-        .about-content h3 {
+
+        h2 {
             font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 30px;
-            line-height: 1.3;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--secondary);
+            position: relative;
+            padding-bottom: 15px;
         }
-        
-        .about-content p {
-            margin-bottom: 25px;
-            line-height: 1.8;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.1rem;
-            color: var(--text-light);
+
+        h2:after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            margin: 15px auto 0;
         }
-        
-        /* Menu Section */
-        .menu {
-            background-color: #f8f9fa;
+
+        .about-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 60px;
         }
-        
-        .menu-categories {
+
+        .fish-categories {
             display: flex;
             justify-content: center;
-            margin-bottom: 50px;
-            flex-wrap: wrap;
+            margin-bottom: 30px;
         }
-        
-        .menu-category {
-            padding: 12px 25px;
-            margin: 0 10px 15px;
+
+        .category-btn {
             background: none;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            font-weight: 600;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.3s;
+            color: var(--dark);
             position: relative;
-            border-radius: 30px;
-            font-family: 'Montserrat', sans-serif;
+            transition: color 0.3s;
         }
-        
-        .menu-category.active, .menu-category:hover {
+
+        .category-btn.active {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .category-btn.active:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
             background: var(--primary);
-            color: white;
+            bottom: 0;
+            left: 0;
         }
-        
-        .menu-items {
+
+        .fish-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
         }
-        
-        .menu-item {
-            background: white;
+
+        .fish-card {
+            background-color: white;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
+            position: relative;
         }
-        
-        .menu-item:hover {
+
+        .fish-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
-        
-        .menu-item-img {
-            height: 250px;
-            overflow: hidden;
+
+        .fish-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 1;
         }
-        
-        .menu-item-img img {
+
+        .fish-image {
             width: 100%;
-            height: 100%;
+            height: 200px;
             object-fit: cover;
-            transition: transform 0.5s;
         }
-        
-        .menu-item:hover .menu-item-img img {
-            transform: scale(1.05);
+
+        .fish-info {
+            padding: 20px;
         }
-        
-        .menu-item-content {
-            padding: 30px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .menu-item-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            align-items: center;
-        }
-        
-        .menu-item-title {
-            font-size: 1.5rem;
-            color: var(--primary);
-        }
-        
-        .menu-item-price {
-            color: var(--accent);
-            font-weight: 700;
-            font-size: 1.3rem;
-        }
-        
-        .menu-item-description {
-            color: var(--text-light);
-            margin-bottom: 20px;
-            font-family: 'Montserrat', sans-serif;
-            line-height: 1.7;
-        }
-        
-        .menu-item-footer {
-            margin-top: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .menu-item-source {
-            font-size: 0.9rem;
+
+        .fish-info h3 {
+            margin: 0 0 10px 0;
             color: var(--secondary);
-            font-weight: 600;
-            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4rem;
         }
-        
-        /* Fish Market Section */
-        .market {
+
+        .fish-price {
+            font-size: 1.3rem;
+            color: var(--accent);
+            font-weight: bold;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .price-unit {
+            font-size: 0.9rem;
+            color: var(--dark);
+            margin-left: 5px;
+            font-weight: normal;
+        }
+
+        .contact-info {
             background-color: white;
-        }
-        
-        .market-items {
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            max-width: 800px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 30px;
         }
-        
-        .market-item {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s;
-            text-align: center;
-            padding: 30px 20px;
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
         }
-        
-        .market-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .market-item-icon {
-            font-size: 3rem;
-            color: var(--secondary);
-            margin-bottom: 20px;
-        }
-        
-        .market-item h3 {
+
+        .contact-icon {
             font-size: 1.5rem;
-            margin-bottom: 15px;
             color: var(--primary);
-        }
-        
-        .market-item p {
-            color: var(--text-light);
-            font-family: 'Montserrat', sans-serif;
-            line-height: 1.7;
-        }
-        
-        /* Gallery Section */
-        .gallery {
-            background-color: #f8f9fa;
-        }
-        
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(2, 250px);
-            gap: 20px;
-        }
-        
-        .gallery-item {
-            overflow: hidden;
-            border-radius: 10px;
-            position: relative;
-        }
-        
-        .gallery-item:first-child {
-            grid-column: span 2;
-            grid-row: span 2;
-        }
-        
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-        
-        .gallery-item-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .gallery-item:hover .gallery-item-overlay {
-            opacity: 1;
-        }
-        
-        .gallery-item-overlay i {
-            color: white;
-            font-size: 2rem;
-        }
-        
-        /* Contact Section */
-        .contact {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .contact .section-title h2 {
-            color: white;
-        }
-        
-        .contact .section-title p {
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .contact-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 50px;
-        }
-        
-        .contact-info {
-            margin-bottom: 30px;
-        }
-        
-        .contact-info h3 {
-            font-size: 1.8rem;
-            margin-bottom: 30px;
-            position: relative;
-            padding-bottom: 15px;
-        }
-        
-        .contact-info h3:after {
-            content: '';
-            position: absolute;
-            width: 50px;
-            height: 3px;
-            background: var(--accent);
-            bottom: 0;
-            left: 0;
-        }
-        
-        .contact-info p {
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            font-family: 'Montserrat', sans-serif;
-        }
-        
-        .contact-info i {
             margin-right: 15px;
-            color: var(--secondary);
-            width: 25px;
+            min-width: 30px;
             text-align: center;
-            font-size: 1.2rem;
         }
-        
-        .contact-form input,
-        .contact-form textarea {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            font-family: 'Montserrat', sans-serif;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
+
+        .contact-text h3 {
+            margin: 0 0 5px 0;
+            color: var(--secondary);
         }
-        
-        .contact-form input::placeholder,
-        .contact-form textarea::placeholder {
-            color: rgba(255, 255, 255, 0.7);
+
+        .contact-text p {
+            margin: 0;
         }
-        
-        .contact-form textarea {
-            height: 150px;
-            resize: vertical;
-        }
-        
-        .contact-form button {
-            width: 100%;
-        }
-        
-        /* Footer */
+
         footer {
-            background: var(--dark);
+            background-color: var(--secondary);
             color: white;
-            padding: 70px 0 30px;
+            padding: 40px 0;
+            margin-top: 80px;
         }
-        
-        .footer-container {
+
+        .footer-content {
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 40px;
             padding: 0 20px;
         }
-        
-        .footer-col h4 {
-            font-size: 1.3rem;
-            margin-bottom: 25px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-        
-        .footer-col h4:after {
-            content: '';
-            position: absolute;
-            width: 40px;
-            height: 2px;
-            background: var(--accent);
-            bottom: 0;
-            left: 0;
-        }
-        
-        .footer-col p {
+
+        .footer-column h3 {
+            color: var(--primary);
             margin-bottom: 20px;
-            font-family: 'Montserrat', sans-serif;
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.7;
+            font-size: 1.3rem;
         }
-        
-        .footer-col ul {
+
+        .footer-links {
             list-style: none;
+            padding: 0;
+            margin: 0;
         }
-        
-        .footer-col ul li {
-            margin-bottom: 15px;
+
+        .footer-links li {
+            margin-bottom: 10px;
         }
-        
-        .footer-col ul li a {
-            color: rgba(255, 255, 255, 0.7);
+
+        .footer-links a {
+            color: white;
             text-decoration: none;
             transition: color 0.3s;
-            font-family: 'Montserrat', sans-serif;
         }
-        
-        .footer-col ul li a:hover {
-            color: var(--secondary);
+
+        .footer-links a:hover {
+            color: var(--primary);
         }
-        
-        .social-links {
-            display: flex;
-            margin-top: 20px;
-        }
-        
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            margin-right: 10px;
-            color: white;
-            transition: all 0.3s;
-        }
-        
-        .social-links a:hover {
-            background: var(--accent);
-            transform: translateY(-3px);
-        }
-        
-        .opening-hours p {
-            display: flex;
-            justify-content: space-between;
-            max-width: 250px;
-        }
-        
-        .opening-hours p span {
-            color: white;
-        }
-        
+
         .copyright {
             text-align: center;
-            padding-top: 50px;
-            margin-top: 50px;
+            margin-top: 40px;
+            padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9rem;
-            font-family: 'Montserrat', sans-serif;
         }
-        
-        /* Responsive */
+
         @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 3.5rem;
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
             }
             
-            .hero p {
-                font-size: 1.5rem;
-            }
-            
-            .nav-links li {
-                margin-left: 25px;
-            }
-            
-            .gallery-grid {
-                grid-template-columns: repeat(3, 1fr);
+            .contact-info {
+                grid-template-columns: 1fr;
             }
         }
-        
+
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.8rem;
+            h1 {
+                font-size: 2.5rem;
             }
             
-            .hero p {
-                font-size: 1.3rem;
+            .subtitle {
+                font-size: 1.2rem;
             }
             
             .nav-container {
@@ -675,485 +353,247 @@
             }
             
             .nav-links li {
-                margin: 0 15px;
+                margin-left: 15px;
+                margin-right: 15px;
             }
             
-            .section-title h2 {
-                font-size: 2.5rem;
+            .fish-categories {
+                flex-wrap: wrap;
             }
             
-            .menu-items {
+            .category-btn {
+                margin: 5px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer-content {
                 grid-template-columns: 1fr;
             }
             
-            .gallery-grid {
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: repeat(4, 200px);
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            .btn {
-                padding: 12px 30px;
-            }
-            
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .nav-links li {
-                margin: 5px 10px;
-            }
-            
-            .section-title h2 {
+            h1 {
                 font-size: 2rem;
             }
             
-            .gallery-grid {
-                grid-template-columns: 1fr;
-                grid-template-rows: repeat(6, 250px);
-            }
-            
-            .gallery-item:first-child {
-                grid-column: span 1;
-                grid-row: span 1;
+            h2 {
+                font-size: 2rem;
             }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <nav>
-            <div class="nav-container">
-                <a href="#" class="logo">Ocean<span>ique</span></a>
-                <ul class="nav-links">
-                    <li><a href="#home">მთავარი</a></li>
-                    <li><a href="#about">ჩვენ შესახებ</a></li>
-                    <li><a href="#menu">მენიუ</a></li>
-                    <li><a href="#market">თევზის მარკეტი</a></li>
-                    <li><a href="#contact">კონტაქტი</a></li>
-                </ul>
-            </div>
-        </nav>
-        
-        <h1>Oceanique</h1>
-        <p>გურმანული თევზის კერძები და ნედლი პროდუქტები უმაღლესი ხარისხის</p>
-        <a href="#menu" class="btn">იხილეთ მენიუ</a>
-    </section>
-    
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>ჩვენი ისტორია</h2>
-                <p>Oceanique არის პრემიუმ კლასის რესტორანი და თევზის მაღაზია, რომელიც გთავაზობთ უმაღლესი ხარისხის პროდუქტებს</p>
-            </div>
-            
-            <div class="about-container">
-                <div class="about-img">
-                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="ჩვენი რესტორანი">
-                </div>
-                <div class="about-content">
-                    <h3>გემოვნების უნიკალური გამოცდილება</h3>
-                    <p>2010 წელს დაარსებული, Oceanique სწრაფად გახდა თბილისის ერთ-ერთი ყველაზე პოპულარული თევზის რესტორანი. ჩვენი შეფ-მზარეულები არიან ნამდვილი პროფესიონალები, რომლებიც თევზის მომზადებაში წლების გამოცდილებას ფლობენ.</p>
-                    <p>ჩვენ ვიყენებთ მხოლოდ ადგილობრივი წარმოების ნედლეულს და ვუზრუნველვყოფთ მის სიახლეს. ჩვენი მენიუ მოიცავს როგორც ტრადიციულ ქართულ, ასევე ევროპულ და აზიურ სტილში მომზადებულ კერძებს.</p>
-                    <p>ჩვენი რესტორანის გარდა, ჩვენ გვაქვს თევზის მაღაზია, სადაც შეგიძლიათ შეიძინოთ ნედლი პროდუქტი სახლში მოსამზადებლად.</p>
-                    <a href="#contact" class="btn">რეზერვაცია</a>
-                </div>
-            </div>
+    <header>
+        <div class="header-content">
+            <h1>ოქროს თევზი</h1>
+            <p class="subtitle">პრემიუმ ხარისხის ცოცხალი და გაყინული თევზები</p>
         </div>
-    </section>
-    
-    <!-- Menu Section -->
-    <section id="menu" class="menu">
-        <div class="container">
-            <div class="section-title">
-                <h2>ჩვენი მენიუ</h2>
-                <p>გემოვნებით შერჩეული თევზის კერძები, მომზადებული ჩვენი შეფ-მზარეულების მიერ</p>
-            </div>
-            
-            <div class="menu-categories">
-                <button class="menu-category active" data-category="all">ყველა</button>
-                <button class="menu-category" data-category="starters">სტარტერები</button>
-                <button class="menu-category" data-category="main">მთავარი კერძები</button>
-                <button class="menu-category" data-category="specials">სპეციალობები</button>
-                <button class="menu-category" data-category="desserts">დესერტები</button>
-            </div>
-            
-            <div class="menu-items">
-                <!-- Starters -->
-                <div class="menu-item" data-category="starters">
-                    <div class="menu-item-img">
-                        <img src="https://images.unsplash.com/photo-1606755456206-b25206bfa233?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="თევზის ტარტარი">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3 class="menu-item-title">ლოსოსის ტარტარი</h3>
-                            <span class="menu-item-price">28₾</span>
-                        </div>
-                        <p class="menu-item-description">ახალი ლოსოსის ფილე, ავოკადო, კაპერსი და ციტრუსების სოუსი, მომზადებული ტრადიციული რეცეპტით</p>
-                        <div class="menu-item-footer">
-                            <span class="menu-item-source">ადგილობრივი ლოსოსი</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="menu-item" data-category="starters">
-                    <div class="menu-item-img">
-                        <img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="სკალოპები">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3 class="menu-item-title">გრილირებული სკალოპები</h3>
-                            <span class="menu-item-price">32₾</span>
-                        </div>
-                        <p class="menu-item-description">ახალი საზღვაო სკალოპები, მომზადებული ნიორის კარაქით და ლიმონის წვენით, მიტანილი ბროკოლის პიურესთან ერთად</p>
-                        <div class="menu-item-footer">
-                            <span class="menu-item-source">იმპორტი საფრანგეთიდან</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Main Courses -->
-                <div class="menu-item" data-category="main">
-                    <div class="menu-item-img">
-                        <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="გრილზე შემწვარი თევზი">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3 class="menu-item-title">გრილზე შემწვარი კალმახი</h3>
-                            <span class="menu-item-price">45₾</span>
-                        </div>
-                        <p class="menu-item-description">სუფთა მთის წყლებში გამოყვანილი კალმახი, მომზადებული ნედლი ზეითუნის ზეთით და არომატული ბალახებით, მიტანილი გრილზე შემწვარ ბოსტნეულთან ერთად</p>
-                        <div class="menu-item-footer">
-                            <span class="menu-item-source">ადგილობრივი კალმახი</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="menu-item" data-category="main">
-                    <div class="menu-item-img">
-                        <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="თევზის სუპი">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3 class="menu-item-title">ბულიონი სამი თევზით</h3>
-                            <span class="menu-item-price">38₾</span>
-                        </div>
-                        <p class="menu-item-description">ტრადიციული თევზის სუპი ლოსოსით, ბარაბულით და კალმახით, მომზადებული ნიორით, ნიახურით და არომატული სანელებლებით</p>
-                        <div class="menu-item-footer">
-                            <span class="menu-item-source">ადგილობრივი თევზები</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Specials -->
-                <div class="menu-item" data-category="specials">
-                    <div class="menu-item-img">
-                        <img src="https://images.unsplash.com/photo-1606755456206-b25206bfa233?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="ლობიო თევზით">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3 class="menu-item-title">ლობიო ბარაბულით</h3>
-                            <span class="menu-item-price">42₾</span>
-                        </div>
-                        <p class="menu-item-description">ჩვენი შეფ-მზარეულის სპეციალური რეცეპტი - ტრადიციული ქართული ლობიო ახალ ბარაბულთან ერთად, მიტანილი მწვანილებით და ჯანჯაფილის პურით</p>
-                        <div class="menu-item-footer">
-                            <span class="menu-item-source">ადგილობრივი ბარაბული</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="menu-item" data-category="specials">
-                    <div class="menu-item-img">
-                        <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="სუში">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3 class="menu-item-title">სუშის ასორტი</h3>
-                            <span class="menu-item-price">55₾</span>
-                        </div>
-                        <p class="menu-item-description">8 ცალი სუშის ასორტი, მომზადებული ახალი ლოსოსით, ტუნასით და სკალოპებით, მიტანილი სოიოს სოუსთან, ვასაბისთან და მარილიან იმბირთან ერთად</p>
-                        <div class="menu-item-footer">
-                            <span class="menu-item-source">ადგილობრივი და იმპორტირებული თევზები</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Desserts -->
-                <div class="menu-item" data-category="desserts">
-                    <div class="menu-item-img">
-                        <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="შოკოლადის ტორტი">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3 class="menu-item-title">შოკოლადის სუფლე</h3>
-                            <span class="menu-item-price">22₾</span>
-                        </div>
-                        <p class="menu-item-description">შოკოლადის სუფლე მარილიანი კარამელის სოუსით და ჟოლოს ნაყინით, მომზადებული ჩვენი შეფ-პატისეს მიერ</p>
-                        <div class="menu-item-footer">
-                            <span class="menu-item-source">სახლში მომზადებული</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="menu-item" data-category="desserts">
-                    <div class="menu-item-img">
-                        <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="ლიმონის ტორტი">
-                    </div>
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <h3 class="menu-item-title">ლიმონის ტორტი</h3>
-                            <span class="menu-item-price">20₾</span>
-                        </div>
-                        <p class="menu-item-description">ფრანგული სტილის ლიმონის ტორტი, მომზადებული ახალი ლიმონებით და ნაზი მერნგით</p>
-                        <div class="menu-item-footer">
-                            <span class="menu-item-source">სახლში მომზადებული</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">ოქროს თევზი</a>
+            <ul class="nav-links">
+                <li><a href="#about">ჩვენ შესახებ</a></li>
+                <li><a href="#fish">თევზები</a></li>
+                <li><a href="#contact">კონტაქტი</a></li>
+            </ul>
         </div>
-    </section>
-    
-    <!-- Fish Market Section -->
-    <section id="market" class="market">
-        <div class="container">
-            <div class="section-title">
-                <h2>თევზის მარკეტი</h2>
-                <p>შეიძინეთ ნედლი პროდუქტი სახლში მოსამზადებლად</p>
+    </nav>
+
+    <main class="container">
+        <section id="about" class="about-section">
+            <h2>ჩვენი ისტორია</h2>
+            <p>შპს "ოქროს თევზი" არის ლიდერი კომპანია ცოცხალი და გაყინული თევზების ბაზარზე. 2010 წლიდან ჩვენ ვუზრუნველვყოფთ ჩვენს მომხმარებლებს უმაღლესი ხარისხის პროდუქტით, რომელიც მოდის პირდაპირ ზღვიდან თქვენს მაგიდამდე.</p>
+            <p>ჩვენი დირექტორი, ერეკლე სკობილევი, პირადად აკონტროლებს ყველა პროცესს - თევზის შეძენიდან დაწყებული მისი მიტანის მომენტამდე. ჩვენ ვთანამშრომლობთ მხოლოდ სანდო მომწოდებლებთან და ვიყენებთ თანამედროვე ტექნოლოგიებს თევზის სიმშვიდის შესანარჩუნებლად.</p>
+        </section>
+
+        <section id="fish">
+            <h2>ჩვენი პროდუქცია</h2>
+            
+            <div class="fish-categories">
+                <button class="category-btn active">ყველა</button>
+                <button class="category-btn">ცოცხალი</button>
+                <button class="category-btn">გაყინული</button>
             </div>
             
-            <div class="market-items">
-                <div class="market-item">
-                    <div class="market-item-icon">
-                        <i class="fas fa-fish"></i>
-                    </div>
-                    <h3>ახალი თევზი</h3>
-                    <p>ყოველდღიურად მიტანილი ახალი თევზი ჩვენი მომწოდებლებისგან</p>
-                </div>
-                
-                <div class="market-item">
-                    <div class="market-item-icon">
-                        <i class="fas fa-utensils"></i>
-                    </div>
-                    <h3>მომზადებული კერძები</h3>
-                    <p>მომზადებული კერძები, რომლებიც შეგიძლიათ წაიღოთ სახლში</p>
-                </div>
-                
-                <div class="market-item">
-                    <div class="market-item-icon">
-                        <i class="fas fa-seedling"></i>
-                    </div>
-                    <h3>ორგანული პროდუქტები</h3>
-                    <p>ორგანული ბოსტნეული და სანელებლები თქვენი კერძებისთვის</p>
-                </div>
-                
-                <div class="market-item">
-                    <div class="market-item-icon">
-                        <i class="fas fa-wine-bottle"></i>
-                    </div>
-                    <h3>ღვინის არჩევანი</h3>
-                    <p>ქართული და საერთაშორისო ღვინოები თევზის კერძებთან შესატყვისად</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Gallery Section -->
-    <section class="gallery">
-        <div class="container">
-            <div class="section-title">
-                <h2>გალერეა</h2>
-                <p>გაეცანით ჩვენი რესტორანის ატმოსფეროს და კერძებს</p>
-            </div>
-            
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="რესტორანის ინტერიერი">
-                    <div class="gallery-item-overlay">
-                        <i class="fas fa-search-plus"></i>
+            <div class="fish-grid">
+                <div class="fish-card">
+                    <span class="fish-badge">ცოცხალი</span>
+                    <img src="https://avatars.mds.yandex.net/i?id=f8f65410731d8d53fdf56914949ce475_l-4577047-images-thumbs&n=13" alt="ბარაბულა" class="fish-image">
+                    <div class="fish-info">
+                        <h3>ბარაბულა</h3>
+                        <p>ახალი შავი ზღვის ბარაბულა, იდეალური გრილისთვის</p>
+                        <div class="fish-price">18.50 <span class="price-unit">₾/კგ</span></div>
                     </div>
                 </div>
                 
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="თევზის კერძი">
-                    <div class="gallery-item-overlay">
-                        <i class="fas fa-search-plus"></i>
+                <div class="fish-card">
+                    <span class="fish-badge">ცოცხალი</span>
+                    <img src="https://sportfishing.ge/forum/uploads/monthly_06_2015/post-271-0-40885100-1435043343.jpg" alt="კეფაილი" class="fish-image">
+                    <div class="fish-info">
+                        <h3>კეფალი</h3>
+                        <p>ახალი მტკნარი წყლის კეფაილი, შეძენილი ადგილობრივი მეთევზეებისგან</p>
+                        <div class="fish-price">15.90 <span class="price-unit">₾/კგ</span></div>
                     </div>
                 </div>
                 
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="სკალოპები">
-                    <div class="gallery-item-overlay">
-                        <i class="fas fa-search-plus"></i>
+                <div class="fish-card">
+                    <span class="fish-badge">გაყინული</span>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Jurel_blanco_o_mediterr%C3%A1neo_%28Trachurus_mediterraneus%29.jpeg" alt="სტავრიდა" class="fish-image">
+                    <div class="fish-info">
+                        <h3>სტავრიდა</h3>
+                        <p>გაყინული სტავრიდა IQF მეთოდით, შენარჩუნებული ყველა სასარგებლო ნივთიერებით</p>
+                        <div class="fish-price">12.75 <span class="price-unit">₾/კგ</span></div>
                     </div>
                 </div>
                 
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="თევზის სუპი">
-                    <div class="gallery-item-overlay">
-                        <i class="fas fa-search-plus"></i>
+                <div class="fish-card">
+                    <span class="fish-badge">ცოცხალი</span>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcS_9SyxJbcxWVgK9zGCy_tLyh7yKbTY7f0w&s" alt="ლუფარი" class="fish-image">
+                    <div class="fish-info">
+                        <h3>ლუფარი</h3>
+                        <p>ახალი ლუფარი, მოტანილი ბათუმის ნავსადგურიდან</p>
+                        <div class="fish-price">24.90 <span class="price-unit">₾/კგ</span></div>
                     </div>
                 </div>
                 
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1605209679761-8f9298a3a9ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="კავიარი">
-                    <div class="gallery-item-overlay">
-                        <i class="fas fa-search-plus"></i>
+                <div class="fish-card">
+                    <span class="fish-badge">გაყინული</span>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOCN5TrEtmSTQxa2AlmSRysFfmv7qP4dQNBw&s" alt="სარღაანი" class="fish-image">
+                    <div class="fish-info">
+                        <h3>სარღაანი</h3>
+                        <p>გაყინული სარღაანი, შეფუთული ვაკუუმურ პაკეტში</p>
+                        <div class="fish-price">16.20 <span class="price-unit">₾/კგ</span></div>
                     </div>
                 </div>
                 
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="დესერტი">
-                    <div class="gallery-item-overlay">
-                        <i class="fas fa-search-plus"></i>
+                <div class="fish-card">
+                    <span class="fish-badge">გაყინული</span>
+                    <img src="https://fishmarket.ge/images/thumbs/0000003_black-sea-turbot-3-kg.jpeg" alt="კამმბალა" class="fish-image">
+                    <div class="fish-info">
+                        <h3>კამმბალა</h3>
+                        <p>გაყინული კამმბალა, მომზადებული შემწვარი და საცხობისთვის</p>
+                        <div class="fish-price">19.90 <span class="price-unit">₾/კგ</span></div>
+                    </div>
+                </div>
+                
+                <div class="fish-card">
+                    <span class="fish-badge">ცოცხალი</span>
+                    <img src="https://fishmarket.ge/images/thumbs/0001887_meagre-3-kg.jpeg" alt="გარბილი" class="fish-image">
+                    <div class="fish-info">
+                        <h3>გარბილი</h3>
+                        <p>ახალი გარბილი, იდეალური ორთქლზე მომზადებისთვის</p>
+                        <div class="fish-price">22.50 <span class="price-unit">₾/კგ</span></div>
+                    </div>
+                </div>
+                
+                <div class="fish-card">
+                    <span class="fish-badge">გაყინული</span>
+                    <img src="https://fishmarket.ge/images/thumbs/0000369_sea-bream-400-600-gr.jpeg" alt="დორდასობა" class="fish-image">
+                    <div class="fish-info">
+                        <h3>დორდასობა</h3>
+                        <p>გაყინული დორდასობა, შენახული -18°C ტემპერატურაზე</p>
+                        <div class="fish-price">14.90 <span class="price-unit">₾/კგ</span></div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-title">
-                <h2>დაგვიკავშირდით</h2>
-                <p>დაგვირეკეთ ან დაგვიტოვეთ შეტყობინება რეზერვაციისთვის</p>
-            </div>
-            
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h3>საკონტაქტო ინფორმაცია</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> თბილისი, ვაჟა-ფშაველას გამზირი #45</p>
-                    <p><i class="fas fa-phone"></i> +995 555 12 34 56</p>
-                    <p><i class="fas fa-envelope"></i> info@oceanique.ge</p>
-                    <p><i class="fas fa-clock"></i> ყოველდღე: 10:00 - 23:00</p>
-                    
-                    <h3 style="margin-top: 40px;">სოციალური ქსელები</h3>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-tripadvisor"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </section>
+
+        <section id="contact">
+            <h2>დაგვიკავშირდით</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>დირექტორი</h3>
+                        <p>ერეკლე სკობილევი</p>
                     </div>
                 </div>
-                
-                <div class="contact-form">
-                    <h3>რეზერვაცია</h3>
-                    <form>
-                        <input type="text" placeholder="თქვენი სახელი" required>
-                        <input type="email" placeholder="თქვენი ელ. ფოსტა" required>
-                        <input type="tel" placeholder="ტელეფონის ნომერი" required>
-                        <input type="date" placeholder="თარიღი">
-                        <input type="time" placeholder="დრო">
-                        <input type="number" placeholder="პირების რაოდენობა" min="1">
-                        <textarea placeholder="დამატებითი შენიშვნები"></textarea>
-                        <button type="submit" class="btn">რეზერვაციის გაკეთება</button>
-                    </form>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>ტელეფონი</h3>
+                        <p>595 03 14 03</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>მისამართი</h3>
+                        <p>ფოთი </p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>სამუშაო საათები</h3>
+                        <p>ორშაბათი - პარასკევი: 09:00 - 18:00</p>
+                        <p>შაბათი: 10:00 - 16:00</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <!-- Footer -->
+        </section>
+    </main>
+
     <footer>
-        <div class="footer-container">
-            <div class="footer-col">
-                <h4>Oceanique</h4>
-                <p>პრემიუმ კლასის თევზის რესტორანი და მაღაზია თბილისის გულში. ჩვენ გთავაზობთ უმაღლესი ხარისხის პროდუქტებს და გურმანულ კერძებს.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-tripadvisor"></i></a>
-                </div>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>ოქროს თევზი</h3>
+                <p>პრემიუმ ხარისხის ცოცხალი და გაყინული თევზების მიმწოდებელი საქართველოში 2010 წლიდან.</p>
             </div>
-            
-            <div class="footer-col">
-                <h4>ბმულები</h4>
-                <ul>
-                    <li><a href="#home">მთავარი</a></li>
+            <div class="footer-column">
+                <h3>ნავიგაცია</h3>
+                <ul class="footer-links">
                     <li><a href="#about">ჩვენ შესახებ</a></li>
-                    <li><a href="#menu">მენიუ</a></li>
-                    <li><a href="#market">თევზის მარკეტი</a></li>
+                    <li><a href="#fish">თევზები</a></li>
                     <li><a href="#contact">კონტაქტი</a></li>
                 </ul>
             </div>
-            
-            <div class="footer-col">
-                <h4>სამუშაო საათები</h4>
-                <div class="opening-hours">
-                    <p><span>ორშაბათი - პარასკევი:</span> 10:00 - 23:00</p>
-                    <p><span>შაბათი:</span> 11:00 - 00:00</p>
-                    <p><span>კვირა:</span> 11:00 - 22:00</p>
-                </div>
-            </div>
-            
-            <div class="footer-col">
-                <h4>გამოგვიწერეთ</h4>
-                <p>იყავით განახლებებზე ინფორმირებული ჩვენი სპეციალური შეთავაზებების შესახებ.</p>
-                <form>
-                    <input type="email" placeholder="თქვენი ელ. ფოსტა" style="width: 100%; padding: 12px; margin-top: 15px; border-radius: 5px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white;">
-                    <button type="submit" class="btn" style="width: 100%; margin-top: 15px; padding: 12px;">გამოწერა</button>
-                </form>
+            <div class="footer-column">
+                <h3>კონტაქტი</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-phone"></i> 595 03 14 03</li>
+                    <li><i class="fas fa-map-marker-alt"></i> ფოთი </li>
+                </ul>
             </div>
         </div>
-        
         <div class="copyright">
-            <p>&copy; 2023 Oceanique. ყველა უფლება დაცულია.</p>
+            <p>&copy; 2025 შპს "ოქროს თევზი". ყველა უფლება დაცულია.</p>
         </div>
     </footer>
-    
+
     <script>
-        // Navigation scroll effect
-        window.addEventListener('scroll', function() {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 100) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
-        
-        // Menu category filtering
-        document.querySelectorAll('.menu-category').forEach(category => {
-            category.addEventListener('click', () => {
-                // Remove active class from all categories
-                document.querySelectorAll('.menu-category').forEach(c => c.classList.remove('active'));
-                // Add active class to clicked category
-                category.classList.add('active');
-                
-                const categoryName = category.dataset.category;
-                const menuItems = document.querySelectorAll('.menu-item');
-                
-                menuItems.forEach(item => {
-                    if (categoryName === 'all' || item.dataset.category === categoryName) {
-                        item.style.display = 'flex';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
-        });
-        
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+        // მარტივი ფილტრაციის ფუნქციონალი
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const fishCards = document.querySelectorAll('.fish-card');
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // აქტიური ღილაკის მონიშვნა
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.textContent;
+                    
+                    // თევზების ფილტრაცია
+                    fishCards.forEach(card => {
+                        if (filter === 'ყველა' || card.querySelector('.fish-badge').textContent === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
                 });
             });
         });
