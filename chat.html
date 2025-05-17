@@ -246,7 +246,7 @@
                     <div>
                         <label for="reg-username" class="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Username</label>
                         <input type="text" id="reg-username" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-500 dark:dark-mode-input">
-                        <p id="username-error" class="text-xs text-red-500 hidden">Username already exists</p>
+                        <p id="username-error", class="text-xs text-red-500 hidden">Username already exists</p>
                     </div>
                     <div>
                         <label for="reg-password" class="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Password</label>
@@ -279,7 +279,7 @@
                 <form class="p-6 space-y-4">
                     <div>
                         <label for="reset-username" class="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Username</label>
-        <input type="text" id="reset-username" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-500 dark:dark-mode-input">
+                        <input type="text" id="reset-username" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-500 dark:dark-mode-input">
                     </div>
                     <div>
                         <label for="reset-secret" class="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">Secret Code</label>
@@ -294,7 +294,7 @@
                         <input type="password" id="confirm-new-password" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:border-purple-500 focus:ring-1 focus:ring-purple-500 dark:dark-mode-input">
                         <p id="reset-password-error" class="text-xs text-red-500 hidden">Passwords don't match</p>
                     </div>
-                    <button type="button" onclick="handleResetPassword()" class="w-full gradient-bg text-white px-4 py-2 rounded-md hover:opacity-90 transition">Reset Password</button>
+                    <button type="button" onclick="handleResetPassword()", class="w-full gradient-bg text-white px-4 py-2 rounded-md hover:opacity-90 transition">Reset Password</button>
                 </form>
                 <div class="px-6 py-4 bg-gray-50 text-center dark:bg-gray-700">
                     <button onclick="showLogin()" class="text-purple-600 font-medium dark:text-purple-400">Back to Login</button>
@@ -489,7 +489,7 @@
             <button id="mute-btn" onclick="toggleMute()" class="call-btn call-mute">
                 <i class="fas fa-microphone"></i>
             </button>
-            <button id="video-btn" onclick="toggleVideo()" class="call-btn call-video">
+            <button id="video-btn", onclick="toggleVideo()" class="call-btn call-video">
                 <i class="fas fa-video"></i>
             </button>
             <button onclick="endCall()" class="call-btn call-end">
@@ -1035,7 +1035,40 @@
             // Update UI
             loadMessages(appState.currentChat);
             
-            // In a real app, you would send the message to the server here
+            // Simulate friend's response if they're online
+            const friend = appState.users.find(u => u.username === appState.currentChat);
+            if (friend && friend.online) {
+                setTimeout(() => {
+                    const responses = [
+                        "Thanks for your message!",
+                        "I'll get back to you soon.",
+                        "That's interesting!",
+                        "What are you up to?",
+                        "Nice to hear from you!",
+                        "How's it going?"
+                    ];
+                    
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    const responseMessage = {
+                        sender: friend.username,
+                        text: randomResponse,
+                        timestamp: new Date()
+                    };
+                    
+                    appState.messages[chatKey].push(responseMessage);
+                    saveState();
+                    
+                    // Only update UI if we're still in the same chat
+                    if (appState.currentChat === friend.username) {
+                        loadMessages(appState.currentChat);
+                    }
+                    
+                    // Show notification if not in the chat
+                    if (appState.currentChat !== friend.username) {
+                        showNotification('New Message', `${friend.username}: ${randomResponse}`, 'info');
+                    }
+                }, 1000 + Math.random() * 3000); // Random delay between 1-4 seconds
+            }
         }
 
         function generateChatKey(user1, user2) {
@@ -1068,7 +1101,7 @@
             }
             
             // Check if already friends
-            if (appState.currentUser.friends.includes(username)) {
+            if (appState.currentUser.friends.includes(username) || user.friends.includes(appState.currentUser.username)) {
                 showNotification('Error', 'You are already friends with this user', 'error');
                 return;
             }
