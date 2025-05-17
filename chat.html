@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Your existing styles remain the same */
         .gradient-bg {
             background: linear-gradient(135deg, #6e8efb, #a777e3);
         }
@@ -21,7 +22,9 @@
         .rank-owner {
             background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
+            color: transparent;
             font-weight: bold;
         }
         .rank-admin {
@@ -800,7 +803,7 @@
             } else {
                 showNotification('Error', 'Invalid username or secret code', 'error');
             }
-        }
+}
 
         function handleLogout() {
             appState.currentUser.online = false;
@@ -1107,7 +1110,7 @@
             }
             
             // Check if request already sent
-            if (user.friendRequests.includes(appState.currentUser.username)) {
+            if (user.friendRequests.includes(appState.currentUser.username) || appState.currentUser.friendRequests.includes(username)) {
                 showNotification('Error', 'Friend request already sent', 'error');
                 return;
             }
