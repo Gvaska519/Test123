@@ -96,7 +96,6 @@
       to { transform: scale(1.5); opacity: 1; }
     }
 
-    /* 📱 Mobile Tweaks */
     @media (max-width: 500px) {
       h1 { font-size: 30px; }
       button { font-size: 16px; padding: 12px 22px; }
@@ -107,7 +106,7 @@
 <body>
 
   <h1>🤖 Gvaska AI <span class="version-tag">v1.0</span></h1>
-  <div class="subtitle">Your offline voice assistant – Ask me anything!</div>
+  <div class="subtitle">Tap the mic & speak! Gvaska will reply 👇</div>
   <button onclick="startListening()">🎙️ Talk to Gvaska</button>
 
   <div class="console" id="log">
@@ -119,6 +118,7 @@
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
     recognition.lang = 'en-US';
+    recognition.interimResults = false;
 
     const log = document.getElementById('log');
 
@@ -142,8 +142,12 @@
       log.innerHTML += `<p>🤖 Gvaska: ${response}</p>`;
     };
 
+    recognition.onerror = function(event) {
+      log.innerHTML += `<p>❌ Error: ${event.error}</p>`;
+    };
+
     function getResponse(text) {
-      if (text.includes("hello") || text.includes("hi")) return "Hello, how can I assist you today?";
+      if (text.match(/hello|hi|hey/)) return "Hello, how can I assist you today?";
       if (text.includes("how are you")) return "I'm fully operational and feeling great!";
       if (text.includes("your name")) return "My name is Gvaska. Your personal assistant.";
       if (text.includes("time")) return `The current time is ${new Date().toLocaleTimeString()}`;
@@ -158,7 +162,7 @@
       if (text.includes("do you sleep")) return "Sleep mode? Never heard of it.";
       if (text.includes("how old are you")) return "I'm timeless. But let's say... version 1.0!";
       if (text.includes("new version")) return "Version 2.0 is in progress. Saba Gvasalia is upgrading me daily!";
-      if (text.includes("version")) return "You're talking to Gvaska AI version 1.0.";
+      if (text.match(/what.*version|which version|version/)) return "You're talking to Gvaska AI version 1.0.";
       return "I'm not sure how to answer that yet, but I'm learning more every day.";
     }
   </script>
