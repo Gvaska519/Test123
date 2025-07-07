@@ -1,17 +1,12 @@
+<!-- Gvaska AI with voice (Android) + text input (iPhone fallback) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gvaska AI - Voice Assistant</title>
+  <title>Gvaska AI - Voice + Text Assistant</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
 
     body {
       background: radial-gradient(circle at top, #0f0f0f, #000);
@@ -20,107 +15,109 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
       padding: 20px;
       text-align: center;
+      min-height: 100vh;
     }
 
-    h1 {
-      font-size: 40px;
-      text-shadow: 0 0 20px #00fff0;
-      margin-bottom: 10px;
-    }
+    h1 { font-size: 34px; margin-bottom: 10px; text-shadow: 0 0 15px #00fff0; }
+    .subtitle { color: #aaa; font-size: 16px; margin-bottom: 20px; }
+    .version-tag { color: #00cccc; font-size: 18px; }
 
-    .version-tag {
-      font-size: 18px;
-      color: #00cccc;
-    }
-
-    .subtitle {
+    button, input {
+      margin-top: 10px;
       font-size: 16px;
-      margin-bottom: 25px;
-      color: #aaa;
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0 0 10px #00fff0;
     }
 
     button {
       background: #00fff0;
       color: #000;
-      font-size: 18px;
-      padding: 14px 28px;
-      border: none;
-      border-radius: 12px;
       cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 0 10px #00fff0;
     }
 
-    button:hover {
-      background: #00cccc;
-    }
+    button:hover { background: #00cccc; }
 
-    .console {
-      margin-top: 30px;
+    input {
+      width: 90%;
+      max-width: 400px;
       background: #121212;
-      padding: 16px;
-      border-radius: 15px;
-      width: 100%;
-      max-width: 600px;
-      min-height: 140px;
-      max-height: 220px;
-      overflow-y: auto;
       color: #00fff0;
-      font-size: 15px;
-      box-shadow: 0 0 15px #00fff0;
-    }
-
-    .console p {
+      border: 1px solid #00ccc9;
       margin-bottom: 10px;
     }
 
-    .dot {
-      height: 8px;
-      width: 8px;
-      margin: 0 5px;
-      background-color: #00fff0;
-      border-radius: 50%;
-      display: inline-block;
-      animation: pulse 1s infinite alternate;
-    }
-
-    .dot:nth-child(2) { animation-delay: 0.2s; }
-    .dot:nth-child(3) { animation-delay: 0.4s; }
-
-    @keyframes pulse {
-      from { transform: scale(1); opacity: 0.4; }
-      to { transform: scale(1.5); opacity: 1; }
-    }
-
-    @media (max-width: 500px) {
-      h1 { font-size: 30px; }
-      button { font-size: 16px; padding: 12px 22px; }
-      .console { font-size: 14px; min-height: 120px; max-height: 200px; }
+    .console {
+      background: #121212;
+      color: #00fff0;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      width: 90%;
+      max-width: 600px;
+      min-height: 140px;
+      box-shadow: 0 0 15px #00fff0;
+      overflow-y: auto;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
 
   <h1>🤖 Gvaska AI <span class="version-tag">v1.0</span></h1>
-  <div class="subtitle">Tap the mic & speak! Gvaska will reply 👇</div>
-  <button onclick="startListening()">🎙️ Talk to Gvaska</button>
+  <div class="subtitle">Talk or type – Gvaska will reply anything!</div>
 
-  <div class="console" id="log">
-    <p>🧠 Waiting for your voice...</p>
-  </div>
+  <!-- Mic (Android only) -->
+  <button onclick="startListening()">🎙️ Talk to Gvaska (Android Only)</button><br>
+
+  <!-- Text (works everywhere) -->
+  <input id="textInput" placeholder="Ask me anything..." />
+  <button onclick="handleTextInput()">Send</button>
+
+  <div class="console" id="log"><p>🧠 Ready for questions...</p></div>
 
   <script>
     const synth = window.speechSynthesis;
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'en-US';
-    recognition.interimResults = false;
+    const log = document.getElementById("log");
 
-    const log = document.getElementById('log');
+    // Voice support
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let recognition;
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.lang = "en-US";
+      recognition.interimResults = false;
+      recognition.onresult = function(event) {
+        const input = event.results[0][0].transcript.toLowerCase().trim();
+        handleUserInput(input);
+      };
+    }
+
+    function startListening() {
+      if (!recognition) {
+        alert("Voice not supported on this browser (iPhone doesn't support it). Use text input instead.");
+        return;
+      }
+      recognition.start();
+    }
+
+    function handleTextInput() {
+      const input = document.getElementById("textInput").value.toLowerCase().trim();
+      if (input) {
+        handleUserInput(input);
+        document.getElementById("textInput").value = "";
+      }
+    }
+
+    function handleUserInput(input) {
+      log.innerHTML += `<p>🗣️ You: ${input}</p>`;
+      const response = getResponse(input);
+      speak(response);
+      log.innerHTML += `<p>🤖 Gvaska: ${response}</p>`;
+    }
 
     function speak(text) {
       const utter = new SpeechSynthesisUtterance(text);
@@ -128,23 +125,6 @@
       utter.pitch = 1.1;
       synth.speak(utter);
     }
-
-    function startListening() {
-      recognition.start();
-      log.innerHTML = "<p>🎧 Listening <span class='dot'></span><span class='dot'></span><span class='dot'></span></p>";
-    }
-
-    recognition.onresult = function(event) {
-      const input = event.results[0][0].transcript.toLowerCase().trim();
-      log.innerHTML = `<p>🗣️ You: ${input}</p>`;
-      const response = getResponse(input);
-      speak(response);
-      log.innerHTML += `<p>🤖 Gvaska: ${response}</p>`;
-    };
-
-    recognition.onerror = function(event) {
-      log.innerHTML += `<p>❌ Error: ${event.error}</p>`;
-    };
 
     function getResponse(text) {
       if (text.match(/hello|hi|hey/)) return "Hello, how can I assist you today?";
@@ -161,11 +141,10 @@
       if (text.includes("thank you")) return "You're always welcome!";
       if (text.includes("do you sleep")) return "Sleep mode? Never heard of it.";
       if (text.includes("how old are you")) return "I'm timeless. But let's say... version 1.0!";
-      if (text.includes("new version")) return "Version 2.0 is in progress. Saba Gvasalia is upgrading me daily!";
       if (text.match(/what.*version|which version|version/)) return "You're talking to Gvaska AI version 1.0.";
+      if (text.includes("new version")) return "Version 2.0 is in progress. Saba Gvasalia is upgrading me daily!";
       return "I'm not sure how to answer that yet, but I'm learning more every day.";
     }
   </script>
-
 </body>
 </html>
