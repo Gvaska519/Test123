@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discord Partnership Portal</title>
+    <title>Blizard Partnership Portal</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤝</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #5865F2;
             --primary-light: #7987ff;
+            --primary-dark: #4752c4;
             --secondary: #404EED;
             --dark: #23272A;
             --darker: #1a1d21;
@@ -27,17 +30,19 @@
             --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
             --glass: rgba(30, 33, 36, 0.7);
             --glass-light: rgba(255, 255, 255, 0.05);
+            --border-radius: 16px;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
             background: linear-gradient(135deg, var(--darker-2), var(--dark));
+            background-attachment: fixed;
             color: var(--light);
             min-height: 100vh;
             display: flex;
@@ -54,10 +59,10 @@
         }
         
         header {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(12px);
             padding: 15px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(88, 101, 242, 0.2);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -85,6 +90,7 @@
             color: transparent;
             letter-spacing: -0.5px;
             transition: var(--transition);
+            text-decoration: none;
         }
         
         .logo:hover {
@@ -108,21 +114,22 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 25px;
+            gap: 15px;
         }
         
         nav a {
             color: var(--light-gray);
             text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 8px;
+            padding: 10px 18px;
+            border-radius: 12px;
             transition: var(--transition);
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             position: relative;
             overflow: hidden;
+            font-size: 1.05rem;
         }
         
         nav a::after {
@@ -139,6 +146,7 @@
         
         nav a:hover, nav a.active {
             color: white;
+            background: rgba(88, 101, 242, 0.15);
         }
         
         nav a:hover::after, nav a.active::after {
@@ -161,6 +169,7 @@
             align-items: center;
             gap: 10px;
             font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
         }
         
         .btn i {
@@ -176,6 +185,7 @@
         .btn-primary:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(88, 101, 242, 0.5);
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
         }
         
         .btn-secondary {
@@ -229,9 +239,9 @@
         
         .hero {
             text-align: center;
-            padding: 80px 40px;
+            padding: 100px 40px;
             background: linear-gradient(135deg, rgba(64, 78, 237, 0.2), rgba(91, 84, 214, 0.25));
-            border-radius: 24px;
+            border-radius: var(--border-radius);
             margin-bottom: 60px;
             border: 1px solid rgba(88, 101, 242, 0.3);
             backdrop-filter: blur(8px);
@@ -259,7 +269,7 @@
         
         .hero h1 {
             font-size: 3.8rem;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             background: linear-gradient(to right, #ffffff, #a5b4fc);
             -webkit-background-clip: text;
             background-clip: text;
@@ -267,6 +277,8 @@
             font-weight: 800;
             letter-spacing: -1px;
             line-height: 1.1;
+            font-family: 'Poppins', sans-serif;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
         
         .hero p {
@@ -291,6 +303,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            font-family: 'Poppins', sans-serif;
         }
         
         .section-title::after {
@@ -308,7 +321,7 @@
         .form-container {
             background: var(--glass);
             padding: 50px;
-            border-radius: 20px;
+            border-radius: var(--border-radius);
             max-width: 700px;
             margin: 0 auto;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -343,7 +356,7 @@
         .form-group select {
             width: 100%;
             padding: 16px 20px;
-            border-radius: 12px;
+            border-radius: var(--border-radius);
             border: 1px solid rgba(255, 255, 255, 0.15);
             background: rgba(0, 0, 0, 0.3);
             color: white;
@@ -375,7 +388,7 @@
         
         .request-card {
             background: var(--glass);
-            border-radius: 20px;
+            border-radius: var(--border-radius);
             padding: 30px;
             position: relative;
             overflow: hidden;
@@ -398,7 +411,7 @@
             left: 0;
             width: 8px;
             height: 100%;
-            border-radius: 20px 0 0 20px;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
         }
         
         .request-card.pending::before {
@@ -519,8 +532,8 @@
         }
         
         footer {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 40px 0;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 60px 0 30px;
             text-align: center;
             margin-top: 80px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -579,10 +592,60 @@
             width: 100%;
         }
         
+        .partners-section {
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(30, 33, 36, 0.4);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .partners-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--light);
+            font-weight: 600;
+        }
+        
+        .partners-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .partner-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 160px;
+            text-align: center;
+        }
+        
+        .partner-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.3);
+        }
+        
+        .partner-name {
+            font-weight: 500;
+            color: var(--light);
+        }
+        
         .copyright {
             color: var(--gray);
             font-size: 1rem;
-            margin-top: 20px;
+            margin-top: 30px;
         }
         
         .hidden {
@@ -633,7 +696,7 @@
             text-align: center;
             padding: 60px 30px;
             background: rgba(30, 33, 36, 0.4);
-            border-radius: 20px;
+            border-radius: var(--border-radius);
             border: 2px dashed rgba(255, 255, 255, 0.15);
             box-shadow: var(--shadow);
             grid-column: 1 / -1;
@@ -679,7 +742,7 @@
         .feature-card {
             background: rgba(255, 255, 255, 0.05);
             padding: 40px 30px;
-            border-radius: 20px;
+            border-radius: var(--border-radius);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: var(--shadow);
             transition: var(--transition);
@@ -728,7 +791,7 @@
             margin-bottom: 40px;
             background: var(--glass);
             padding: 25px 30px;
-            border-radius: 20px;
+            border-radius: var(--border-radius);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: var(--shadow);
             backdrop-filter: blur(8px);
@@ -773,6 +836,28 @@
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-top: 8px;
+        }
+        
+        /* Animation for cards */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .feature-card, .request-card {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3.2rem;
+            }
+            
+            .section-title {
+                font-size: 2.4rem;
+            }
         }
         
         @media (max-width: 900px) {
@@ -788,12 +873,16 @@
                 margin-top: 15px;
             }
             
+            .hero {
+                padding: 80px 20px;
+            }
+            
             .hero h1 {
                 font-size: 2.8rem;
             }
             
-            .hero {
-                padding: 60px 20px;
+            .hero p {
+                font-size: 1.2rem;
             }
             
             .section-title {
@@ -812,19 +901,31 @@
                 width: 100%;
                 justify-content: center;
             }
+            
+            .dashboard-header {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+            
+            .user-info {
+                width: 100%;
+            }
         }
         
         @media (max-width: 600px) {
+            .hero {
+                padding: 60px 20px;
+            }
+            
             .hero h1 {
                 font-size: 2.3rem;
             }
             
-            .hero p {
-                font-size: 1.2rem;
-            }
-            
             .section-title {
                 font-size: 2rem;
+                padding: 0 15px;
+                width: 100%;
             }
             
             .form-container {
@@ -839,6 +940,29 @@
             
             .user-info {
                 flex-direction: column;
+                text-align: center;
+            }
+            
+            .request-content p {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .request-content strong {
+                min-width: auto;
+            }
+            
+            .request-actions {
+                flex-direction: column;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .partners-grid {
+                gap: 20px;
             }
         }
     </style>
@@ -851,10 +975,10 @@
     
     <header>
         <div class="header-content">
-            <div class="logo">
+            <a href="#" class="logo">
                 <div class="logo-icon">B</div>
                 <span>Blizard Partners</span>
-            </div>
+            </a>
             <nav>
                 <ul>
                     <li><a href="#" id="home-link" class="active"><i class="fas fa-home"></i> Home</a></li>
@@ -1021,12 +1145,39 @@
     <footer>
         <div class="footer-content">
             <div class="footer-logo">Blizard Partners</div>
+            
+            <div class="partners-section">
+                <h3 class="partners-title">Our Trusted Partners</h3>
+                <div class="partners-grid">
+                    <div class="partner-card">
+                        <div class="partner-logo"><i class="fab fa-discord"></i></div>
+                        <div class="partner-name">Discord Hub</div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo"><i class="fas fa-gamepad"></i></div>
+                        <div class="partner-name">Game Masters</div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo"><i class="fas fa-paint-brush"></i></div>
+                        <div class="partner-name">Art Community</div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo"><i class="fas fa-music"></i></div>
+                        <div class="partner-name">Music Lovers</div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo"><i class="fas fa-code"></i></div>
+                        <div class="partner-name">Dev Community</div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="footer-links">
-                <a href="#">Home</a>
-                <a href="#">About</a>
-                <a href="#">Contact</a>
-                <a href="#">Terms</a>
-                <a href="#">Privacy</a>
+                <a href="#"><i class="fas fa-home"></i> Home</a>
+                <a href="#"><i class="fas fa-info-circle"></i> About</a>
+                <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="#"><i class="fas fa-file-alt"></i> Terms</a>
+                <a href="#"><i class="fas fa-lock"></i> Privacy</a>
             </div>
             <div class="copyright">
                 &copy; 2025 Blizard Partnership Portal. All rights reserved.
