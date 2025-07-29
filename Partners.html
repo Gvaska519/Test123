@@ -964,6 +964,14 @@
             .partners-grid {
                 gap: 20px;
             }
+            
+            .feature-card {
+                padding: 25px 15px;
+            }
+            
+            .partner-card {
+                width: 120px;
+            }
         }
     </style>
 </head>
@@ -1202,10 +1210,23 @@
         function initializeStorage() {
             let adminExists = false;
             
+            // Add admin accounts if they don't exist
             adminAccounts.forEach(admin => {
                 if (!users.some(u => u.username === admin.username)) {
                     users.push(admin);
                     adminExists = true;
+                }
+            });
+            
+            // Add regular users if they don't exist (for testing)
+            const regularUsers = [
+                { username: 'ServerOwner', password: 'user123', isAdmin: false },
+                { username: 'ArtHub', password: 'user123', isAdmin: false }
+            ];
+            
+            regularUsers.forEach(user => {
+                if (!users.some(u => u.username === user.username)) {
+                    users.push(user);
                 }
             });
             
@@ -1526,6 +1547,14 @@
                 filteredRequests = requests.filter(req => req.status === currentFilter);
             }
             
+            // Filter out rejected requests that don't belong to the current admin
+            filteredRequests = filteredRequests.filter(req => {
+                if (req.status === 'rejected') {
+                    return req.handledBy === currentUser.username;
+                }
+                return true;
+            });
+            
             if (filteredRequests.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
@@ -1538,14 +1567,6 @@
             }
             
             filteredRequests.forEach(req => {
-                // For rejected requests, only show to the rejecting admin and the submitter
-                if (req.status === 'rejected') {
-                    // If current user is not the rejecting admin and not the submitter, skip
-                    if (currentUser.username !== req.handledBy && currentUser.username !== req.username) {
-                        return;
-                    }
-                }
-                
                 const card = document.createElement('div');
                 card.className = `request-card ${req.status}`;
                 
