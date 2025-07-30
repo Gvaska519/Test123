@@ -3,30 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discord Partnership Portal</title>
+    <title>Blizard Partnership Portal</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤝</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #5865F2;
-            --primary-light: #7987ff;
-            --secondary: #404EED;
-            --dark: #23272A;
-            --darker: #1a1d21;
-            --darker-2: #16181c;
-            --light: #F6F6F6;
-            --light-gray: #e6e9f0;
-            --success: #57F287;
-            --success-dark: #3ddb72;
-            --danger: #ED4245;
-            --warning: #FEE75C;
-            --gray: #99AAB5;
-            --purple: #9b59b6;
-            --pink: #e91e63;
+            --primary: #1a56db;
+            --primary-light: #3d7bf7;
+            --primary-dark: #0d3a8c;
+            --secondary: #1e429f;
+            --dark: #111827;
+            --darker: #0b1120;
+            --darker-2: #070a15;
+            --light: #f9fafb;
+            --light-gray: #e5e7eb;
+            --success: #0e9f6e;
+            --success-dark: #057a55;
+            --danger: #e02424;
+            --warning: #f59e0b;
+            --gray: #6b7280;
+            --purple: #7e3af2;
+            --pink: #d61f69;
             --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            --shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-            --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-            --glass: rgba(30, 33, 36, 0.7);
-            --glass-light: rgba(255, 255, 255, 0.05);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-light: rgba(255, 255, 255, 0.03);
+            --border-radius: 10px;
         }
         
         * {
@@ -38,6 +42,7 @@
         
         body {
             background: linear-gradient(135deg, var(--darker-2), var(--dark));
+            background-attachment: fixed;
             color: var(--light);
             min-height: 100vh;
             display: flex;
@@ -54,14 +59,14 @@
         }
         
         header {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(17, 24, 39, 0.95);
             backdrop-filter: blur(12px);
             padding: 15px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(26, 86, 219, 0.2);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
         
         .header-content {
@@ -77,14 +82,12 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(to right, var(--primary), var(--purple));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
             letter-spacing: -0.5px;
             transition: var(--transition);
+            text-decoration: none;
         }
         
         .logo:hover {
@@ -93,36 +96,37 @@
         
         .logo-icon {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: bold;
-            font-size: 1.4rem;
-            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
+            font-size: 1.2rem;
+            box-shadow: 0 2px 8px rgba(26, 86, 219, 0.3);
         }
         
         nav ul {
             display: flex;
             list-style: none;
-            gap: 25px;
+            gap: 15px;
         }
         
         nav a {
             color: var(--light-gray);
             text-decoration: none;
-            padding: 8px 15px;
+            padding: 10px 18px;
             border-radius: 8px;
             transition: var(--transition);
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             position: relative;
             overflow: hidden;
+            font-size: 1rem;
         }
         
         nav a::after {
@@ -131,14 +135,15 @@
             bottom: 0;
             left: 0;
             width: 0;
-            height: 3px;
+            height: 2px;
             background: var(--primary);
             transition: var(--transition);
-            border-radius: 4px;
+            border-radius: 2px;
         }
         
         nav a:hover, nav a.active {
             color: white;
+            background: rgba(26, 86, 219, 0.1);
         }
         
         nav a:hover::after, nav a.active::after {
@@ -151,31 +156,33 @@
         }
         
         .btn {
-            padding: 12px 24px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             transition: var(--transition);
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1rem;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-family: 'Poppins', sans-serif;
         }
         
         .btn i {
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         
         .btn-primary {
-            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            background: var(--primary);
             color: white;
-            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
+            box-shadow: 0 2px 6px rgba(26, 86, 219, 0.3);
         }
         
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(88, 101, 242, 0.5);
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(26, 86, 219, 0.4);
         }
         
         .btn-secondary {
@@ -190,25 +197,27 @@
         }
         
         .btn-success {
-            background: linear-gradient(to right, var(--success), var(--success-dark));
-            color: var(--darker);
-            box-shadow: 0 5px 15px rgba(87, 242, 135, 0.4);
+            background: var(--success);
+            color: white;
+            box-shadow: 0 2px 6px rgba(14, 159, 110, 0.3);
         }
         
         .btn-success:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(87, 242, 135, 0.5);
+            background: var(--success-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(14, 159, 110, 0.4);
         }
         
         .btn-danger {
-            background: linear-gradient(to right, var(--danger), #ff5252);
+            background: var(--danger);
             color: white;
-            box-shadow: 0 5px 15px rgba(237, 66, 69, 0.4);
+            box-shadow: 0 2px 6px rgba(224, 36, 36, 0.3);
         }
         
         .btn-danger:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(237, 66, 69, 0.5);
+            background: #c81e1e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(224, 36, 36, 0.4);
         }
         
         .btn-outline {
@@ -218,7 +227,7 @@
         }
         
         .btn-outline:hover {
-            background: rgba(88, 101, 242, 0.1);
+            background: rgba(26, 86, 219, 0.1);
             transform: translateY(-2px);
         }
         
@@ -230,10 +239,10 @@
         .hero {
             text-align: center;
             padding: 80px 40px;
-            background: linear-gradient(135deg, rgba(64, 78, 237, 0.2), rgba(91, 84, 214, 0.25));
-            border-radius: 24px;
+            background: rgba(17, 24, 39, 0.7);
+            border-radius: var(--border-radius);
             margin-bottom: 60px;
-            border: 1px solid rgba(88, 101, 242, 0.3);
+            border: 1px solid rgba(26, 86, 219, 0.2);
             backdrop-filter: blur(8px);
             position: relative;
             overflow: hidden;
@@ -247,7 +256,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(88, 101, 242, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(26, 86, 219, 0.1) 0%, transparent 70%);
             z-index: -1;
             animation: rotate 20s linear infinite;
         }
@@ -258,39 +267,35 @@
         }
         
         .hero h1 {
-            font-size: 3.8rem;
+            font-size: 3.2rem;
             margin-bottom: 20px;
-            background: linear-gradient(to right, #ffffff, #a5b4fc);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 800;
+            color: white;
+            font-weight: 700;
             letter-spacing: -1px;
             line-height: 1.1;
+            font-family: 'Poppins', sans-serif;
         }
         
         .hero p {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             max-width: 800px;
-            margin: 0 auto 50px;
+            margin: 0 auto 40px;
             color: var(--light-gray);
             font-weight: 400;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 50px;
-            font-size: 2.8rem;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
             position: relative;
             display: inline-block;
             left: 50%;
             transform: translateX(-50%);
             padding-bottom: 15px;
             font-weight: 700;
-            background: linear-gradient(to right, #ffffff, #a5b4fc);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: white;
+            font-family: 'Poppins', sans-serif;
         }
         
         .section-title::after {
@@ -299,40 +304,40 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 5px;
+            width: 60px;
+            height: 4px;
             background: var(--primary);
             border-radius: 4px;
         }
         
         .form-container {
             background: var(--glass);
-            padding: 50px;
-            border-radius: 20px;
+            padding: 40px;
+            border-radius: var(--border-radius);
             max-width: 700px;
             margin: 0 auto;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: var(--card-shadow);
             backdrop-filter: blur(10px);
             transition: var(--transition);
         }
         
         .form-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
         
         .form-group {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             position: relative;
         }
         
         .form-group label {
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-weight: 600;
             color: var(--light-gray);
-            font-size: 1.1rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -342,14 +347,13 @@
         .form-group textarea,
         .form-group select {
             width: 100%;
-            padding: 16px 20px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(0, 0, 0, 0.3);
+            padding: 14px 18px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(0, 0, 0, 0.2);
             color: white;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: var(--transition);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         
         .form-group input:focus,
@@ -357,38 +361,38 @@
         .form-group select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.3);
-            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 0 2px rgba(26, 86, 219, 0.2);
+            background: rgba(0, 0, 0, 0.25);
         }
         
         .form-group textarea {
-            min-height: 180px;
+            min-height: 160px;
             resize: vertical;
         }
         
         .requests-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 25px;
             margin-top: 30px;
         }
         
         .request-card {
             background: var(--glass);
-            border-radius: 20px;
-            padding: 30px;
+            border-radius: var(--border-radius);
+            padding: 25px;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: var(--shadow);
             transition: var(--transition);
             backdrop-filter: blur(8px);
         }
         
         .request-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            border-color: rgba(88, 101, 242, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border-color: rgba(26, 86, 219, 0.3);
         }
         
         .request-card::before {
@@ -396,97 +400,96 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 8px;
+            width: 6px;
             height: 100%;
-            border-radius: 20px 0 0 20px;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
         }
         
         .request-card.pending::before {
-            background: linear-gradient(to bottom, var(--warning), #ffd700);
+            background: linear-gradient(to bottom, var(--warning), #f59e0b);
         }
         
         .request-card.accepted::before {
-            background: linear-gradient(to bottom, var(--success), #2ecc71);
+            background: linear-gradient(to bottom, var(--success), #0e9f6e);
         }
         
         .request-card.rejected::before {
-            background: linear-gradient(to bottom, var(--danger), #e74c3c);
+            background: linear-gradient(to bottom, var(--danger), #e02424);
         }
         
         .request-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
         
         .request-header h3 {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         
         .request-status {
-            padding: 8px 18px;
+            padding: 6px 14px;
             border-radius: 30px;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         
         .status-pending {
-            background: rgba(254, 231, 92, 0.15);
+            background: rgba(245, 158, 11, 0.15);
             color: var(--warning);
-            box-shadow: 0 3px 10px rgba(254, 231, 92, 0.1);
         }
         
         .status-accepted {
-            background: rgba(87, 242, 135, 0.15);
+            background: rgba(14, 159, 110, 0.15);
             color: var(--success);
-            box-shadow: 0 3px 10px rgba(87, 242, 135, 0.1);
         }
         
         .status-rejected {
-            background: rgba(237, 66, 69, 0.15);
+            background: rgba(224, 36, 36, 0.15);
             color: var(--danger);
-            box-shadow: 0 3px 10px rgba(237, 66, 69, 0.1);
         }
         
         .request-content {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         
         .request-content p {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             display: flex;
-            gap: 12px;
-            padding: 10px 0;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+            font-size: 0.95rem;
         }
         
         .request-content strong {
             color: var(--light-gray);
-            min-width: 160px;
+            min-width: 140px;
             display: inline-block;
+            font-weight: 600;
         }
         
         .request-meta {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
             color: var(--gray);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             display: flex;
             justify-content: space-between;
         }
         
         .request-actions {
             display: flex;
-            gap: 15px;
-            margin-top: 25px;
+            gap: 12px;
+            margin-top: 20px;
         }
         
         .admin-only {
@@ -502,25 +505,25 @@
         }
         
         .admin-info {
-            background: rgba(87, 242, 135, 0.1);
-            border-left: 4px solid var(--success);
-            padding: 18px;
-            border-radius: 0 12px 12px 0;
-            margin-top: 20px;
+            background: rgba(14, 159, 110, 0.1);
+            border-left: 3px solid var(--success);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 15px;
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            font-size: 0.95rem;
         }
         
         .admin-info.rejected {
-            background: rgba(237, 66, 69, 0.1);
-            border-left: 4px solid var(--danger);
+            background: rgba(224, 36, 36, 0.1);
+            border-left: 3px solid var(--danger);
         }
         
         footer {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 40px 0;
+            background: rgba(17, 24, 39, 0.95);
+            padding: 60px 0 30px;
             text-align: center;
             margin-top: 80px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -534,20 +537,17 @@
         }
         
         .footer-logo {
-            font-size: 1.8rem;
-            font-weight: 800;
+            font-size: 1.6rem;
+            font-weight: 700;
             margin-bottom: 25px;
-            background: linear-gradient(to right, var(--primary), var(--purple));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: white;
             display: inline-block;
         }
         
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 25px;
             margin-bottom: 30px;
             flex-wrap: wrap;
         }
@@ -556,8 +556,9 @@
             color: var(--gray);
             text-decoration: none;
             transition: var(--transition);
-            padding: 8px 0;
+            padding: 6px 0;
             position: relative;
+            font-size: 0.95rem;
         }
         
         .footer-links a::after {
@@ -579,10 +580,61 @@
             width: 100%;
         }
         
+        .partners-section {
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(17, 24, 39, 0.5);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .partners-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--light);
+            font-weight: 600;
+        }
+        
+        .partners-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+        
+        .partner-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            width: 140px;
+            text-align: center;
+        }
+        
+        .partner-logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.6rem;
+            box-shadow: 0 4px 10px rgba(26, 86, 219, 0.2);
+        }
+        
+        .partner-name {
+            font-weight: 500;
+            color: var(--light);
+            font-size: 0.95rem;
+        }
+        
         .copyright {
             color: var(--gray);
-            font-size: 1rem;
-            margin-top: 20px;
+            font-size: 0.95rem;
+            margin-top: 30px;
         }
         
         .hidden {
@@ -591,10 +643,10 @@
         
         .notification {
             position: fixed;
-            top: 30px;
-            right: 30px;
-            padding: 20px 35px;
-            border-radius: 16px;
+            top: 25px;
+            right: 25px;
+            padding: 16px 28px;
+            border-radius: 12px;
             color: white;
             font-weight: 600;
             z-index: 1000;
@@ -603,11 +655,11 @@
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 15px;
-            max-width: 450px;
-            box-shadow: var(--shadow);
+            gap: 12px;
+            max-width: 400px;
+            box-shadow: var(--card-shadow);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
         
         .notification.show {
@@ -616,39 +668,39 @@
         }
         
         .notification.success {
-            background: rgba(39, 174, 96, 0.2);
-            border-left: 5px solid var(--success);
+            background: rgba(14, 159, 110, 0.2);
+            border-left: 4px solid var(--success);
         }
         
         .notification.error {
-            background: rgba(192, 57, 43, 0.2);
-            border-left: 5px solid var(--danger);
+            background: rgba(224, 36, 36, 0.2);
+            border-left: 4px solid var(--danger);
         }
         
         .notification i {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
         }
         
         .empty-state {
             text-align: center;
-            padding: 60px 30px;
-            background: rgba(30, 33, 36, 0.4);
-            border-radius: 20px;
-            border: 2px dashed rgba(255, 255, 255, 0.15);
+            padding: 50px 25px;
+            background: rgba(17, 24, 39, 0.4);
+            border-radius: var(--border-radius);
+            border: 2px dashed rgba(255, 255, 255, 0.12);
             box-shadow: var(--shadow);
             grid-column: 1 / -1;
         }
         
         .empty-state i {
-            font-size: 4rem;
+            font-size: 3.5rem;
             color: var(--gray);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             opacity: 0.6;
         }
         
         .empty-state h3 {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
             color: var(--light);
             font-weight: 600;
         }
@@ -656,20 +708,19 @@
         .empty-state p {
             color: var(--gray);
             max-width: 600px;
-            margin: 0 auto 30px;
-            font-size: 1.2rem;
+            margin: 0 auto 25px;
+            font-size: 1.1rem;
             line-height: 1.7;
         }
         
         .user-badge {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            background: rgba(88, 101, 242, 0.15);
-            padding: 8px 16px;
+            gap: 8px;
+            background: rgba(26, 86, 219, 0.15);
+            padding: 6px 14px;
             border-radius: 30px;
-            font-size: 1rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
         }
         
         .user-badge i {
@@ -677,10 +728,10 @@
         }
         
         .feature-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 40px 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            padding: 35px 25px;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: var(--shadow);
             transition: var(--transition);
             text-align: center;
@@ -688,48 +739,45 @@
         }
         
         .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-            border-color: rgba(88, 101, 242, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: rgba(26, 86, 219, 0.3);
         }
         
         .feature-card i {
-            font-size: 3.5rem;
-            background: linear-gradient(to right, var(--primary), var(--purple));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 25px;
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
         }
         
         .feature-card h3 {
-            margin-bottom: 20px;
-            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
             color: white;
         }
         
         .feature-card p {
             color: var(--light-gray);
-            font-size: 1.1rem;
+            font-size: 1rem;
             line-height: 1.7;
         }
         
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 35px;
-            margin-bottom: 70px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
         }
         
         .dashboard-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             background: var(--glass);
-            padding: 25px 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 25px;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: var(--shadow);
             backdrop-filter: blur(8px);
         }
@@ -741,8 +789,8 @@
         }
         
         .user-avatar {
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
             background: linear-gradient(to right, var(--primary), var(--purple));
             display: flex;
@@ -750,54 +798,208 @@
             justify-content: center;
             color: white;
             font-weight: bold;
-            font-size: 1.5rem;
-            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
+            font-size: 1.4rem;
+            box-shadow: 0 4px 10px rgba(26, 86, 219, 0.3);
         }
         
         .user-text h2 {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             margin-bottom: 5px;
         }
         
         .user-text p {
             color: var(--light-gray);
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         
         .admin-badge {
-            background: linear-gradient(to right, var(--pink), #ff4081);
+            background: linear-gradient(to right, var(--pink), #d61f69);
             color: white;
-            padding: 5px 15px;
+            padding: 4px 12px;
             border-radius: 30px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-top: 5px;
+            display: inline-block;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .social-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+            gap: 8px;
+        }
+        
+        .social-link i {
+            font-size: 2rem;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            color: white;
+        }
+        
+        .social-link:hover i {
+            transform: translateY(-5px);
+        }
+        
+        .social-link.whatsapp:hover i {
+            color: #25D366;
+        }
+        
+        .social-link.facebook:hover i {
+            color: #1877F2;
+        }
+        
+        .social-link.tiktok:hover i {
+            color: #69C9D0;
+        }
+        
+        .social-link.discord:hover i {
+            color: #5865F2;
+        }
+        
+        .social-name {
+            font-size: 0.9rem;
+        }
+        
+        /* Animation for cards */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .feature-card, .request-card {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        
+        /* New styles for social media selection */
+        .social-media-group {
+            margin-bottom: 25px;
+        }
+        
+        .social-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .social-option {
+            flex: 1;
+            min-width: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .social-option:hover {
+            background: rgba(26, 86, 219, 0.1);
+            border-color: rgba(26, 86, 219, 0.3);
+        }
+        
+        .social-option.selected {
+            background: rgba(26, 86, 219, 0.2);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(26, 86, 219, 0.2);
+        }
+        
+        .social-option i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .social-option.whatsapp i {
+            color: #25D366;
+        }
+        
+        .social-option.facebook i {
+            color: #1877F2;
+        }
+        
+        .social-option.tiktok i {
+            color: #69C9D0;
+        }
+        
+        .social-option.discord i {
+            color: #5865F2;
+        }
+        
+        .social-input {
+            display: none;
+        }
+        
+        .social-input.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .social-input .form-group {
+            margin-bottom: 0;
+        }
+        
+        .social-input .form-group label {
+            color: var(--light);
+            font-weight: 600;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
         }
         
         @media (max-width: 900px) {
             .header-content {
                 flex-wrap: wrap;
-                gap: 15px;
+                gap: 12px;
             }
             
             nav ul {
                 order: 3;
                 width: 100%;
                 justify-content: center;
-                margin-top: 15px;
-            }
-            
-            .hero h1 {
-                font-size: 2.8rem;
+                margin-top: 12px;
             }
             
             .hero {
-                padding: 60px 20px;
+                padding: 70px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
             }
             
             .section-title {
-                font-size: 2.3rem;
+                font-size: 1.8rem;
             }
             
             .requests-container {
@@ -805,40 +1007,93 @@
             }
             
             .form-container {
-                padding: 35px;
+                padding: 30px;
             }
             
             .auth-buttons {
                 width: 100%;
                 justify-content: center;
             }
+            
+            .dashboard-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .user-info {
+                width: 100%;
+            }
         }
         
         @media (max-width: 600px) {
+            .hero {
+                padding: 50px 15px;
+            }
+            
             .hero h1 {
-                font-size: 2.3rem;
-            }
-            
-            .hero p {
-                font-size: 1.2rem;
-            }
-            
-            .section-title {
                 font-size: 2rem;
             }
             
+            .section-title {
+                font-size: 1.7rem;
+                padding: 0 15px;
+                width: 100%;
+            }
+            
             .form-container {
-                padding: 25px;
+                padding: 20px;
             }
             
             .dashboard-header {
                 flex-direction: column;
-                gap: 20px;
+                gap: 15px;
                 text-align: center;
             }
             
             .user-info {
                 flex-direction: column;
+                text-align: center;
+            }
+            
+            .request-content p {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .request-content strong {
+                min-width: auto;
+                margin-bottom: 5px;
+            }
+            
+            .request-actions {
+                flex-direction: column;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .partners-grid {
+                gap: 15px;
+            }
+            
+            .feature-card {
+                padding: 25px 15px;
+            }
+            
+            .partner-card {
+                width: 110px;
+            }
+            
+            .social-links {
+                gap: 15px;
+                flex-wrap: wrap;
+            }
+            
+            .social-option {
+                min-width: 100px;
             }
         }
     </style>
@@ -851,10 +1106,10 @@
     
     <header>
         <div class="header-content">
-            <div class="logo">
+            <a href="#" class="logo">
                 <div class="logo-icon">B</div>
                 <span>Blizard Partners</span>
-            </div>
+            </a>
             <nav>
                 <ul>
                     <li><a href="#" id="home-link" class="active"><i class="fas fa-home"></i> Home</a></li>
@@ -874,7 +1129,7 @@
         <!-- Home Page -->
         <div id="home-page">
             <div class="hero">
-                <h1>Blizard Partnership Portal</h1>
+                <h1>Professional Partnership Portal</h1>
                 <p>Connect your Discord server with others through our partnership program. Grow your community with trusted partners.</p>
                 <button id="get-started" class="btn btn-primary"><i class="fas fa-rocket"></i> Get Started</button>
             </div>
@@ -889,7 +1144,7 @@
                 <div class="feature-card">
                     <i class="fas fa-paper-plane"></i>
                     <h3>Submit Request</h3>
-                    <p>Provide your Discord server details and partnership requirements. We'll handle the rest.</p>
+                    <p>Provide your Discord server details and social media links. We'll handle the rest.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-check-circle"></i>
@@ -943,6 +1198,59 @@
                     <label for="discord-link"><i class="fab fa-discord"></i> Discord Server Link</label>
                     <input type="text" id="discord-link" placeholder="https://discord.gg/your-server">
                 </div>
+                
+                <!-- Social Media Selection Section -->
+                <div class="social-media-group">
+                    <label><i class="fas fa-share-alt"></i> Select Social Media Link to Provide</label>
+                    <div class="social-options">
+                        <div class="social-option whatsapp" data-social="whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp</span>
+                        </div>
+                        <div class="social-option facebook" data-social="facebook">
+                            <i class="fab fa-facebook"></i>
+                            <span>Facebook</span>
+                        </div>
+                        <div class="social-option tiktok" data-social="tiktok">
+                            <i class="fab fa-tiktok"></i>
+                            <span>TikTok</span>
+                        </div>
+                        <div class="social-option discord" data-social="discord">
+                            <i class="fab fa-discord"></i>
+                            <span>Discord</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Media Input Fields -->
+                    <div class="social-input" id="whatsapp-input">
+                        <div class="form-group">
+                            <label for="whatsapp-link"><i class="fab fa-whatsapp"></i> WhatsApp Group Link</label>
+                            <input type="text" id="whatsapp-link" placeholder="https://chat.whatsapp.com/your-group">
+                        </div>
+                    </div>
+                    
+                    <div class="social-input" id="facebook-input">
+                        <div class="form-group">
+                            <label for="facebook-link"><i class="fab fa-facebook"></i> Facebook Page Link</label>
+                            <input type="text" id="facebook-link" placeholder="https://facebook.com/your-page">
+                        </div>
+                    </div>
+                    
+                    <div class="social-input" id="tiktok-input">
+                        <div class="form-group">
+                            <label for="tiktok-link"><i class="fab fa-tiktok"></i> TikTok Profile Link</label>
+                            <input type="text" id="tiktok-link" placeholder="https://tiktok.com/@yourprofile">
+                        </div>
+                    </div>
+                    
+                    <div class="social-input" id="discord-input">
+                        <div class="form-group">
+                            <label for="additional-discord-link"><i class="fab fa-discord"></i> Additional Discord Link</label>
+                            <input type="text" id="additional-discord-link" placeholder="https://discord.gg/another-server">
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="form-group">
                     <label for="partnership-type"><i class="fas fa-handshake"></i> Partnership Type</label>
                     <select id="partnership-type">
@@ -1021,13 +1329,60 @@
     <footer>
         <div class="footer-content">
             <div class="footer-logo">Blizard Partners</div>
-            <div class="footer-links">
-                <a href="#">Home</a>
-                <a href="#">About</a>
-                <a href="#">Contact</a>
-                <a href="#">Terms</a>
-                <a href="#">Privacy</a>
+            
+            <div class="partners-section">
+                <h3 class="partners-title">Our Trusted Partners</h3>
+                <div class="partners-grid">
+                    <div class="partner-card">
+                        <div class="partner-logo"><i class="fab fa-discord"></i></div>
+                        <div class="partner-name">Discord Hub</div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo"><i class="fas fa-gamepad"></i></div>
+                        <div class="partner-name">Game Masters</div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo"><i class="fas fa-paint-brush"></i></div>
+                        <div class="partner-name">Art Community</div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo"><i class="fas fa-music"></i></div>
+                        <div class="partner-name">Music Lovers</div>
+                    </div>
+                    <div class="partner-card">
+                        <div class="partner-logo"><i class="fas fa-code"></i></div>
+                        <div class="partner-name">Dev Community</div>
+                    </div>
+                </div>
             </div>
+            
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-home"></i> Home</a>
+                <a href="#"><i class="fas fa-info-circle"></i> About</a>
+                <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="#"><i class="fas fa-file-alt"></i> Terms</a>
+                <a href="#"><i class="fas fa-lock"></i> Privacy</a>
+            </div>
+            
+            <div class="social-links">
+                <a href="#" class="social-link whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span class="social-name">WhatsApp</span>
+                </a>
+                <a href="#" class="social-link facebook">
+                    <i class="fab fa-facebook"></i>
+                    <span class="social-name">Facebook</span>
+                </a>
+                <a href="#" class="social-link tiktok">
+                    <i class="fab fa-tiktok"></i>
+                    <span class="social-name">TikTok</span>
+                </a>
+                <a href="#" class="social-link discord">
+                    <i class="fab fa-discord"></i>
+                    <span class="social-name">Discord</span>
+                </a>
+            </div>
+            
             <div class="copyright">
                 &copy; 2025 Blizard Partnership Portal. All rights reserved.
             </div>
@@ -1040,6 +1395,7 @@
         let requests = JSON.parse(localStorage.getItem('requests')) || [];
         let currentUser = null;
         let currentFilter = 'all';
+        let selectedSocial = null;
         
         // Predefined admin accounts
         const adminAccounts = [
@@ -1051,10 +1407,23 @@
         function initializeStorage() {
             let adminExists = false;
             
+            // Add admin accounts if they don't exist
             adminAccounts.forEach(admin => {
                 if (!users.some(u => u.username === admin.username)) {
                     users.push(admin);
                     adminExists = true;
+                }
+            });
+            
+            // Add regular users if they don't exist (for testing)
+            const regularUsers = [
+                { username: 'ServerOwner', password: 'user123', isAdmin: false },
+                { username: 'ArtHub', password: 'user123', isAdmin: false }
+            ];
+            
+            regularUsers.forEach(user => {
+                if (!users.some(u => u.username === user.username)) {
+                    users.push(user);
                 }
             });
             
@@ -1068,6 +1437,10 @@
                     id: 1001,
                     username: 'ServerOwner',
                     discordLink: 'https://discord.gg/gamingcommunity',
+                    socialMedia: {
+                        platform: 'facebook',
+                        link: 'https://facebook.com/gamingcommunity'
+                    },
                     partnershipType: 'promotion',
                     duration: '3months',
                     details: 'Looking to cross-promote our gaming communities to grow together.',
@@ -1080,6 +1453,10 @@
                     id: 1002,
                     username: 'ArtHub',
                     discordLink: 'https://discord.gg/arthub',
+                    socialMedia: {
+                        platform: 'tiktok',
+                        link: 'https://tiktok.com/@arthub'
+                    },
                     partnershipType: 'event',
                     duration: '1month',
                     details: 'Want to host joint art competitions with another creative community.',
@@ -1093,6 +1470,10 @@
                     id: 1003,
                     username: 'MusicLovers',
                     discordLink: 'https://discord.gg/musicworld',
+                    socialMedia: {
+                        platform: 'whatsapp',
+                        link: 'https://whatsapp.com/musicgroup'
+                    },
                     partnershipType: 'community',
                     duration: 'ongoing',
                     details: 'Seeking long-term partnership with music-focused communities.',
@@ -1250,6 +1631,31 @@
         // Submit a partnership request
         function submitRequest() {
             const discordLink = document.getElementById('discord-link').value.trim();
+            let socialLink = '';
+            let socialPlatform = '';
+            
+            // Get selected social media link
+            if (selectedSocial) {
+                switch(selectedSocial) {
+                    case 'whatsapp':
+                        socialLink = document.getElementById('whatsapp-link').value.trim();
+                        socialPlatform = 'whatsapp';
+                        break;
+                    case 'facebook':
+                        socialLink = document.getElementById('facebook-link').value.trim();
+                        socialPlatform = 'facebook';
+                        break;
+                    case 'tiktok':
+                        socialLink = document.getElementById('tiktok-link').value.trim();
+                        socialPlatform = 'tiktok';
+                        break;
+                    case 'discord':
+                        socialLink = document.getElementById('additional-discord-link').value.trim();
+                        socialPlatform = 'discord';
+                        break;
+                }
+            }
+            
             const partnershipType = document.getElementById('partnership-type').value;
             const duration = document.getElementById('duration').value;
             const details = document.getElementById('details').value.trim();
@@ -1264,10 +1670,20 @@
                 return;
             }
             
+            // Validate social media link if a platform was selected
+            if (selectedSocial && !socialLink) {
+                showNotification(`Please provide a ${selectedSocial} link`, false);
+                return;
+            }
+            
             const newRequest = {
                 id: Date.now(),
                 username: currentUser.username,
                 discordLink,
+                socialMedia: selectedSocial ? {
+                    platform: socialPlatform,
+                    link: socialLink
+                } : null,
                 partnershipType,
                 duration,
                 details,
@@ -1283,6 +1699,19 @@
             document.getElementById('partnership-type').value = '';
             document.getElementById('duration').value = '';
             document.getElementById('details').value = '';
+            document.getElementById('whatsapp-link').value = '';
+            document.getElementById('facebook-link').value = '';
+            document.getElementById('tiktok-link').value = '';
+            document.getElementById('additional-discord-link').value = '';
+            
+            // Reset social media selection
+            document.querySelectorAll('.social-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.querySelectorAll('.social-input').forEach(input => {
+                input.classList.remove('active');
+            });
+            selectedSocial = null;
             
             showPage(pages.dashboard);
             renderUserRequests();
@@ -1328,13 +1757,47 @@
                         break;
                 }
                 
+                // Get social media icon and text
+                let socialMediaHtml = '';
+                if (req.socialMedia) {
+                    let iconClass = '';
+                    let platformName = '';
+                    
+                    switch(req.socialMedia.platform) {
+                        case 'whatsapp':
+                            iconClass = 'fab fa-whatsapp';
+                            platformName = 'WhatsApp';
+                            break;
+                        case 'facebook':
+                            iconClass = 'fab fa-facebook';
+                            platformName = 'Facebook';
+                            break;
+                        case 'tiktok':
+                            iconClass = 'fab fa-tiktok';
+                            platformName = 'TikTok';
+                            break;
+                        case 'discord':
+                            iconClass = 'fab fa-discord';
+                            platformName = 'Discord';
+                            break;
+                    }
+                    
+                    socialMediaHtml = `
+                        <p>
+                            <strong><i class="${iconClass}"></i> ${platformName}:</strong> 
+                            <a href="${req.socialMedia.link}" target="_blank">${req.socialMedia.link}</a>
+                        </p>
+                    `;
+                }
+                
                 card.innerHTML = `
                     <div class="request-header">
                         <h3><i class="fas fa-hashtag"></i> Request #${req.id.toString().slice(-4)}</h3>
                         <div class="request-status status-${req.status}">${statusText}</div>
                     </div>
                     <div class="request-content">
-                        <p><strong><i class="fas fa-link"></i> Discord Server:</strong> ${req.discordLink}</p>
+                        <p><strong><i class="fab fa-discord"></i> Discord Server:</strong> <a href="${req.discordLink}" target="_blank">${req.discordLink}</a></p>
+                        ${socialMediaHtml}
                         <p><strong><i class="fas fa-handshake"></i> Partnership Type:</strong> ${req.partnershipType}</p>
                         <p><strong><i class="fas fa-clock"></i> Duration:</strong> ${req.duration}</p>
                         <p><strong><i class="fas fa-file-alt"></i> Details:</strong> ${req.details}</p>
@@ -1375,6 +1838,14 @@
                 filteredRequests = requests.filter(req => req.status === currentFilter);
             }
             
+            // Filter out rejected requests that don't belong to the current admin
+            filteredRequests = filteredRequests.filter(req => {
+                if (req.status === 'rejected') {
+                    return req.handledBy === currentUser.username;
+                }
+                return true;
+            });
+            
             if (filteredRequests.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
@@ -1387,14 +1858,6 @@
             }
             
             filteredRequests.forEach(req => {
-                // For rejected requests, only show to the rejecting admin and the submitter
-                if (req.status === 'rejected') {
-                    // If current user is not the rejecting admin and not the submitter, skip
-                    if (currentUser.username !== req.handledBy && currentUser.username !== req.username) {
-                        return;
-                    }
-                }
-                
                 const card = document.createElement('div');
                 card.className = `request-card ${req.status}`;
                 
@@ -1411,6 +1874,39 @@
                         break;
                 }
                 
+                // Get social media icon and text
+                let socialMediaHtml = '';
+                if (req.socialMedia) {
+                    let iconClass = '';
+                    let platformName = '';
+                    
+                    switch(req.socialMedia.platform) {
+                        case 'whatsapp':
+                            iconClass = 'fab fa-whatsapp';
+                            platformName = 'WhatsApp';
+                            break;
+                        case 'facebook':
+                            iconClass = 'fab fa-facebook';
+                            platformName = 'Facebook';
+                            break;
+                        case 'tiktok':
+                            iconClass = 'fab fa-tiktok';
+                            platformName = 'TikTok';
+                            break;
+                        case 'discord':
+                            iconClass = 'fab fa-discord';
+                            platformName = 'Discord';
+                            break;
+                    }
+                    
+                    socialMediaHtml = `
+                        <p>
+                            <strong><i class="${iconClass}"></i> ${platformName}:</strong> 
+                            <a href="${req.socialMedia.link}" target="_blank">${req.socialMedia.link}</a>
+                        </p>
+                    `;
+                }
+                
                 card.innerHTML = `
                     <div class="request-header">
                         <h3><i class="fas fa-hashtag"></i> Request #${req.id.toString().slice(-4)}</h3>
@@ -1420,7 +1916,8 @@
                         <p><strong><i class="fas fa-user"></i> Submitted by:</strong> 
                             <span class="user-badge"><i class="fas fa-user"></i> ${req.username}</span>
                         </p>
-                        <p><strong><i class="fas fa-link"></i> Discord Server:</strong> ${req.discordLink}</p>
+                        <p><strong><i class="fab fa-discord"></i> Discord Server:</strong> <a href="${req.discordLink}" target="_blank">${req.discordLink}</a></p>
+                        ${socialMediaHtml}
                         <p><strong><i class="fas fa-handshake"></i> Partnership Type:</strong> ${req.partnershipType}</p>
                         <p><strong><i class="fas fa-clock"></i> Duration:</strong> ${req.duration}</p>
                         <p><strong><i class="fas fa-file-alt"></i> Details:</strong> ${req.details}</p>
@@ -1547,6 +2044,26 @@
                 btn.classList.add('active');
                 currentFilter = btn.dataset.filter;
                 renderAdminRequests();
+            });
+        });
+        
+        // Social media selection
+        document.querySelectorAll('.social-option').forEach(option => {
+            option.addEventListener('click', () => {
+                // Reset all selections
+                document.querySelectorAll('.social-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                document.querySelectorAll('.social-input').forEach(input => {
+                    input.classList.remove('active');
+                });
+                
+                // Set current selection
+                option.classList.add('selected');
+                selectedSocial = option.dataset.social;
+                
+                // Show corresponding input
+                document.getElementById(`${selectedSocial}-input`).classList.add('active');
             });
         });
         
