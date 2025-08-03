@@ -9,21 +9,30 @@
     <style>
         @media (max-width: 640px) {
             .hero-bg {
-                padding-top: 120px;
-                padding-bottom: 80px;
+                padding-top: 100px;
+                padding-bottom: 60px;
+                background-attachment: scroll;
             }
             .container {
-                padding-left: 1rem;
-                padding-right: 1rem;
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
             }
             button, input, textarea {
                 font-size: 16px !important;
             }
+            h1 {
+                font-size: 2.5rem !important;
+                line-height: 1.2;
+            }
+            .news-card {
+                margin-bottom: 1.5rem;
+            }
         }
         .hero-bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1603190287605-e6ade32fa852?ixlib=rb-4.0.3');
+            background-image: linear-gradient(135deg, rgba(201, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1603190287605-e6ade32fa852?ixlib=rb-4.0.3');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
         }
         .news-card:hover {
             transform: translateY(-5px);
@@ -36,7 +45,8 @@
     <header class="hero-bg text-white pt-40 pb-24 md:pt-48 md:pb-32">
         <div class="container mx-auto px-4 text-center">
             <h1 class="text-4xl md:text-6xl font-bold mb-4">TV SHESHLILEBI</h1>
-            <p class="text-xl md:text-2xl mb-8">თუ შეიშალე ჩვენთან ხარ სახლში</p>
+            <p class="text-xl md:text-2xl mb-4">ქართული ტელევიზიის ყველაზე სასაუბრო თემები</p>
+            <p class="text-lg md:text-xl mb-8">განხილვები, კომენტარები და ექსკლუზივები</p>
             
             <!-- Auth Buttons -->
             <div id="authButtons" class="flex justify-center space-x-4">
@@ -138,8 +148,8 @@
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-16">
         <!-- News Section -->
-        <section class="mb-12 bg-gradient-to-r from-gray-900 to-gray-800 rounded-xl p-8 shadow-2xl">
-            <h2 class="text-3xl font-bold mb-8 text-center">ბოლო ამბები</h2>
+        <section class="mb-12 bg-gradient-to-r from-red-900 to-gray-900 rounded-xl p-8 shadow-2xl">
+            <h2 class="text-3xl font-bold mb-8 text-center text-white">ბოლო ამბები და განხილვები</h2>
             <div id="newsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- News cards will be added here dynamically -->
             </div>
@@ -166,7 +176,8 @@
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-6 md:mb-0">
                     <h2 class="text-2xl font-bold">TV SHESHLILEBI</h2>
-                    <p class="mt-2">თუ შეიშალე ჩვენთან ხარ სახლში</p>
+                    <p class="mt-2">ქართული ტელევიზიის განხილვის პლატფორმა</p>
+                    <p class="mt-2 text-gray-400">შემოგვიერთდით საინტერესო დისკუსიებში და იყავით ინფორმირებული</p>
                 </div>
                 <div class="flex space-x-6">
                     <a href="#" class="text-gray-400 hover:text-white">
