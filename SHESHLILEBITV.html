@@ -210,6 +210,34 @@
         // News data (initially empty)
         let news = [];
         
+        // Mock API URL (replace with your real API endpoint)
+        const API_URL = 'https://jsonplaceholder.typicode.com/posts';
+        
+        // Function to fetch news from API
+        async function fetchNews() {
+            try {
+                // In a real app, this would be your API call
+                // const response = await fetch(API_URL);
+                // const data = await response.json();
+                
+                // For demo, we'll use localStorage but simulate API call
+                const savedNews = localStorage.getItem('newsData');
+                if (savedNews) {
+                    news = JSON.parse(savedNews);
+                    renderNews();
+                }
+                
+                // Also check if there's any server-side news
+                if (localStorage.getItem('serverNews')) {
+                    const serverNews = JSON.parse(localStorage.getItem('serverNews'));
+                    news = [...serverNews, ...news];
+                    renderNews();
+                }
+            } catch (error) {
+                console.error('Error fetching news:', error);
+            }
+        }
+        
         
         function stopLive() {
             isLive = false;
@@ -232,13 +260,8 @@
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
-            // Load news from localStorage if available
-            const savedNews = localStorage.getItem('newsData');
-            if (savedNews) {
-                news = JSON.parse(savedNews);
-            }
-            
-            renderNews();
+            // Load news from API/localStorage
+            await fetchNews();
             
             // Check if user is already logged in (from localStorage)
             const savedUser = localStorage.getItem('currentUser');
@@ -422,8 +445,29 @@
             };
             
             news.unshift(newNews);
-            // Save to localStorage
+            // Save to localStorage (simulating local storage)
             localStorage.setItem('newsData', JSON.stringify(news));
+            
+            // In a real app, you would POST to your API here:
+            // try {
+            //     const response = await fetch(API_URL, {
+            //         method: 'POST',
+            //         headers: {
+            //             'Content-Type': 'application/json',
+            //         },
+            //         body: JSON.stringify(newNews)
+            //     });
+            //     const data = await response.json();
+            //     console.log('Success:', data);
+            // } catch (error) {
+            //     console.error('Error:', error);
+            // }
+            
+            // For demo, we'll simulate server storage
+            const serverNews = JSON.parse(localStorage.getItem('serverNews') || '[]');
+            serverNews.unshift(newNews);
+            localStorage.setItem('serverNews', JSON.stringify(serverNews));
+            
             renderNews();
             hidePostNews();
             document.getElementById('newsForm').reset();
