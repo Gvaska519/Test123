@@ -221,6 +221,12 @@
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
+            // Load news from localStorage if available
+            const savedNews = localStorage.getItem('newsData');
+            if (savedNews) {
+                news = JSON.parse(savedNews);
+            }
+            
             renderNews();
             
             // Check if user is already logged in (from localStorage)
@@ -405,6 +411,8 @@
             };
             
             news.unshift(newNews);
+            // Save to localStorage
+            localStorage.setItem('newsData', JSON.stringify(news));
             renderNews();
             hidePostNews();
             document.getElementById('newsForm').reset();
