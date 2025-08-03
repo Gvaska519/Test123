@@ -259,15 +259,18 @@
         const commentsSection = document.getElementById('commentsSection');
         
         // Initialize the page
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             // Load news from API/localStorage
             await fetchNews();
             
             // Check if user is already logged in (from localStorage)
             const savedUser = localStorage.getItem('currentUser');
-            if (savedUser && predefinedAccounts[savedUser]) {
-                currentUser = savedUser;
-                updateUIAfterLogin();
+            if (savedUser) {
+                const accounts = JSON.parse(localStorage.getItem('userAccounts') || '{}');
+                if (accounts[savedUser] || predefinedAccounts[savedUser]) {
+                    currentUser = savedUser;
+                    updateUIAfterLogin();
+                }
             }
         });
         
