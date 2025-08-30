@@ -31,6 +31,7 @@
             color: white;
             padding: 15px 0;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
         .header-content {
@@ -90,6 +91,24 @@
             justify-content: center;
             font-size: 12px;
             font-weight: bold;
+        }
+
+        /* Mobile Cart Button */
+        .mobile-cart-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #0062cc, #0095ff);
+            border-radius: 50%;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
         }
 
         /* Hero Section */
@@ -517,6 +536,15 @@
             nav ul {
                 margin-top: 15px;
                 justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+
+            .cart-icon {
+                margin-top: 15px;
             }
 
             .hero h1 {
@@ -533,6 +561,16 @@
 
             .checkout-btn {
                 margin: 5px 0;
+            }
+
+            /* Show mobile cart button on small screens */
+            .mobile-cart-btn {
+                display: flex;
+            }
+            
+            /* Hide the cart icon in header on mobile */
+            .header-content .cart-icon {
+                display: none;
             }
         }
     </style>
@@ -561,6 +599,12 @@
             </div>
         </div>
     </header>
+
+    <!-- Mobile Cart Button -->
+    <div class="mobile-cart-btn" id="mobileCartBtn">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" id="mobileCartCount">0</span>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -735,11 +779,13 @@
         // Cart functionality
         let cart = [];
         const cartIcon = document.getElementById('cartIcon');
+        const mobileCartBtn = document.getElementById('mobileCartBtn');
         const cartModal = document.getElementById('cartModal');
         const closeCart = document.getElementById('closeCart');
         const cartItems = document.getElementById('cartItems');
         const cartTotal = document.getElementById('cartTotal');
         const cartCount = document.getElementById('cartCount');
+        const mobileCartCount = document.getElementById('mobileCartCount');
         const addToCartButtons = document.querySelectorAll('.add-to-cart');
         const paypalCheckout = document.getElementById('paypalCheckout');
         const mastercardCheckout = document.getElementById('mastercardCheckout');
@@ -751,6 +797,11 @@
 
         // Open cart modal
         cartIcon.addEventListener('click', () => {
+            cartModal.style.display = 'flex';
+        });
+
+        // Mobile cart button click
+        mobileCartBtn.addEventListener('click', () => {
             cartModal.style.display = 'flex';
         });
 
@@ -831,6 +882,7 @@
             
             cartTotal.textContent = total.toFixed(2);
             cartCount.textContent = count;
+            mobileCartCount.textContent = count;
             
             // Add event listeners to quantity buttons
             const minusButtons = document.querySelectorAll('.minus');
