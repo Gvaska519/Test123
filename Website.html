@@ -243,7 +243,7 @@
             font-weight: 600;
         }
 
-        .filter-group input {
+        .filter-group input, .filter-group select {
             padding: 8px 12px;
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -311,6 +311,12 @@
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 10px;
+        }
+
+        .product-category {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 5px;
         }
 
         .product-price {
@@ -575,6 +581,34 @@
             margin-bottom: 20px;
         }
 
+        .user-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .user-tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            flex: 1;
+            text-align: center;
+        }
+
+        .user-tab.active {
+            border-bottom: 3px solid #0095ff;
+            color: #0095ff;
+            font-weight: 600;
+        }
+
+        .user-section {
+            display: none;
+        }
+
+        .user-section.active {
+            display: block;
+        }
+
         /* Cart Modal */
         .cart-modal {
             display: none;
@@ -771,6 +805,27 @@
             background: #0077cc;
         }
 
+        /* Page Content Styles */
+        .page-content {
+            display: none;
+            padding: 40px 0;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        .about-content, .contact-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact-form {
+            margin-top: 20px;
+        }
+
         /* Footer */
         footer {
             background: #2c3e50;
@@ -887,7 +942,7 @@
                 justify-content: space-between;
             }
 
-            .filter-group input {
+            .filter-group input, .filter-group select {
                 width: 45%;
             }
         }
@@ -904,10 +959,10 @@
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Products</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="#" data-page="home">Home</a></li>
+                        <li><a href="#" data-page="products">Products</a></li>
+                        <li><a href="#" data-page="about">About</a></li>
+                        <li><a href="#" data-page="contact">Contact</a></li>
                     </ul>
                 </nav>
                 <div class="header-icons">
@@ -938,39 +993,114 @@
         <i class="fas fa-chart-line"></i>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Welcome to TechShop</h1>
-            <p>Discover the latest tech gadgets at amazing prices</p>
-            <a href="#products" class="btn">Shop Now</a>
-        </div>
-    </section>
+    <!-- Home Page -->
+    <div class="page-content active" id="homePage">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to TechShop</h1>
+                <p>Discover the latest tech gadgets at amazing prices</p>
+                <a href="#" data-page="products" class="btn">Shop Now</a>
+            </div>
+        </section>
 
-    <!-- Products Section -->
-    <section class="products" id="products">
-        <div class="container">
-            <h2 class="section-title">Featured Products</h2>
-            
-            <!-- Price Filter -->
-            <div class="price-filter">
-                <div class="filter-group">
-                    <label for="minPrice">Min Price:</label>
-                    <input type="number" id="minPrice" placeholder="$0" min="0">
+        <!-- Products Preview Section -->
+        <section class="products">
+            <div class="container">
+                <h2 class="section-title">Featured Products</h2>
+                <div class="product-grid" id="featuredProducts">
+                    <!-- Featured products will be loaded dynamically -->
                 </div>
-                <div class="filter-group">
-                    <label for="maxPrice">Max Price:</label>
-                    <input type="number" id="maxPrice" placeholder="$2000" min="0">
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="#" data-page="products" class="btn">View All Products</a>
                 </div>
-                <button class="filter-btn" id="applyFilter">Apply Filter</button>
-                <button class="filter-btn" id="clearFilter" style="background: #6c757d;">Clear Filter</button>
             </div>
-            
-            <div class="product-grid" id="productGrid">
-                <!-- Products will be loaded dynamically -->
+        </section>
+    </div>
+
+    <!-- Products Page -->
+    <div class="page-content" id="productsPage">
+        <!-- Products Section -->
+        <section class="products">
+            <div class="container">
+                <h2 class="section-title">Our Products</h2>
+                
+                <!-- Price and Category Filter -->
+                <div class="price-filter">
+                    <div class="filter-group">
+                        <label for="minPrice">Min Price:</label>
+                        <input type="number" id="minPrice" placeholder="$0" min="0">
+                    </div>
+                    <div class="filter-group">
+                        <label for="maxPrice">Max Price:</label>
+                        <input type="number" id="maxPrice" placeholder="$2000" min="0">
+                    </div>
+                    <div class="filter-group">
+                        <label for="categoryFilter">Category:</label>
+                        <select id="categoryFilter">
+                            <option value="all">All Categories</option>
+                            <!-- Categories will be loaded dynamically -->
+                        </select>
+                    </div>
+                    <button class="filter-btn" id="applyFilter">Apply Filter</button>
+                    <button class="filter-btn" id="clearFilter" style="background: #6c757d;">Clear Filter</button>
+                </div>
+                
+                <div class="product-grid" id="productGrid">
+                    <!-- Products will be loaded dynamically -->
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
+
+    <!-- About Page -->
+    <div class="page-content" id="aboutPage">
+        <section class="products">
+            <div class="container">
+                <h2 class="section-title">About TechShop</h2>
+                <div class="about-content">
+                    <p>TechShop is your one-stop destination for all the latest electronics and tech gadgets. We offer a wide range of products from top brands at competitive prices.</p>
+                    <p>Our mission is to provide our customers with the best shopping experience, offering high-quality products, fast shipping, and excellent customer service.</p>
+                    <p>Founded in 2025, we have grown to become one of the leading online electronics retailers, serving customers across the country.</p>
+                    <h3 style="margin-top: 20px;">Our Team</h3>
+                    <p>We have a dedicated team of tech enthusiasts who are always ready to help you find the perfect product for your needs.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div class="page-content" id="contactPage">
+        <section class="products">
+            <div class="container">
+                <h2 class="section-title">Contact Us</h2>
+                <div class="contact-content">
+                    <p>We'd love to hear from you! Reach out to us through any of the following methods:</p>
+                    <div style="margin-top: 20px;">
+                        <p><i class="fas fa-map-marker-alt"></i> <strong>Address:</strong> 123 Tech Street, San Francisco, CA</p>
+                        <p><i class="fas fa-phone"></i> <strong>Phone:</strong> +1 (123) 456-7890</p>
+                        <p><i class="fas fa-envelope"></i> <strong>Email:</strong> info@techshop.com</p>
+                    </div>
+                    <div class="contact-form">
+                        <h3>Send us a message</h3>
+                        <div class="form-group">
+                            <label for="contactName">Your Name</label>
+                            <input type="text" id="contactName" placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Your Email</label>
+                            <input type="email" id="contactEmail" placeholder="Your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Message</label>
+                            <textarea id="contactMessage" placeholder="Your message" rows="5"></textarea>
+                        </div>
+                        <button class="btn" id="sendMessageBtn">Send Message</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <!-- User Modal -->
     <div class="user-modal" id="userModal">
@@ -979,22 +1109,51 @@
                 <h2>User Account</h2>
                 <span class="close-cart" id="closeUser">&times;</span>
             </div>
-            <div class="admin-form">
-                <div class="form-title">Login to Your Account</div>
-                <div class="form-group">
-                    <label for="userEmail">Email</label>
-                    <input type="email" id="userEmail" placeholder="Your email">
+            <div class="user-tabs">
+                <div class="user-tab active" data-tab="login">Login</div>
+                <div class="user-tab" data-tab="register">Register</div>
+            </div>
+            <div class="user-section active" id="loginSection">
+                <div class="admin-form">
+                    <div class="form-title">Login to Your Account</div>
+                    <div class="form-group">
+                        <label for="userEmail">Email</label>
+                        <input type="email" id="userEmail" placeholder="Your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="userPassword">Password</label>
+                        <input type="password" id="userPassword" placeholder="Your password">
+                    </div>
+                    <div class="form-buttons">
+                        <button class="form-btn btn-primary" id="userLoginBtn">Login</button>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <a href="#" style="color: #0095ff; text-decoration: none;">Forgot Password?</a>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="userPassword">Password</label>
-                    <input type="password" id="userPassword" placeholder="Your password">
-                </div>
-                <div class="form-buttons">
-                    <button class="form-btn btn-primary" id="userLoginBtn">Login</button>
-                    <button class="form-btn btn-secondary" id="userRegisterBtn">Register</button>
-                </div>
-                <div style="text-align: center; margin-top: 15px;">
-                    <a href="#" style="color: #0095ff; text-decoration: none;">Forgot Password?</a>
+            </div>
+            <div class="user-section" id="registerSection">
+                <div class="admin-form">
+                    <div class="form-title">Create New Account</div>
+                    <div class="form-group">
+                        <label for="registerName">Full Name</label>
+                        <input type="text" id="registerName" placeholder="Your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" placeholder="Your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" placeholder="Create a password">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerConfirmPassword">Confirm Password</label>
+                        <input type="password" id="registerConfirmPassword" placeholder="Confirm your password">
+                    </div>
+                    <div class="form-buttons">
+                        <button class="form-btn btn-primary" id="userRegisterBtn">Register</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1046,6 +1205,7 @@
             
             <div class="admin-tabs">
                 <div class="admin-tab active" data-tab="products">Products</div>
+                <div class="admin-tab" data-tab="pages">Pages</div>
                 <div class="admin-tab" data-tab="orders">Orders</div>
                 <div class="admin-tab" data-tab="finance">Finance</div>
             </div>
@@ -1058,6 +1218,12 @@
                         <div class="form-group">
                             <label for="productName">Product Name</label>
                             <input type="text" id="productName" placeholder="Product name">
+                        </div>
+                        <div class="form-group">
+                            <label for="productCategory">Category</label>
+                            <select id="productCategory">
+                                <!-- Categories will be loaded dynamically -->
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="productPrice">Price ($)</label>
@@ -1080,6 +1246,33 @@
                     <ul class="admin-list" id="productsList">
                         <!-- Products will be listed here -->
                     </ul>
+                </div>
+                
+                <!-- Pages Management -->
+                <div class="admin-section" id="pagesSection">
+                    <h3>Page Management</h3>
+                    <div class="admin-form">
+                        <div class="form-title">Edit Page Content</div>
+                        <div class="form-group">
+                            <label for="pageSelect">Select Page</label>
+                            <select id="pageSelect">
+                                <option value="home">Home Page</option>
+                                <option value="about">About Page</option>
+                                <option value="contact">Contact Page</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="pageTitle">Page Title</label>
+                            <input type="text" id="pageTitle" placeholder="Page title">
+                        </div>
+                        <div class="form-group">
+                            <label for="pageContent">Page Content</label>
+                            <textarea id="pageContent" placeholder="Page content" rows="6"></textarea>
+                        </div>
+                        <div class="form-buttons">
+                            <button class="form-btn btn-primary" id="savePageBtn">Save Changes</button>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Orders Management -->
@@ -1189,10 +1382,10 @@
                 </div>
                 <div class="footer-section">
                     <h3>Quick Links</h3>
-                    <a href="#">Home</a>
-                    <a href="#">Products</a>
-                    <a href="#">About Us</a>
-                    <a href="#">Contact</a>
+                    <a href="#" data-page="home">Home</a>
+                    <a href="#" data-page="products">Products</a>
+                    <a href="#" data-page="about">About Us</a>
+                    <a href="#" data-page="contact">Contact</a>
                 </div>
                 <div class="footer-section">
                     <h3>Contact Info</h3>
@@ -1219,11 +1412,32 @@
     <script>
         // Data storage
         let cart = [];
+        let currentUser = null;
+        let users = JSON.parse(localStorage.getItem('techshop_users')) || [];
+        let categories = JSON.parse(localStorage.getItem('techshop_categories')) || [
+            "Laptops", "Smartphones", "Tablets", "Accessories", "Gaming", "Audio", "Wearables", "Cameras", "Monitors", "Networking"
+        ];
+        let pages = JSON.parse(localStorage.getItem('techshop_pages')) || {
+            home: {
+                title: "Welcome to TechShop",
+                content: "Discover the latest tech gadgets at amazing prices"
+            },
+            about: {
+                title: "About TechShop",
+                content: "TechShop is your one-stop destination for all the latest electronics and tech gadgets. We offer a wide range of products from top brands at competitive prices."
+            },
+            contact: {
+                title: "Contact Us",
+                content: "We'd love to hear from you! Reach out to us through any of the following methods:"
+            }
+        };
+        
         let products = JSON.parse(localStorage.getItem('techshop_products')) || [
             {
                 id: 1,
                 name: "Ultra Thin Laptop",
                 price: 999.99,
+                category: "Laptops",
                 description: "15.6 inch display, 8GB RAM, 256GB SSD, Intel Core i5",
                 image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771&q=80"
             },
@@ -1231,6 +1445,7 @@
                 id: 2,
                 name: "Gaming Console",
                 price: 499.99,
+                category: "Gaming",
                 description: "Next-gen gaming console with 1TB storage and wireless controller",
                 image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
             },
@@ -1238,6 +1453,7 @@
                 id: 3,
                 name: "Smart Watch",
                 price: 249.99,
+                category: "Wearables",
                 description: "Fitness tracker, heart rate monitor, and smartphone notifications",
                 image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1768&q=80"
             },
@@ -1245,6 +1461,7 @@
                 id: 4,
                 name: "Wireless Headphones",
                 price: 199.99,
+                category: "Audio",
                 description: "Noise cancelling, 30-hour battery life, comfortable design",
                 image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
             },
@@ -1252,6 +1469,7 @@
                 id: 5,
                 name: "Smartphone Pro",
                 price: 899.99,
+                category: "Smartphones",
                 description: "6.7 inch OLED display, 128GB storage, Triple camera",
                 image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1760&q=80"
             },
@@ -1259,6 +1477,7 @@
                 id: 6,
                 name: "4K Smart TV",
                 price: 799.99,
+                category: "Gaming",
                 description: "55 inch 4K Ultra HD Smart TV with HDR",
                 image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
             },
@@ -1266,6 +1485,7 @@
                 id: 7,
                 name: "Wireless Earbuds",
                 price: 129.99,
+                category: "Audio",
                 description: "True wireless earbuds with charging case",
                 image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1772&q=80"
             },
@@ -1273,8 +1493,105 @@
                 id: 8,
                 name: "Gaming Mouse",
                 price: 79.99,
+                category: "Accessories",
                 description: "RGB gaming mouse with high DPI sensor",
                 image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+            },
+            {
+                id: 9,
+                name: "DSLR Camera",
+                price: 899.99,
+                category: "Cameras",
+                description: "24.2MP DSLR camera with 18-55mm lens",
+                image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80"
+            },
+            {
+                id: 10,
+                name: "External SSD",
+                price: 149.99,
+                category: "Accessories",
+                description: "1TB External SSD, USB-C, up to 1050MB/s read speed",
+                image: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1732&q=80"
+            },
+            {
+                id: 11,
+                name: "Gaming Keyboard",
+                price: 89.99,
+                category: "Accessories",
+                description: "Mechanical gaming keyboard with RGB lighting",
+                image: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+            },
+            {
+                id: 12,
+                name: "Wireless Charger",
+                price: 39.99,
+                category: "Accessories",
+                description: "15W Fast Wireless Charger with cooling fan",
+                image: "https://images.unsplash.com/photo-1609091839311-d5365f2e0c5a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+            },
+            {
+                id: 13,
+                name: "Tablet Pro",
+                price: 649.99,
+                category: "Tablets",
+                description: "10.9-inch Liquid Retina display, A14 Bionic chip, 64GB",
+                image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+            },
+            {
+                id: 14,
+                name: "Smart Home Hub",
+                price: 99.99,
+                category: "Accessories",
+                description: "Control your smart home devices with voice commands",
+                image: "https://images.unsplash.com/photo-1558089680-209f153c5ce4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1738&q=80"
+            },
+            {
+                id: 15,
+                name: "UltraWide Monitor",
+                price: 499.99,
+                category: "Monitors",
+                description: "34-inch UltraWide Curved Monitor, 1440p Resolution",
+                image: "https://images.unsplash.com/photo-1635236062126-4efc4bdb59b6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1738&q=80"
+            },
+            {
+                id: 16,
+                name: "Wi-Fi Router",
+                price: 199.99,
+                category: "Networking",
+                description: "AX6000 Wi-Fi 6 Router with 8 Streams",
+                image: "https://images.unsplash.com/photo-1612838320300-04d0186d2f4d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1364&q=80"
+            },
+            {
+                id: 17,
+                name: "Bluetooth Speaker",
+                price: 129.99,
+                category: "Audio",
+                description: "Waterproof Bluetooth speaker with 360° sound",
+                image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1738&q=80"
+            },
+            {
+                id: 18,
+                name: "Action Camera",
+                price: 299.99,
+                category: "Cameras",
+                description: "4K Action Camera with waterproof case and accessories",
+                image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+            },
+            {
+                id: 19,
+                name: "VR Headset",
+                price: 399.99,
+                category: "Gaming",
+                description: "Immersive virtual reality headset with motion controllers",
+                image: "https://images.unsplash.com/photo-1593118247619-e2d6f056869e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+            },
+            {
+                id: 20,
+                name: "Portable Projector",
+                price: 349.99,
+                category: "Accessories",
+                description: "Mini portable projector with 100-inch screen support",
+                image: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1742&q=80"
             }
         ];
         
@@ -1300,6 +1617,7 @@
 
         // DOM Elements
         const productGrid = document.getElementById('productGrid');
+        const featuredProducts = document.getElementById('featuredProducts');
         const cartIcon = document.getElementById('cartIcon');
         const mobileCartBtn = document.getElementById('mobileCartBtn');
         const cartModal = document.getElementById('cartModal');
@@ -1323,9 +1641,11 @@
         const adminSections = document.querySelectorAll('.admin-section');
         const minPriceFilter = document.getElementById('minPrice');
         const maxPriceFilter = document.getElementById('maxPrice');
+        const categoryFilter = document.getElementById('categoryFilter');
         const applyFilterBtn = document.getElementById('applyFilter');
         const clearFilterBtn = document.getElementById('clearFilter');
         const addProductBtn = document.getElementById('addProductBtn');
+        const productCategory = document.getElementById('productCategory');
         const productsList = document.getElementById('productsList');
         const userIcon = document.getElementById('userIcon');
         const userModal = document.getElementById('userModal');
@@ -1333,23 +1653,121 @@
         const userLoginBtn = document.getElementById('userLoginBtn');
         const userRegisterBtn = document.getElementById('userRegisterBtn');
         const adminIcon = document.getElementById('adminIcon');
+        const userTabs = document.querySelectorAll('.user-tab');
+        const userSections = document.querySelectorAll('.user-section');
+        const pageSelect = document.getElementById('pageSelect');
+        const pageTitle = document.getElementById('pageTitle');
+        const pageContent = document.getElementById('pageContent');
+        const savePageBtn = document.getElementById('savePageBtn');
+        const sendMessageBtn = document.getElementById('sendMessageBtn');
+        const pageContents = document.querySelectorAll('.page-content');
+        const navLinks = document.querySelectorAll('nav a');
 
         // Initialize the page
         function init() {
-            // Save initial products to localStorage
+            // Save initial data to localStorage
             if (!localStorage.getItem('techshop_products')) {
                 localStorage.setItem('techshop_products', JSON.stringify(products));
             } else {
                 products = JSON.parse(localStorage.getItem('techshop_products'));
             }
             
+            if (!localStorage.getItem('techshop_categories')) {
+                localStorage.setItem('techshop_categories', JSON.stringify(categories));
+            } else {
+                categories = JSON.parse(localStorage.getItem('techshop_categories'));
+            }
+            
+            if (!localStorage.getItem('techshop_pages')) {
+                localStorage.setItem('techshop_pages', JSON.stringify(pages));
+            } else {
+                pages = JSON.parse(localStorage.getItem('techshop_pages'));
+            }
+            
+            // Update page content from storage
+            updatePageContent();
+            
+            // Render products and categories
+            renderCategories();
             renderProducts(products);
+            renderFeaturedProducts();
             updateCart();
             updateAdminStats();
             
             // Set default price filter values
             minPriceFilter.value = 0;
             maxPriceFilter.value = 2000;
+            
+            // Set up page navigation
+            setupPageNavigation();
+        }
+
+        // Set up page navigation
+        function setupPageNavigation() {
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = link.getAttribute('data-page');
+                    showPage(page);
+                });
+            });
+            
+            // Also set up footer links
+            document.querySelectorAll('footer a[data-page]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = link.getAttribute('data-page');
+                    showPage(page);
+                });
+            });
+            
+            // Set up "View All Products" button
+            document.querySelector('a[data-page="products"]').addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('products');
+            });
+        }
+        
+        // Show specific page
+        function showPage(pageId) {
+            pageContents.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.getElementById(`${pageId}Page`).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // If products page, refresh products
+            if (pageId === 'products') {
+                renderProducts(products);
+            }
+        }
+        
+        // Update page content from storage
+        function updatePageContent() {
+            // Update about page
+            document.querySelector('#aboutPage .about-content p').textContent = pages.about.content;
+            
+            // Update contact page
+            document.querySelector('#contactPage .contact-content p').textContent = pages.contact.content;
+        }
+
+        // Render categories to filters
+        function renderCategories() {
+            // Clear existing options
+            categoryFilter.innerHTML = '<option value="all">All Categories</option>';
+            productCategory.innerHTML = '';
+            
+            // Add categories to filter
+            categories.forEach(category => {
+                categoryFilter.innerHTML += `<option value="${category}">${category}</option>`;
+                productCategory.innerHTML += `<option value="${category}">${category}</option>`;
+            });
+            
+            // Add "Add New Category" option to admin
+            productCategory.innerHTML += '<option value="new">+ Add New Category</option>';
         }
 
         // Render products to the page
@@ -1370,6 +1788,7 @@
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">${product.name}</h3>
+                        <p class="product-category">${product.category}</p>
                         <p class="product-price">$${product.price.toFixed(2)}</p>
                         <p class="product-description">${product.description}</p>
                         <button class="add-to-cart" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">Add to Cart</button>
@@ -1381,6 +1800,44 @@
             
             // Add event listeners to Add to Cart buttons
             document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.getAttribute('data-id');
+                    const name = button.getAttribute('data-name');
+                    const price = parseFloat(button.getAttribute('data-price'));
+                    
+                    addToCart(id, name, price, button);
+                });
+            });
+        }
+        
+        // Render featured products on home page
+        function renderFeaturedProducts() {
+            featuredProducts.innerHTML = '';
+            
+            // Show only 4 featured products
+            const featured = products.slice(0, 4);
+            
+            featured.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-category">${product.category}</p>
+                        <p class="product-price">$${product.price.toFixed(2)}</p>
+                        <p class="product-description">${product.description}</p>
+                        <button class="add-to-cart" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">Add to Cart</button>
+                    </div>
+                `;
+                
+                featuredProducts.appendChild(productCard);
+            });
+            
+            // Add event listeners to Add to Cart buttons
+            document.querySelectorAll('#featuredProducts .add-to-cart').forEach(button => {
                 button.addEventListener('click', () => {
                     const id = button.getAttribute('data-id');
                     const name = button.getAttribute('data-name');
@@ -1485,7 +1942,7 @@
         function updateAdminStats() {
             document.getElementById('statSales').textContent = '$' + finances.totalSales.toFixed(2);
             document.getElementById('statOrders').textContent = finances.totalOrders;
-            document.getElementById('statCustomers').textContent = orders.length;
+            document.getElementById('statCustomers').textContent = users.length;
             document.getElementById('statProducts').textContent = products.length;
             
             document.getElementById('statRevenue').textContent = '$' + finances.revenue.toFixed(2);
@@ -1511,7 +1968,7 @@
                 productItem.innerHTML = `
                     <div>
                         <strong>${product.name}</strong><br>
-                        $${product.price.toFixed(2)}
+                        <span>${product.category} - $${product.price.toFixed(2)}</span>
                     </div>
                     <div>
                         <button class="form-btn btn-secondary edit-product" data-id="${product.id}">Edit</button>
@@ -1547,6 +2004,13 @@
             document.getElementById('productDescription').value = product.description;
             document.getElementById('productImage').value = product.image;
             
+            // Set category if it exists, otherwise select first option
+            if (categories.includes(product.category)) {
+                document.getElementById('productCategory').value = product.category;
+            } else {
+                document.getElementById('productCategory').value = categories[0];
+            }
+            
             // Change add button to update button
             addProductBtn.textContent = 'Update Product';
             addProductBtn.setAttribute('data-editing-id', id);
@@ -1558,18 +2022,22 @@
                 products = products.filter(p => p.id != id);
                 localStorage.setItem('techshop_products', JSON.stringify(products));
                 renderProducts(products);
+                renderFeaturedProducts();
                 updateAdminStats();
             }
         }
 
-        // Filter products by price
-        function filterProductsByPrice() {
+        // Filter products by price and category
+        function filterProducts() {
             const minPrice = parseFloat(minPriceFilter.value) || 0;
             const maxPrice = parseFloat(maxPriceFilter.value) || Number.MAX_VALUE;
+            const category = categoryFilter.value;
             
-            const filteredProducts = products.filter(product => 
-                product.price >= minPrice && product.price <= maxPrice
-            );
+            const filteredProducts = products.filter(product => {
+                const priceMatch = product.price >= minPrice && product.price <= maxPrice;
+                const categoryMatch = category === 'all' || product.category === category;
+                return priceMatch && categoryMatch;
+            });
             
             renderProducts(filteredProducts);
         }
@@ -1577,6 +2045,7 @@
         // Add new product
         function addNewProduct() {
             const name = document.getElementById('productName').value;
+            let category = document.getElementById('productCategory').value;
             const price = parseFloat(document.getElementById('productPrice').value);
             const description = document.getElementById('productDescription').value;
             const image = document.getElementById('productImage').value;
@@ -1584,6 +2053,17 @@
             if (!name || isNaN(price) || !description || !image) {
                 alert('Please fill all fields with valid values');
                 return;
+            }
+            
+            // Handle new category
+            if (category === 'new') {
+                category = prompt('Enter new category name:');
+                if (!category) return;
+                
+                // Add new category to list
+                categories.push(category);
+                localStorage.setItem('techshop_categories', JSON.stringify(categories));
+                renderCategories();
             }
             
             // Check if we're editing
@@ -1595,6 +2075,7 @@
                     products[productIndex] = {
                         ...products[productIndex],
                         name,
+                        category,
                         price,
                         description,
                         image
@@ -1609,6 +2090,7 @@
                 const newProduct = {
                     id: Date.now(),
                     name,
+                    category,
                     price,
                     description,
                     image
@@ -1620,6 +2102,7 @@
             // Save to localStorage and update UI
             localStorage.setItem('techshop_products', JSON.stringify(products));
             renderProducts(products);
+            renderFeaturedProducts();
             updateAdminStats();
             
             // Clear form
@@ -1627,8 +2110,118 @@
             document.getElementById('productPrice').value = '';
             document.getElementById('productDescription').value = '';
             document.getElementById('productImage').value = '';
+            document.getElementById('productCategory').value = categories[0];
             
             alert(editingId ? 'Product updated successfully!' : 'Product added successfully!');
+        }
+        
+        // Save page content
+        function savePageContent() {
+            const page = pageSelect.value;
+            const title = pageTitle.value;
+            const content = pageContent.value;
+            
+            if (!title || !content) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            // Update page content
+            pages[page] = {
+                title,
+                content
+            };
+            
+            // Save to localStorage
+            localStorage.setItem('techshop_pages', JSON.stringify(pages));
+            
+            // Update page display
+            updatePageContent();
+            
+            alert('Page content saved successfully!');
+        }
+        
+        // Load page content for editing
+        function loadPageContent() {
+            const page = pageSelect.value;
+            
+            pageTitle.value = pages[page].title;
+            pageContent.value = pages[page].content;
+        }
+        
+        // User registration
+        function registerUser() {
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            
+            if (!name || !email || !password || !confirmPassword) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            // Check if user already exists
+            if (users.find(user => user.email === email)) {
+                alert('User with this email already exists');
+                return;
+            }
+            
+            // Add new user
+            const newUser = {
+                id: Date.now(),
+                name,
+                email,
+                password // In a real app, this should be hashed
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('techshop_users', JSON.stringify(users));
+            
+            alert('Registration successful! Please login.');
+            
+            // Switch to login tab
+            userTabs.forEach(tab => tab.classList.remove('active'));
+            userSections.forEach(section => section.classList.remove('active'));
+            document.querySelector('.user-tab[data-tab="login"]').classList.add('active');
+            document.getElementById('loginSection').classList.add('active');
+            
+            // Clear form
+            document.getElementById('registerName').value = '';
+            document.getElementById('registerEmail').value = '';
+            document.getElementById('registerPassword').value = '';
+            document.getElementById('registerConfirmPassword').value = '';
+        }
+        
+        // User login
+        function loginUser() {
+            const email = document.getElementById('userEmail').value;
+            const password = document.getElementById('userPassword').value;
+            
+            if (!email || !password) {
+                alert('Please enter both email and password');
+                return;
+            }
+            
+            // Find user
+            const user = users.find(user => user.email === email && user.password === password);
+            
+            if (user) {
+                currentUser = user;
+                alert('Login successful!');
+                userModal.style.display = 'none';
+                
+                // Update user icon
+                document.getElementById('userNotification').style.display = 'flex';
+                document.getElementById('userNotification').textContent = '1';
+            } else {
+                alert('Invalid email or password');
+            }
         }
 
         // Event Listeners
@@ -1652,38 +2245,39 @@
             adminPanel.classList.toggle('active');
         });
 
-        // NEW: Admin icon click handler
         adminIcon.addEventListener('click', () => {
             adminPanel.classList.toggle('active');
         });
 
-        // NEW: User icon click handler
         userIcon.addEventListener('click', () => {
             userModal.style.display = 'flex';
         });
 
-        // NEW: Close user modal
         closeUser.addEventListener('click', () => {
             userModal.style.display = 'none';
         });
 
-        // NEW: User login button
-        userLoginBtn.addEventListener('click', () => {
-            const email = document.getElementById('userEmail').value;
-            const password = document.getElementById('userPassword').value;
-            
-            if (email && password) {
-                alert('User login functionality would be implemented here!');
-                userModal.style.display = 'none';
-            } else {
-                alert('Please enter both email and password');
-            }
+        // User tab switching
+        userTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                // Update active tab
+                userTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Show corresponding section
+                userSections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === `${tabId}Section`) {
+                        section.classList.add('active');
+                    }
+                });
+            });
         });
 
-        // NEW: User register button
-        userRegisterBtn.addEventListener('click', () => {
-            alert('User registration functionality would be implemented here!');
-        });
+        userLoginBtn.addEventListener('click', loginUser);
+        userRegisterBtn.addEventListener('click', registerUser);
 
         adminLoginBtn.addEventListener('click', () => {
             const username = document.getElementById('adminUsername').value;
@@ -1715,18 +2309,45 @@
                         section.classList.add('active');
                     }
                 });
+                
+                // If pages tab, load page content
+                if (tabId === 'pages') {
+                    loadPageContent();
+                }
             });
         });
 
-        applyFilterBtn.addEventListener('click', filterProductsByPrice);
+        applyFilterBtn.addEventListener('click', filterProducts);
         
         clearFilterBtn.addEventListener('click', () => {
             minPriceFilter.value = 0;
             maxPriceFilter.value = 2000;
+            categoryFilter.value = 'all';
             renderProducts(products);
         });
 
         addProductBtn.addEventListener('click', addNewProduct);
+        
+        pageSelect.addEventListener('change', loadPageContent);
+        savePageBtn.addEventListener('click', savePageContent);
+        
+        sendMessageBtn.addEventListener('click', () => {
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            if (!name || !email || !message) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            alert('Thank you for your message! We will get back to you soon.');
+            
+            // Clear form
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactEmail').value = '';
+            document.getElementById('contactMessage').value = '';
+        });
 
         paypalCheckout.addEventListener('click', () => {
             if (cart.length === 0) {
@@ -1819,4 +2440,4 @@
         init();
     </script>
 </body>
-</html> 
+</html>
