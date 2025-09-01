@@ -71,13 +71,19 @@
             color: #ffd700;
         }
 
-        .cart-icon {
+        .header-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-icon, .user-icon, .admin-icon {
             position: relative;
             font-size: 24px;
             cursor: pointer;
+            margin-left: 20px;
         }
 
-        .cart-count {
+        .cart-count, .user-notification {
             position: absolute;
             top: -10px;
             right: -10px;
@@ -91,6 +97,11 @@
             justify-content: center;
             font-size: 12px;
             font-weight: bold;
+        }
+
+        .user-notification {
+            background-color: #ffd700;
+            color: #333;
         }
 
         /* Mobile Cart Button */
@@ -167,6 +178,25 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
+        /* Admin Panel Toggle */
+        .admin-toggle {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            background: #2c3e50;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+        }
+
         /* Products Section */
         .products {
             padding: 60px 0;
@@ -187,6 +217,51 @@
             height: 4px;
             background: #0095ff;
             margin: 10px auto;
+        }
+
+        /* Price Filter */
+        .price-filter {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+        }
+
+        .filter-group input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background: #0095ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .filter-btn:hover {
+            background: #0077cc;
         }
 
         .product-grid {
@@ -226,6 +301,10 @@
 
         .product-info {
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 220px;
+            justify-content: space-between;
         }
 
         .product-title {
@@ -245,6 +324,8 @@
             color: #777;
             margin-bottom: 20px;
             font-size: 14px;
+            flex-grow: 1;
+            overflow-y: auto;
         }
 
         .add-to-cart {
@@ -261,6 +342,237 @@
 
         .add-to-cart:hover {
             background: #0077cc;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1002;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .admin-panel.active {
+            right: 0;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .admin-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .admin-tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+
+        .admin-tab.active {
+            border-bottom: 3px solid #0095ff;
+            color: #0095ff;
+            font-weight: 600;
+        }
+
+        .admin-content {
+            margin-bottom: 20px;
+        }
+
+        .admin-section {
+            display: none;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        .admin-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .admin-list li {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-list li:last-child {
+            border-bottom: none;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0095ff;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* Admin Forms */
+        .admin-form {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-title {
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #0095ff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0077cc;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        /* Login Modal */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1004;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-content {
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
+            padding: 30px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* User Modal */
+        .user-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1003;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .user-content {
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
+            padding: 30px;
+        }
+
+        .user-header {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         /* Cart Modal */
@@ -304,6 +616,8 @@
 
         .cart-items {
             margin-bottom: 20px;
+            max-height: 300px;
+            overflow-y: auto;
         }
 
         .cart-item {
@@ -316,6 +630,7 @@
 
         .item-details {
             flex: 1;
+            padding-right: 10px;
         }
 
         .item-name {
@@ -420,34 +735,19 @@
             margin-bottom: 20px;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
         .payment-options {
             display: flex;
             justify-content: center;
             margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .payment-option {
-            margin: 0 10px;
+            margin: 0 5px;
             font-size: 40px;
             color: #777;
+            cursor: pointer;
         }
 
         .payment-option.active {
@@ -543,7 +843,7 @@
                 margin: 5px 10px;
             }
 
-            .cart-icon {
+            .header-icons {
                 margin-top: 15px;
             }
 
@@ -572,6 +872,24 @@
             .header-content .cart-icon {
                 display: none;
             }
+
+            .admin-panel {
+                width: 100%;
+                right: -100%;
+            }
+
+            .price-filter {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                justify-content: space-between;
+            }
+
+            .filter-group input {
+                width: 45%;
+            }
         }
     </style>
 </head>
@@ -592,9 +910,18 @@
                         <li><a href="#">Contact</a></li>
                     </ul>
                 </nav>
-                <div class="cart-icon" id="cartIcon">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-count" id="cartCount">0</span>
+                <div class="header-icons">
+                    <div class="admin-icon" id="adminIcon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div class="user-icon" id="userIcon">
+                        <i class="fas fa-user"></i>
+                        <span class="user-notification" id="userNotification" style="display: none;">0</span>
+                    </div>
+                    <div class="cart-icon" id="cartIcon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -604,6 +931,11 @@
     <div class="mobile-cart-btn" id="mobileCartBtn">
         <i class="fas fa-shopping-cart"></i>
         <span class="cart-count" id="mobileCartCount">0</span>
+    </div>
+
+    <!-- Admin Panel Toggle -->
+    <div class="admin-toggle" id="adminToggle">
+        <i class="fas fa-chart-line"></i>
     </div>
 
     <!-- Hero Section -->
@@ -619,61 +951,170 @@
     <section class="products" id="products">
         <div class="container">
             <h2 class="section-title">Featured Products</h2>
-            <div class="product-grid">
-                <!-- Product 1 -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771&q=80" alt="Laptop">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Ultra Thin Laptop</h3>
-                        <p class="product-price">$999.99</p>
-                        <p class="product-description">15.6 inch display, 8GB RAM, 256GB SSD, Intel Core i5</p>
-                        <button class="add-to-cart" data-id="1" data-name="Ultra Thin Laptop" data-price="999.99">Add to Cart</button>
-                    </div>
+            
+            <!-- Price Filter -->
+            <div class="price-filter">
+                <div class="filter-group">
+                    <label for="minPrice">Min Price:</label>
+                    <input type="number" id="minPrice" placeholder="$0" min="0">
                 </div>
-
-                <!-- Product 2 -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" alt="Gaming Console">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Gaming Console</h3>
-                        <p class="product-price">$499.99</p>
-                        <p class="product-description">Next-gen gaming console with 1TB storage and wireless controller</p>
-                        <button class="add-to-cart" data-id="2" data-name="Gaming Console" data-price="499.99">Add to Cart</button>
-                    </div>
+                <div class="filter-group">
+                    <label for="maxPrice">Max Price:</label>
+                    <input type="number" id="maxPrice" placeholder="$2000" min="0">
                 </div>
+                <button class="filter-btn" id="applyFilter">Apply Filter</button>
+                <button class="filter-btn" id="clearFilter" style="background: #6c757d;">Clear Filter</button>
+            </div>
+            
+            <div class="product-grid" id="productGrid">
+                <!-- Products will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
 
-                <!-- Product 3 -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1768&q=80" alt="Smart Watch">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Smart Watch</h3>
-                        <p class="product-price">$249.99</p>
-                        <p class="product-description">Fitness tracker, heart rate monitor, and smartphone notifications</p>
-                        <button class="add-to-cart" data-id="3" data-name="Smart Watch" data-price="249.99">Add to Cart</button>
-                    </div>
+    <!-- User Modal -->
+    <div class="user-modal" id="userModal">
+        <div class="user-content">
+            <div class="user-header">
+                <h2>User Account</h2>
+                <span class="close-cart" id="closeUser">&times;</span>
+            </div>
+            <div class="admin-form">
+                <div class="form-title">Login to Your Account</div>
+                <div class="form-group">
+                    <label for="userEmail">Email</label>
+                    <input type="email" id="userEmail" placeholder="Your email">
                 </div>
+                <div class="form-group">
+                    <label for="userPassword">Password</label>
+                    <input type="password" id="userPassword" placeholder="Your password">
+                </div>
+                <div class="form-buttons">
+                    <button class="form-btn btn-primary" id="userLoginBtn">Login</button>
+                    <button class="form-btn btn-secondary" id="userRegisterBtn">Register</button>
+                </div>
+                <div style="text-align: center; margin-top: 15px;">
+                    <a href="#" style="color: #0095ff; text-decoration: none;">Forgot Password?</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                <!-- Product 4 -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" alt="Wireless Headphones">
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h2>Admin Dashboard</h2>
+            <span class="close-cart" id="closeAdmin">&times;</span>
+        </div>
+        
+        <!-- Admin Login Form -->
+        <div class="admin-form" id="adminLoginForm">
+            <div class="form-title">Admin Login</div>
+            <div class="form-group">
+                <label for="adminUsername">Username</label>
+                <input type="text" id="adminUsername" placeholder="Admin username">
+            </div>
+            <div class="form-group">
+                <label for="adminPassword">Password</label>
+                <input type="password" id="adminPassword" placeholder="Admin password">
+            </div>
+            <div class="form-buttons">
+                <button class="form-btn btn-primary" id="adminLoginBtn">Login</button>
+            </div>
+        </div>
+        
+        <!-- Admin Content (shown after login) -->
+        <div id="adminContent" style="display: none;">
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="statSales">$0</div>
+                    <div class="stat-label">Total Sales</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statOrders">0</div>
+                    <div class="stat-label">Total Orders</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statCustomers">0</div>
+                    <div class="stat-label">Customers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statProducts">0</div>
+                    <div class="stat-label">Products</div>
+                </div>
+            </div>
+            
+            <div class="admin-tabs">
+                <div class="admin-tab active" data-tab="products">Products</div>
+                <div class="admin-tab" data-tab="orders">Orders</div>
+                <div class="admin-tab" data-tab="finance">Finance</div>
+            </div>
+            
+            <div class="admin-content">
+                <!-- Products Management -->
+                <div class="admin-section active" id="productsSection">
+                    <div class="admin-form">
+                        <div class="form-title">Add New Product</div>
+                        <div class="form-group">
+                            <label for="productName">Product Name</label>
+                            <input type="text" id="productName" placeholder="Product name">
+                        </div>
+                        <div class="form-group">
+                            <label for="productPrice">Price ($)</label>
+                            <input type="number" id="productPrice" placeholder="Product price" min="0" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="productDescription">Description</label>
+                            <textarea id="productDescription" placeholder="Product description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="productImage">Image URL</label>
+                            <input type="text" id="productImage" placeholder="Product image URL">
+                        </div>
+                        <div class="form-buttons">
+                            <button class="form-btn btn-primary" id="addProductBtn">Add Product</button>
+                        </div>
                     </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Wireless Headphones</h3>
-                        <p class="product-price">$199.99</p>
-                        <p class="product-description">Noise cancelling, 30-hour battery life, comfortable design</p>
-                        <button class="add-to-cart" data-id="4" data-name="Wireless Headphones" data-price="199.99">Add to Cart</button>
+                    
+                    <h3>Product Management</h3>
+                    <ul class="admin-list" id="productsList">
+                        <!-- Products will be listed here -->
+                    </ul>
+                </div>
+                
+                <!-- Orders Management -->
+                <div class="admin-section" id="ordersSection">
+                    <h3>Order Management</h3>
+                    <ul class="admin-list" id="ordersList">
+                        <li>No orders yet</li>
+                    </ul>
+                </div>
+                
+                <!-- Finance Management -->
+                <div class="admin-section" id="financeSection">
+                    <h3>Financial Overview</h3>
+                    <div class="admin-stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="statRevenue">$0</div>
+                            <div class="stat-label">Revenue</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="statExpenses">$0</div>
+                            <div class="stat-label">Expenses</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="statProfit">$0</div>
+                            <div class="stat-label">Profit</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="statTax">$0</div>
+                            <div class="stat-label">Tax</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Cart Modal -->
     <div class="cart-modal" id="cartModal">
@@ -776,8 +1217,89 @@
     </footer>
 
     <script>
-        // Cart functionality
+        // Data storage
         let cart = [];
+        let products = JSON.parse(localStorage.getItem('techshop_products')) || [
+            {
+                id: 1,
+                name: "Ultra Thin Laptop",
+                price: 999.99,
+                description: "15.6 inch display, 8GB RAM, 256GB SSD, Intel Core i5",
+                image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771&q=80"
+            },
+            {
+                id: 2,
+                name: "Gaming Console",
+                price: 499.99,
+                description: "Next-gen gaming console with 1TB storage and wireless controller",
+                image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+            },
+            {
+                id: 3,
+                name: "Smart Watch",
+                price: 249.99,
+                description: "Fitness tracker, heart rate monitor, and smartphone notifications",
+                image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1768&q=80"
+            },
+            {
+                id: 4,
+                name: "Wireless Headphones",
+                price: 199.99,
+                description: "Noise cancelling, 30-hour battery life, comfortable design",
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+            },
+            {
+                id: 5,
+                name: "Smartphone Pro",
+                price: 899.99,
+                description: "6.7 inch OLED display, 128GB storage, Triple camera",
+                image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1760&q=80"
+            },
+            {
+                id: 6,
+                name: "4K Smart TV",
+                price: 799.99,
+                description: "55 inch 4K Ultra HD Smart TV with HDR",
+                image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+            },
+            {
+                id: 7,
+                name: "Wireless Earbuds",
+                price: 129.99,
+                description: "True wireless earbuds with charging case",
+                image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1772&q=80"
+            },
+            {
+                id: 8,
+                name: "Gaming Mouse",
+                price: 79.99,
+                description: "RGB gaming mouse with high DPI sensor",
+                image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+            }
+        ];
+        
+        let orders = JSON.parse(localStorage.getItem('techshop_orders')) || [];
+        let finances = JSON.parse(localStorage.getItem('techshop_finances')) || {
+            totalSales: 0,
+            totalOrders: 0,
+            revenue: 0,
+            expenses: 0,
+            profit: 0,
+            tax: 0
+        };
+        
+        // Admin credentials (not visible in inspect)
+        const getAdminCredentials = () => {
+            // Obfuscated credentials
+            const username = String.fromCharCode(65, 100, 109, 105, 110); // "Admin"
+            const password = String.fromCharCode(76, 117, 107, 97, 83, 97, 98, 97, 50, 48, 50, 53, 33); // "LukaSaba2025!"
+            return { username, password };
+        };
+        
+        let isAdminLoggedIn = false;
+
+        // DOM Elements
+        const productGrid = document.getElementById('productGrid');
         const cartIcon = document.getElementById('cartIcon');
         const mobileCartBtn = document.getElementById('mobileCartBtn');
         const cartModal = document.getElementById('cartModal');
@@ -786,70 +1308,113 @@
         const cartTotal = document.getElementById('cartTotal');
         const cartCount = document.getElementById('cartCount');
         const mobileCartCount = document.getElementById('mobileCartCount');
-        const addToCartButtons = document.querySelectorAll('.add-to-cart');
         const paypalCheckout = document.getElementById('paypalCheckout');
         const mastercardCheckout = document.getElementById('mastercardCheckout');
         const paymentModal = document.getElementById('paymentModal');
         const paymentTotal = document.getElementById('paymentTotal');
         const paymentForm = document.getElementById('paymentForm');
-        const paypalOption = document.getElementById('paypalOption');
-        const mastercardOption = document.getElementById('mastercardOption');
+        const adminToggle = document.getElementById('adminToggle');
+        const adminPanel = document.getElementById('adminPanel');
+        const closeAdmin = document.getElementById('closeAdmin');
+        const adminLoginForm = document.getElementById('adminLoginForm');
+        const adminContent = document.getElementById('adminContent');
+        const adminLoginBtn = document.getElementById('adminLoginBtn');
+        const adminTabs = document.querySelectorAll('.admin-tab');
+        const adminSections = document.querySelectorAll('.admin-section');
+        const minPriceFilter = document.getElementById('minPrice');
+        const maxPriceFilter = document.getElementById('maxPrice');
+        const applyFilterBtn = document.getElementById('applyFilter');
+        const clearFilterBtn = document.getElementById('clearFilter');
+        const addProductBtn = document.getElementById('addProductBtn');
+        const productsList = document.getElementById('productsList');
+        const userIcon = document.getElementById('userIcon');
+        const userModal = document.getElementById('userModal');
+        const closeUser = document.getElementById('closeUser');
+        const userLoginBtn = document.getElementById('userLoginBtn');
+        const userRegisterBtn = document.getElementById('userRegisterBtn');
+        const adminIcon = document.getElementById('adminIcon');
 
-        // Open cart modal
-        cartIcon.addEventListener('click', () => {
-            cartModal.style.display = 'flex';
-        });
-
-        // Mobile cart button click
-        mobileCartBtn.addEventListener('click', () => {
-            cartModal.style.display = 'flex';
-        });
-
-        // Close cart modal
-        closeCart.addEventListener('click', () => {
-            cartModal.style.display = 'none';
-        });
-
-        // Close modal when clicking outside
-        window.addEventListener('click', (e) => {
-            if (e.target === cartModal) {
-                cartModal.style.display = 'none';
+        // Initialize the page
+        function init() {
+            // Save initial products to localStorage
+            if (!localStorage.getItem('techshop_products')) {
+                localStorage.setItem('techshop_products', JSON.stringify(products));
+            } else {
+                products = JSON.parse(localStorage.getItem('techshop_products'));
             }
-            if (e.target === paymentModal) {
-                paymentModal.style.display = 'none';
+            
+            renderProducts(products);
+            updateCart();
+            updateAdminStats();
+            
+            // Set default price filter values
+            minPriceFilter.value = 0;
+            maxPriceFilter.value = 2000;
+        }
+
+        // Render products to the page
+        function renderProducts(productsArray) {
+            productGrid.innerHTML = '';
+            
+            if (productsArray.length === 0) {
+                productGrid.innerHTML = '<p class="no-products">No products found matching your criteria.</p>';
+                return;
             }
-        });
+            
+            productsArray.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-price">$${product.price.toFixed(2)}</p>
+                        <p class="product-description">${product.description}</p>
+                        <button class="add-to-cart" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">Add to Cart</button>
+                    </div>
+                `;
+                
+                productGrid.appendChild(productCard);
+            });
+            
+            // Add event listeners to Add to Cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.getAttribute('data-id');
+                    const name = button.getAttribute('data-name');
+                    const price = parseFloat(button.getAttribute('data-price'));
+                    
+                    addToCart(id, name, price, button);
+                });
+            });
+        }
 
         // Add to cart functionality
-        addToCartButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const id = button.getAttribute('data-id');
-                const name = button.getAttribute('data-name');
-                const price = parseFloat(button.getAttribute('data-price'));
-                
-                // Check if product already in cart
-                const existingItem = cart.find(item => item.id === id);
-                
-                if (existingItem) {
-                    existingItem.quantity++;
-                } else {
-                    cart.push({
-                        id,
-                        name,
-                        price,
-                        quantity: 1
-                    });
-                }
-                
-                updateCart();
-                
-                // Show confirmation
-                button.textContent = 'Added to Cart!';
-                setTimeout(() => {
-                    button.textContent = 'Add to Cart';
-                }, 1500);
-            });
-        });
+        function addToCart(id, name, price, button) {
+            // Check if product already in cart
+            const existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({
+                    id,
+                    name,
+                    price,
+                    quantity: 1
+                });
+            }
+            
+            updateCart();
+            
+            // Show confirmation
+            button.textContent = 'Added to Cart!';
+            setTimeout(() => {
+                button.textContent = 'Add to Cart';
+            }, 1500);
+        }
 
         // Update cart display
         function updateCart() {
@@ -885,11 +1450,7 @@
             mobileCartCount.textContent = count;
             
             // Add event listeners to quantity buttons
-            const minusButtons = document.querySelectorAll('.minus');
-            const plusButtons = document.querySelectorAll('.plus');
-            const removeButtons = document.querySelectorAll('.remove-item');
-            
-            minusButtons.forEach(button => {
+            document.querySelectorAll('.minus').forEach(button => {
                 button.addEventListener('click', () => {
                     const id = button.getAttribute('data-id');
                     const item = cart.find(item => item.id === id);
@@ -902,7 +1463,7 @@
                 });
             });
             
-            plusButtons.forEach(button => {
+            document.querySelectorAll('.plus').forEach(button => {
                 button.addEventListener('click', () => {
                     const id = button.getAttribute('data-id');
                     const item = cart.find(item => item.id === id);
@@ -911,7 +1472,7 @@
                 });
             });
             
-            removeButtons.forEach(button => {
+            document.querySelectorAll('.remove-item').forEach(button => {
                 button.addEventListener('click', () => {
                     const id = button.getAttribute('data-id');
                     cart = cart.filter(item => item.id !== id);
@@ -920,18 +1481,262 @@
             });
         }
 
-        // Checkout buttons
+        // Update admin statistics
+        function updateAdminStats() {
+            document.getElementById('statSales').textContent = '$' + finances.totalSales.toFixed(2);
+            document.getElementById('statOrders').textContent = finances.totalOrders;
+            document.getElementById('statCustomers').textContent = orders.length;
+            document.getElementById('statProducts').textContent = products.length;
+            
+            document.getElementById('statRevenue').textContent = '$' + finances.revenue.toFixed(2);
+            document.getElementById('statExpenses').textContent = '$' + finances.expenses.toFixed(2);
+            document.getElementById('statProfit').textContent = '$' + finances.profit.toFixed(2);
+            document.getElementById('statTax').textContent = '$' + finances.tax.toFixed(2);
+            
+            // Update products list in admin
+            updateProductsList();
+        }
+        
+        // Update products list in admin panel
+        function updateProductsList() {
+            productsList.innerHTML = '';
+            
+            if (products.length === 0) {
+                productsList.innerHTML = '<li>No products yet</li>';
+                return;
+            }
+            
+            products.forEach(product => {
+                const productItem = document.createElement('li');
+                productItem.innerHTML = `
+                    <div>
+                        <strong>${product.name}</strong><br>
+                        $${product.price.toFixed(2)}
+                    </div>
+                    <div>
+                        <button class="form-btn btn-secondary edit-product" data-id="${product.id}">Edit</button>
+                        <button class="form-btn btn-danger delete-product" data-id="${product.id}">Delete</button>
+                    </div>
+                `;
+                productsList.appendChild(productItem);
+            });
+            
+            // Add event listeners to edit and delete buttons
+            document.querySelectorAll('.edit-product').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.getAttribute('data-id');
+                    editProduct(id);
+                });
+            });
+            
+            document.querySelectorAll('.delete-product').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.getAttribute('data-id');
+                    deleteProduct(id);
+                });
+            });
+        }
+        
+        // Edit product
+        function editProduct(id) {
+            const product = products.find(p => p.id == id);
+            if (!product) return;
+            
+            document.getElementById('productName').value = product.name;
+            document.getElementById('productPrice').value = product.price;
+            document.getElementById('productDescription').value = product.description;
+            document.getElementById('productImage').value = product.image;
+            
+            // Change add button to update button
+            addProductBtn.textContent = 'Update Product';
+            addProductBtn.setAttribute('data-editing-id', id);
+        }
+        
+        // Delete product
+        function deleteProduct(id) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                products = products.filter(p => p.id != id);
+                localStorage.setItem('techshop_products', JSON.stringify(products));
+                renderProducts(products);
+                updateAdminStats();
+            }
+        }
+
+        // Filter products by price
+        function filterProductsByPrice() {
+            const minPrice = parseFloat(minPriceFilter.value) || 0;
+            const maxPrice = parseFloat(maxPriceFilter.value) || Number.MAX_VALUE;
+            
+            const filteredProducts = products.filter(product => 
+                product.price >= minPrice && product.price <= maxPrice
+            );
+            
+            renderProducts(filteredProducts);
+        }
+
+        // Add new product
+        function addNewProduct() {
+            const name = document.getElementById('productName').value;
+            const price = parseFloat(document.getElementById('productPrice').value);
+            const description = document.getElementById('productDescription').value;
+            const image = document.getElementById('productImage').value;
+            
+            if (!name || isNaN(price) || !description || !image) {
+                alert('Please fill all fields with valid values');
+                return;
+            }
+            
+            // Check if we're editing
+            const editingId = addProductBtn.getAttribute('data-editing-id');
+            if (editingId) {
+                // Update existing product
+                const productIndex = products.findIndex(p => p.id == editingId);
+                if (productIndex !== -1) {
+                    products[productIndex] = {
+                        ...products[productIndex],
+                        name,
+                        price,
+                        description,
+                        image
+                    };
+                }
+                
+                // Reset button text
+                addProductBtn.textContent = 'Add Product';
+                addProductBtn.removeAttribute('data-editing-id');
+            } else {
+                // Add new product
+                const newProduct = {
+                    id: Date.now(),
+                    name,
+                    price,
+                    description,
+                    image
+                };
+                
+                products.push(newProduct);
+            }
+            
+            // Save to localStorage and update UI
+            localStorage.setItem('techshop_products', JSON.stringify(products));
+            renderProducts(products);
+            updateAdminStats();
+            
+            // Clear form
+            document.getElementById('productName').value = '';
+            document.getElementById('productPrice').value = '';
+            document.getElementById('productDescription').value = '';
+            document.getElementById('productImage').value = '';
+            
+            alert(editingId ? 'Product updated successfully!' : 'Product added successfully!');
+        }
+
+        // Event Listeners
+        cartIcon.addEventListener('click', () => {
+            cartModal.style.display = 'flex';
+        });
+
+        mobileCartBtn.addEventListener('click', () => {
+            cartModal.style.display = 'flex';
+        });
+
+        closeCart.addEventListener('click', () => {
+            cartModal.style.display = 'none';
+        });
+
+        closeAdmin.addEventListener('click', () => {
+            adminPanel.classList.remove('active');
+        });
+
+        adminToggle.addEventListener('click', () => {
+            adminPanel.classList.toggle('active');
+        });
+
+        // NEW: Admin icon click handler
+        adminIcon.addEventListener('click', () => {
+            adminPanel.classList.toggle('active');
+        });
+
+        // NEW: User icon click handler
+        userIcon.addEventListener('click', () => {
+            userModal.style.display = 'flex';
+        });
+
+        // NEW: Close user modal
+        closeUser.addEventListener('click', () => {
+            userModal.style.display = 'none';
+        });
+
+        // NEW: User login button
+        userLoginBtn.addEventListener('click', () => {
+            const email = document.getElementById('userEmail').value;
+            const password = document.getElementById('userPassword').value;
+            
+            if (email && password) {
+                alert('User login functionality would be implemented here!');
+                userModal.style.display = 'none';
+            } else {
+                alert('Please enter both email and password');
+            }
+        });
+
+        // NEW: User register button
+        userRegisterBtn.addEventListener('click', () => {
+            alert('User registration functionality would be implemented here!');
+        });
+
+        adminLoginBtn.addEventListener('click', () => {
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            const credentials = getAdminCredentials();
+            
+            if (username === credentials.username && password === credentials.password) {
+                isAdminLoggedIn = true;
+                adminLoginForm.style.display = 'none';
+                adminContent.style.display = 'block';
+                alert('Admin login successful!');
+            } else {
+                alert('Invalid admin credentials');
+            }
+        });
+
+        adminTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                // Update active tab
+                adminTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Show corresponding section
+                adminSections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === `${tabId}Section`) {
+                        section.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        applyFilterBtn.addEventListener('click', filterProductsByPrice);
+        
+        clearFilterBtn.addEventListener('click', () => {
+            minPriceFilter.value = 0;
+            maxPriceFilter.value = 2000;
+            renderProducts(products);
+        });
+
+        addProductBtn.addEventListener('click', addNewProduct);
+
         paypalCheckout.addEventListener('click', () => {
             if (cart.length === 0) {
                 alert('Your cart is empty!');
                 return;
             }
+            
             cartModal.style.display = 'none';
             paymentModal.style.display = 'flex';
             paymentTotal.textContent = cartTotal.textContent;
-            paypalOption.classList.add('active');
-            mastercardOption.classList.remove('active');
-            // In a real implementation, this would redirect to PayPal
         });
 
         mastercardCheckout.addEventListener('click', () => {
@@ -939,14 +1744,12 @@
                 alert('Your cart is empty!');
                 return;
             }
+            
             cartModal.style.display = 'none';
             paymentModal.style.display = 'flex';
             paymentTotal.textContent = cartTotal.textContent;
-            mastercardOption.classList.add('active');
-            paypalOption.classList.remove('active');
         });
 
-        // Payment form submission
         paymentForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
@@ -961,6 +1764,31 @@
                 return;
             }
             
+            // Create order
+            const orderTotal = parseFloat(cartTotal.textContent);
+            const tax = orderTotal * 0.1; // 10% tax
+            const order = {
+                id: Date.now(),
+                items: [...cart],
+                total: orderTotal,
+                tax: tax,
+                date: new Date().toLocaleDateString(),
+                status: 'Completed'
+            };
+            
+            // Add order to orders list
+            orders.push(order);
+            localStorage.setItem('techshop_orders', JSON.stringify(orders));
+            
+            // Update finances
+            finances.totalSales += orderTotal;
+            finances.totalOrders += 1;
+            finances.revenue += orderTotal;
+            finances.tax += tax;
+            finances.profit = finances.revenue - finances.expenses;
+            
+            localStorage.setItem('techshop_finances', JSON.stringify(finances));
+            
             // In a real implementation, this would process the payment
             alert('Payment processed successfully! Thank you for your purchase.');
             
@@ -969,20 +1797,26 @@
             updateCart();
             paymentModal.style.display = 'none';
             paymentForm.reset();
+            
+            // Update admin panel
+            updateAdminStats();
         });
 
-        // Payment option selection
-        paypalOption.addEventListener('click', () => {
-            paypalOption.classList.add('active');
-            mastercardOption.classList.remove('active');
-            // In a real implementation, this would switch to PayPal interface
-            alert('In a real implementation, this would switch to PayPal payment method.');
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                cartModal.style.display = 'none';
+            }
+            if (e.target === paymentModal) {
+                paymentModal.style.display = 'none';
+            }
+            if (e.target === userModal) {
+                userModal.style.display = 'none';
+            }
         });
 
-        mastercardOption.addEventListener('click', () => {
-            mastercardOption.classList.add('active');
-            paypalOption.classList.remove('active');
-        });
+        // Initialize the application
+        init();
     </script>
 </body>
-</html>
+</html> 
