@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunset Cafe | Premium Coffee & Dining | Poti, Georgia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #c19a6b;
+            --accent: #e67e22;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gold-light: #f5e6ca;
+            --transition: all 0.4s ease;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            line-height: 1.7;
+            background-color: #fefefe;
+            overflow-x: hidden;
+        }
+        
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        header {
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.85)), url('https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            z-index: 10;
+            animation: fadeInUp 1.2s ease-out;
+        }
+        
+        nav {
+            background-color: rgba(44, 62, 80, 0.95);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
+            transition: var(--transition);
+        }
+        
+        .scrolled-nav {
+            padding: 15px 0;
+            background-color: rgba(44, 62, 80, 0.98);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            margin-top: 20px;
+            border: 2px solid var(--secondary);
+            text-transform: uppercase;
+            font-size: 1rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: var(--primary);
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .btn:hover:before {
+            width: 100%;
+        }
+        
+        .btn:hover {
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            margin-left: 15px;
+        }
+        
+        .btn-outline:hover {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .about-section {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 100px;
+        }
+        
+        .about-text {
+            flex: 1;
+            padding: 30px;
+        }
+        
+        .about-text p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .about-image {
+            flex: 1;
+            height: 500px;
+            background: url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            box-shadow: var(--shadow);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            transform: rotate(-2deg);
+        }
+        
+        .about-image:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(193, 154, 107, 0.1), rgba(44, 62, 80, 0.2));
+        }
+        
+        .menu-section {
+            background-color: var(--light);
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .menu-section:before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%23f8f9fa"/></svg>');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+        
+        .menu-item {
+            background-color: white;
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .menu-item:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .menu-item:hover:before {
+            height: 100%;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .menu-item h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.5rem;
+        }
+        
+        .menu-item h3 span {
+            color: var(--secondary);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        
+        .menu-item p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .menu-item .popular {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+        
+        .contact-section {
+            text-align: center;
+            padding: 60px 30px;
+            background: linear-gradient(rgba(44, 62, 80, 0.95), rgba(44, 62, 80, 0.95)), url('https://images.unsplash.com/photo-1505275350441-83dcda8eeef5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            border-radius: 15px;
+            margin: 60px 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .contact-info {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .contact-info h3 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: var(--gold-light);
+        }
+        
+        .contact-info p {
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .contact-info i {
+            color: var(--secondary);
+            font-size: 1.8rem;
+            margin-right: 15px;
+            width: 40px;
+        }
+        
+        .phone-highlight {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 40px;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 20px 0;
+            border: 2px solid var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .phone-highlight:hover {
+            background: var(--secondary);
+            color: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .hours {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .reservation-section {
+            text-align: center;
+            padding: 80px 20px;
+            background: var(--gold-light);
+            border-radius: 15px;
+            margin: 60px 0;
+        }
+        
+        .reservation-section h2 {
+            color: var(--primary);
+        }
+        
+        .reservation-section p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .call-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--secondary);
+            color: white;
+            padding: 20px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-top: 30px;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .call-button i {
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .call-button:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .gallery-section {
+            padding: 100px 0;
+            background-color: var(--light);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 60px 20px 30px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .footer-column p, .footer-column a {
+            margin-bottom: 15px;
+            display: block;
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+            z-index: 99;
+            box-shadow: var(--shadow);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .back-to-top:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+        
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            
+            .about-section {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                height: 400px;
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2.3rem;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: var(--primary);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: var(--transition);
+            }
+            
+            .nav-links.active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            
+            .nav-links a {
+                margin: 15px 0;
+                font-size: 1.2rem;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .btn-container {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn, .btn-outline {
+                margin: 5px 0;
+                width: 100%;
+            }
+            
+            .phone-highlight {
+                font-size: 1.8rem;
+                padding: 12px 25px;
+            }
+            
+            .call-button {
+                font-size: 1.4rem;
+                padding: 15px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 class="serif">Sunset Cafe</h1>
+            <p class="serif" style="font-size: 1.5rem; margin-bottom: 30px;">Premium coffee and dining experience in Poti, Georgia</p>
+            <div class="btn-container">
+                <a href="#menu" class="btn">Explore Our Menu</a>
+                <a href="#contact" class="btn btn-outline">Call to Reserve</a>
+            </div>
+        </div>
+    </header>
+    
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Sunset<span>Cafe</span></a>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#menu">Menu</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <button class="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+    
+    <section id="about" class="container">
+        <div class="section-title">
+            <h2>Our Story</h2>
+            <p style="max-width: 700px; margin: 0 auto; font-size: 1.1rem;">Where tradition meets innovation in the heart of Poti</p>
+        </div>
+        
+        <div class="about-section animate-on-scroll">
+            <div class="about-text">
+                <p>Founded in 2025, Sunset Cafe has quickly established itself as Poti's premier destination for exceptional coffee and refined dining. Our passion for quality ingredients and meticulous preparation sets us apart.</p>
+                <p>We source our coffee beans from sustainable farms and roast them in-house to ensure the perfect cup every time. Our kitchen combines Georgian culinary traditions with modern techniques to create memorable dishes.</p>
+                <p>Our cozy yet sophisticated ambiance provides the perfect setting for breakfast meetings, romantic dinners, or simply enjoying a quiet moment with a perfect cup of coffee.</p>
+                <a href="#menu" class="btn">View Our Menu</a>
+            </div>
+            <div class="about-image"></div>
+        </div>
+    </section>
+    
+    <section id="menu" class="menu-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Menu</h2>
+                <p style="max-width: 700px; margin: 0 auto; font-size: 1.1rem;">Seasonal specialties crafted with local ingredients</p>
+            </div>
+            
+            <div class="menu-grid">
+                <div class="menu-item animate-on-scroll">
+                    <h3>Specialty Coffee <span>12 GEL</span></h3>
+                    <p>Our signature blend, single-origin options, and seasonal specials prepared by certified baristas.</p>
+                    <span class="popular">Most Popular</span>
+                </div>
+                <div class="menu-item animate-on-scroll">
+                    <h3>Traditional Breakfast <span>25 GEL</span></h3>
+                    <p>Georgian cheese, fresh bread, seasonal fruits, honey, and your choice of coffee or tea.</p>
+                </div>
+                <div class="menu-item animate-on-scroll">
+                    <h3>Adjarian Khachapuri <span>28 GEL</span></h3>
+                    <p>Authentic boat-shaped bread filled with cheese and topped with egg and butter.</p>
+                    <span class="popular">Georgian Specialty</span>
+                </div>
+                <div class="menu-item animate-on-scroll">
+                    <h3>Seasonal Salad <span>22 GEL</span></h3>
+                    <p>Fresh local greens, vegetables, and herbs with house-made dressing.</p>
+                </div>
+                <div class="menu-item animate-on-scroll">
+                    <h3>Artisan Desserts <span>18 GEL</span></h3>
+                    <p>Daily selection of cakes, pastries, and traditional Georgian sweets.</p>
+                    <span class="popular">New</span>
+                </div>
+                <div class="menu-item animate-on-scroll">
+                    <h3>Wine Selection <span>30+ GEL</span></h3>
+                    <p>Curated selection of Georgian wines by the glass or bottle.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="gallery" class="gallery-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Gallery</h2>
+                <p style="max-width: 700px; margin: 0 auto; font-size: 1.1rem;">Experience the Sunset Cafe atmosphere</p>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Cafe Interior">
+                </div>
+                <div class="gallery-item animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1554119921-33c5d8686eba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Coffee Preparation">
+                </div>
+                <div class="gallery-item animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1477763858572-cda7deaa9bc5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Cafe Exterior">
+                </div>
+                <div class="gallery-item animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1484980972926-edee96e0960d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Food Presentation">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="reservation-section animate-on-scroll">
+        <div class="container">
+            <h2>Reserve Your Table</h2>
+            <p>For reservations, please call us directly. We do not accept online bookings to ensure personalized service for every guest.</p>
+            <a href="tel:+995593831717" class="call-button">
+                <i class="fas fa-phone"></i> +995 599 99 99 99 
+            </a>
+        </div>
+    </section>
+    
+    <section id="contact" class="container">
+        <div class="contact-section animate-on-scroll">
+            <div class="contact-info">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Seaside Boulevard, Poti, Georgia</p>
+                <div class="phone-highlight">
+                    <i class="fas fa-phone"></i> +995 599 99 99 99 test
+                </div>
+                <p><i class="fas fa-envelope"></i> infosunsetcafepoti@gmail.com</p>
+                
+                <div class="hours">
+                    <p><i class="fas fa-clock"></i> Monday - Sunday: 8:00 AM - 10:00 PM</p>
+                    <p><i class="fas fa-wifi"></i> Complimentary high-speed Wi-Fi</p>
+                    <p><i class="fas fa-parking"></i> Free parking available</p>
+                    <p><i class="fas fa-paw"></i> Pet-friendly terrace</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Sunset Cafe</h3>
+                <p>Premium coffee and dining experience in the heart of Poti, Georgia. We blend tradition with innovation to create unforgettable culinary experiences.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tripadvisor"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Opening Hours</h3>
+                <p><strong>Monday - Friday:</strong> 8:00 AM - 10:00 PM</p>
+                <p><strong>Saturday - Sunday:</strong> 9:00 AM - 11:00 PM</p>
+                <p><strong>Holidays:</strong> 10:00 AM - 8:00 PM</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Seaside Blvd, Poti</p>
+                <p><i class="fas fa-phone"></i> +995 599 99 99 99 test </p>
+                <p><i class="fas fa-envelope"></i> infosunsetcafepoti@gmail.com</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Sunset Cafe. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <a href="#" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    
+    <script>
+        // Mobile Navigation
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Sticky Navigation
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled-nav');
+            } else {
+                navbar.classList.remove('scrolled-nav');
+            }
+        });
+        
+        // Back to top button
+        const backToTopBtn = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        // Scroll animations
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        animateElements.forEach(element => {
+            observer.observe(element);
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                navLinks.classList.remove('active');
+                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
