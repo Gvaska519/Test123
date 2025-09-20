@@ -220,6 +220,16 @@
             background: #d32f2f;
             transform: translateY(-2px);
         }
+
+        #calculate-btn {
+            background: var(--success);
+            color: white;
+        }
+        
+        #calculate-btn:hover {
+            background: #388E3C;
+            transform: translateY(-2px);
+        }
         
         #order-list {
             list-style-type: none;
@@ -329,6 +339,21 @@
         
         #total span {
             color: var(--sunset-purple);
+        }
+
+        .service-charge {
+            font-weight: 600;
+            text-align: right;
+            padding: 10px 15px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 1.1rem;
+            display: none;
+        }
+        
+        .service-charge span {
+            color: var(--success);
         }
         
         .empty-order {
@@ -536,6 +561,7 @@
             <div class="input-group">
                 <input type="text" id="barcode-input" placeholder="შეიყვანეთ შტრიხკოდი (001-014)">
                 <button id="add-btn"><i class="fas fa-plus"></i> დამატება</button>
+                <button id="calculate-btn"><i class="fas fa-calculator"></i> გამოთვლა</button>
                 <button id="clear-btn"><i class="fas fa-trash"></i> გასუფთავება</button>
             </div>
             
@@ -547,7 +573,11 @@
                 </li>
             </ul>
             
-            <div id="total">ჯამური თანხა: <span>0.00</span> ლარი</div>
+            <div class="service-charge" id="service-charge">
+                მომსახურეობა (5%): <span id="service-amount">0.00</span> ლარი
+            </div>
+            
+            <div id="total">ჯამური თანხა: <span id="total-amount">0.00</span> ლარი</div>
         </div>
     </div>
 
@@ -572,13 +602,17 @@
 
         // შეკვეთის მასივი
         let order = [];
+        let serviceApplied = false;
         
         // DOM ელემენტები
         const barcodeInput = document.getElementById('barcode-input');
         const addBtn = document.getElementById('add-btn');
+        const calculateBtn = document.getElementById('calculate-btn');
         const clearBtn = document.getElementById('clear-btn');
         const orderList = document.getElementById('order-list');
-        const totalElement = document.getElementById('total');
+        const totalElement = document.getElementById('total-amount');
+        const serviceChargeElement = document.getElementById('service-charge');
+        const serviceAmountElement = document.getElementById('service-amount');
         const productElements = document.querySelectorAll('.product');
 
         // პროდუქტის დამატება
@@ -621,7 +655,13 @@
                 });
             }
             
-            updateOrderList();
+            // თუ მომსახურეობა უკვე იყო გამოყენებული, გამოვთვალოთ თავიდან
+            if (serviceApplied) {
+                calculateTotalWithService();
+            } else {
+                updateOrderList();
+            }
+            
             showAlert(`${products[barcode].name} დამატებულია შეკვეთაში`, 'success');
             return true;
         }
@@ -642,14 +682,26 @@
                     order[itemIndex].totalPrice = order[itemIndex].quantity * products[order[itemIndex].barcode].price;
                 }
                 
-                updateOrderList();
+                // თუ მომსახურეობა უკვე იყო გამოყენებული, გამოვთვალოთ თავიდან
+                if (serviceApplied) {
+                    calculateTotalWithService();
+                } else {
+                    updateOrderList();
+                }
             }
         }
         
         // პროდუქტის მოშლა შეკვეთიდან
         function removeProduct(id) {
             order = order.filter(item => item.id !== id);
-            updateOrderList();
+            
+            // თუ მომსახურეობა უკვე იყო გამოყენებული, გამოვთვალოთ თავიდან
+            if (serviceApplied) {
+                calculateTotalWithService();
+            } else {
+                updateOrderList();
+            }
+            
             showAlert('პროდუქტი მოშლილია შეკვეთიდან', 'info');
         }
         
@@ -663,12 +715,15 @@
                         <small>შეიყვანეთ პროდუქტის შტრიხკოდი ან დააწკაპეთ პროდუქტზე</small>
                     </li>
                 `;
-                totalElement.innerHTML = `ჯამური თანხა: <span>0.00</span> ლარი`;
+                document.getElementById('total').innerHTML = `ჯამური თანხა: <span id="total-amount">0.00</span> ლარი`;
+                totalElement = document.getElementById('total-amount');
+                serviceChargeElement.style.display = 'none';
+                serviceApplied = false;
                 return;
             }
             
             orderList.innerHTML = '';
-            let total = 0;
+            let subtotal = 0;
             
             order.forEach((item) => {
                 const li = document.createElement('li');
@@ -687,7 +742,7 @@
                     </div>
                 `;
                 orderList.appendChild(li);
-                total += item.totalPrice;
+                subtotal += item.totalPrice;
                 
                 // მოვლენების დამატება
                 li.querySelector('.minus').addEventListener('click', (e) => {
@@ -706,7 +761,38 @@
                 });
             });
             
-            totalElement.innerHTML = `ჯამური თანხა: <span>${total.toFixed(2)}</span> ლარი`;
+            document.getElementById('total').innerHTML = `ქვეჯამი: <span id="total-amount">${subtotal.toFixed(2)}</span> ლარი`;
+            totalElement = document.getElementById('total-amount');
+            
+            // თუ მომსახურეობა უკვე იყო გამოყენებული, გამოვთვალოთ თავიდან
+            if (serviceApplied) {
+                calculateTotalWithService();
+            }
+        }
+        
+        // მომსახურეობის გადასახადის გამოთვლა
+        function calculateTotalWithService() {
+            if (order.length === 0) {
+                showAlert('შეკვეთა ცარიელია', 'info');
+                return;
+            }
+            
+            let subtotal = 0;
+            order.forEach(item => {
+                subtotal += item.totalPrice;
+            });
+            
+            const serviceCharge = subtotal * 0.05;
+            const totalWithService = subtotal + serviceCharge;
+            
+            serviceAmountElement.textContent = serviceCharge.toFixed(2);
+            document.getElementById('total').innerHTML = `ჯამური თანხა: <span id="total-amount">${totalWithService.toFixed(2)}</span> ლარი`;
+            totalElement = document.getElementById('total-amount');
+            
+            serviceChargeElement.style.display = 'block';
+            serviceApplied = true;
+            
+            showAlert(`მომსახურეობის გადასახადი (5%) დაემატა: ${serviceCharge.toFixed(2)} ლარი`, 'success');
         }
         
         // შეკვეთის გასუფთავება
@@ -722,6 +808,7 @@
             
             order = [];
             updateOrderList();
+            serviceApplied = false;
             showAlert('შეკვეთა გასუფთავებულია', 'success');
         }
         
@@ -782,6 +869,7 @@
             }
         });
         
+        calculateBtn.addEventListener('click', calculateTotalWithService);
         clearBtn.addEventListener('click', clearOrder);
         
         // პროდუქტებზე დაწკაპება
