@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>პროფესიონალური ვებგვერდების შექმნა</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            /* No color transition needed, theme is fixed */
+        }
+        .price-card {
+            /* Deeper shadow and more pronounced lift on hover for premium feel */
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease;
+            border: 1px solid transparent; /* Base border */
+        }
+        /* Fixed Dark Mode Hover Effects */
+        .price-card:hover {
+            transform: translateY(-12px);
+            /* Using the original dark shadow settings for fixed mode */
+             box-shadow: 0 40px 70px -15px rgba(0, 0, 0, 0.7);
+        }
+        .highlighted-card {
+            /* Primary Indigo color for highlight */
+            border: 4px solid #f97316; /* Amber-500 border for POP */
+            /* Using the original dark shadow settings for fixed mode */
+             box-shadow: 0 15px 30px -5px rgba(249, 115, 22, 0.3);
+        }
+
+        /* Chatbot Button Animation */
+        #chat-toggle {
+            animation: pulse-ring 2s infinite;
+        }
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(249, 115, 22, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); }
+        }
+    </style>
+</head>
+<!-- Fixed Dark Mode: bg-gray-900 is now the permanent body background -->
+<body class="min-h-screen flex flex-col items-center p-4 sm:p-8 bg-gray-900">
+
+    <!-- Header Section (Dark Mode Classes Applied as Default) -->
+    <header class="w-full max-w-7xl flex flex-col sm:flex-row justify-between items-start sm:items-center mb-16">
+        <div class="text-left mb-6 sm:mb-0">
+            <h1 class="text-5xl sm:text-7xl font-extrabold text-white tracking-tight">
+                ვებგვერდის <span class="text-indigo-400">პაკეტები</span>
+            </h1>
+            <p class="text-xl text-gray-300 mt-4 font-light">
+                თანამედროვე, სრულად ადაპტირებული ვებ-გადაწყვეტები თქვენი ბიზნესისთვის.
+            </p>
+             <!-- Notice for beginner programmers - Professional badge style -->
+            <p class="text-sm font-semibold text-indigo-300 mt-4 p-2 px-4 bg-gray-800 rounded-full inline-block shadow-md">
+                ⭐ ჩვენ ვართ **დამწყები პროგრამისტები**, რომლებიც ვზრუნავთ თქვენს პროექტზე.
+            </p>
+        </div>
+
+        <!-- Dark Mode Toggle Button REMOVED -->
+    </header>
+
+    <!-- Pricing Grid -->
+    <div class="w-full max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-10 mb-20">
+
+        <!-- 1. Low Tier Card (დაბალი დონის) - RED ACCENT -->
+        <!-- Fixed Background and Border to Dark Mode values -->
+        <div class="price-card bg-gray-800 p-8 sm:p-12 rounded-2xl shadow-2xl flex flex-col border border-gray-700">
+            <div class="flex items-center mb-3">
+                <!-- ACCENT COLOR IS RED -->
+                <svg class="w-7 h-7 mr-3 text-red-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                <h2 class="text-3xl font-bold text-gray-100">დაბალი დონის</h2>
+            </div>
+            <p class="text-lg text-gray-300 mb-8">მარტივი, საწყისი დონის **სავიზიტო ბარათი**.</p>
+            
+            <div class="flex items-baseline mb-8">
+                <!-- ACCENT COLOR IS RED -->
+                <span class="text-6xl font-extrabold text-red-400">100</span>
+                <span class="text-4xl font-medium text-red-400">₾ - 150₾</span>
+            </div>
+
+            <ul class="space-y-4 text-left text-gray-200 flex-grow mb-10">
+                <li class="flex items-center">
+                    <svg class="w-6 h-6 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span>**ერთი გვერდი** (Landing Page)</span>
+                </li>
+                <li class="flex items-center">
+                    <svg class="w-6 h-6 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span>მობილურზე **სრული ადაპტირება**</span>
+                </li>
+                <li class="flex items-center text-gray-300">
+                    <svg class="w-6 h-6 mr-3 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>სტანდარტული კონტენტი (ტექსტი, 2-3 სურათი)</span>
+                </li>
+            </ul>
+
+            <!-- BUTTON COLOR IS RED - Dark hover applied as default hover -->
+            <button onclick="document.getElementById('contact-section').scrollIntoView({ behavior: 'smooth' });" class="w-full py-4 bg-red-600 text-white font-bold text-lg rounded-xl hover:bg-red-500 transition duration-300 shadow-xl hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-red-500/50">
+                დაწყება
+            </button>
+        </div>
+
+        <!-- 2. Medium Tier Card (საშუალო დონის) - Highlighted (Orange Accent) -->
+        <div class="price-card highlighted-card bg-gray-800 p-8 sm:p-12 rounded-2xl flex flex-col relative">
+            <span class="absolute top-0 right-0 mt-6 mr-6 bg-orange-500 text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider shadow-lg">
+                პოპულარული არჩევანი
+            </span>
+             <div class="flex items-center mb-3">
+                <svg class="w-7 h-7 mr-3 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <h2 class="text-3xl font-bold text-gray-100">საშუალო დონის</h2>
+            </div>
+            <p class="text-lg text-gray-300 mb-8">იდეალურია მცირე და საშუალო ბიზნესისთვის.</p>
+            
+            <div class="flex items-baseline mb-8">
+                <span class="text-6xl font-extrabold text-orange-400">200</span>
+                <span class="text-4xl font-medium text-orange-400">₾ - 250₾</span>
+            </div>
+
+            <ul class="space-y-4 text-left text-gray-200 flex-grow mb-10">
+                <li class="flex items-center">
+                    <svg class="w-6 h-6 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span>**3-5 გვერდიანი** სტრუქტურა</span>
+                </li>
+                <li class="flex items-center">
+                    <svg class="w-6 h-6 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span>ფორმების ინტეგრაცია (Contact Form)</span>
+                </li>
+                <li class="flex items-center">
+                    <svg class="w-6 h-6 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span>**ძირითადი SEO** და სოციალური მედიის ლინკები</span>
+                </li>
+            </ul>
+
+            <!-- Button using new Orange color, with stronger shadow/focus - Dark hover applied as default hover -->
+            <button onclick="document.getElementById('contact-section').scrollIntoView({ behavior: 'smooth' });" class="w-full py-4 bg-orange-500 text-white font-bold text-lg rounded-xl hover:bg-orange-400 transition duration-300 shadow-2xl hover:shadow-3xl focus:outline-none focus:ring-4 focus:ring-orange-500/50">
+                დაწყება
+            </button>
+        </div>
+
+        <!-- 3. High Tier Card (პრემიუმ დონის) -->
+        <!-- Fixed Background and Border to Dark Mode values -->
+        <div class="price-card bg-gray-800 p-8 sm:p-12 rounded-2xl shadow-2xl flex flex-col border border-gray-700">
+             <div class="flex items-center mb-3">
+                <!-- Using a lighter accent for Premium tier features -->
+                <svg class="w-7 h-7 mr-3 text-teal-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                <h2 class="text-3xl font-bold text-gray-100">პრემიუმ დონის</h2>
+            </div>
+            <p class="text-lg text-gray-300 mb-8">პრემიუმ დიზაინი, მორგებული ფუნქციონალი.</p>
+            
+            <div class="flex items-baseline mb-8">
+                <span class="text-6xl font-extrabold text-teal-400">300</span>
+                <span class="text-4xl font-medium text-teal-400">₾ - 450₾</span>
+            </div>
+
+            <ul class="space-y-4 text-left text-gray-200 flex-grow mb-10">
+                <li class="flex items-center">
+                    <svg class="w-6 h-6 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span>ყველაფერი საშუალო პაკეტიდან</span>
+                </li>
+                <li class="flex items-center">
+                    <svg class="w-6 h-6 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span>მრავალგვერდიანი სტრუქტურა **(7+ გვერდი)**</span>
+                </li>
+                <li class="flex items-center">
+                    <svg class="w-6 h-6 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span>გაფართოებული SEO და **სიჩქარის ოპტიმიზაცია**</span>
+                </li>
+            </ul>
+
+            <!-- Button using new Teal color - Dark hover applied as default hover -->
+            <button onclick="document.getElementById('contact-section').scrollIntoView({ behavior: 'smooth' });" class="w-full py-4 bg-teal-600 text-white font-bold text-lg rounded-xl hover:bg-teal-500 transition duration-300 shadow-xl hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-teal-500/50">
+                დაწყება
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Contact Section -->
+    <!-- Fixed Background and Border to Dark Mode values -->
+    <div id="contact-section" class="w-full max-w-4xl bg-gray-800 p-8 sm:p-12 rounded-2xl shadow-2xl text-center border-t-4 border-t-red-600 border border-gray-700">
+        <h2 class="text-3xl font-bold text-gray-100 mb-6">საკონტაქტო ინფორმაცია</h2>
+        <p class="text-xl text-red-300 font-semibold mb-8 p-3 bg-red-900/50 rounded-xl inline-block border border-red-700 shadow-inner">
+            ⚠️ მნიშვნელოვანია: დარეკეთ **15:00-დან 16:00 საათის შემდეგ**! 
+        </p>
+        <!-- Click-to-Call Implemented -->
+        <a href="tel:555123456" class="inline-block text-4xl font-extrabold text-indigo-400 mb-4 hover:text-orange-400 cursor-pointer">
+            <svg class="w-9 h-9 inline-block mr-3 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+            <span id="phone-display">555 12 34 56</span>
+        </a>
+        <p class="text-gray-400">დაგვირეკეთ ნებისმიერი კითხვის ან დეტალების განხილვისთვის.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-12 text-center text-sm text-gray-500 w-full max-w-4xl">
+        &copy; 2025 ვებ-სერვისები. ყველა უფლება დაცულია.
+    </footer>
+
+    <!-- Chatbot Widget (New Feature) -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <!-- Chat Toggle Button -->
+        <button id="chat-toggle" class="p-4 rounded-full bg-orange-500 text-white shadow-2xl hover:bg-orange-600 transition duration-300 focus:outline-none focus:ring-4 focus:ring-orange-500/50">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z"></path></svg>
+        </button>
+
+        <!-- Chat Window -->
+        <!-- Fixed Background and Border to Dark Mode values -->
+        <div id="chat-window" class="hidden absolute bottom-20 right-0 w-80 h-96 bg-gray-700 rounded-xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 border border-gray-600">
+            <!-- Header -->
+            <div class="p-4 bg-indigo-600 text-white flex justify-between items-center shadow-md">
+                <h3 class="font-bold">დახმარების ცენტრი</h3>
+                <button onclick="document.getElementById('chat-window').classList.add('hidden')" class="text-white hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <!-- Messages (Placeholder) -->
+            <!-- Fixed Background and Text to Dark Mode values -->
+            <div class="flex-grow p-4 space-y-4 overflow-y-auto">
+                <!-- Bot Message -->
+                <div class="flex justify-start">
+                    <div class="bg-gray-800 p-3 rounded-xl max-w-[80%] text-sm text-gray-100 shadow">
+                        მოგესალმებით! როგორ შემიძლია დაგეხმაროთ დღეს?
+                    </div>
+                </div>
+                <!-- Bot Message (Action Prompt) -->
+                <div class="flex justify-start">
+                    <div class="bg-gray-800 p-3 rounded-xl max-w-[80%] text-sm text-gray-100 shadow">
+                        რადგან დამწყები პროგრამისტები ვართ, ყველაზე სწრაფი პასუხისთვის უმჯობესია დაგვირეკოთ!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer / Input (Action) -->
+            <!-- Fixed Background and Border to Dark Mode values -->
+            <div class="p-4 border-t border-gray-600 bg-gray-700">
+                <a href="tel:555123456" class="w-full py-3 bg-orange-500 text-white font-semibold rounded-lg text-center block hover:bg-orange-600 transition duration-150 shadow-md">
+                    📞 დაგვირეკეთ ახლავე
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatToggleButton = document.getElementById('chat-toggle');
+            const chatWindow = document.getElementById('chat-window');
+
+            // --- Dark Mode Logic REMOVED ---
+            // The theme is now permanently dark, so no toggle logic is needed.
+
+            // --- Chatbot Logic (Kept) ---
+            chatToggleButton.addEventListener('click', () => {
+                chatWindow.classList.toggle('hidden');
+                // Stop the pulsing animation when the chat window is open
+                if (chatWindow.classList.contains('hidden')) {
+                    chatToggleButton.style.animationPlayState = 'running';
+                } else {
+                    chatToggleButton.style.animationPlayState = 'paused';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
