@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice-Activated AI Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fdbb2d, #b21f1f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        
+        .ai-container {
+            display: flex;
+            padding: 30px;
+            gap: 30px;
+        }
+        
+        .ai-face {
+            flex: 0 0 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .face {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 80px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .face::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            top: 30px;
+            left: 40px;
+        }
+        
+        .status {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-top: 10px;
+        }
+        
+        .listening .status {
+            background: rgba(76, 175, 80, 0.3);
+            color: #4CAF50;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .speaking .status {
+            background: rgba(33, 150, 243, 0.3);
+            color: #2196F3;
+        }
+        
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .response-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 200px;
+            margin-bottom: 20px;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+        
+        .user-query {
+            color: #fdbb2d;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .ai-response {
+            color: white;
+            line-height: 1.5;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        button {
+            background: linear-gradient(to right, #4CAF50, #8BC34A);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        button:disabled {
+            background: linear-gradient(to right, #666, #888);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .mic-icon {
+            font-size: 1.5rem;
+        }
+        
+        .commands {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+        }
+        
+        .commands h3 {
+            margin-bottom: 15px;
+            color: #fdbb2d;
+        }
+        
+        .command-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        .command {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .ai-container {
+                flex-direction: column;
+                padding: 20px;
+            }
+            
+            .ai-face {
+                flex: none;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Voice-Activated AI Assistant</h1>
+            <p class="subtitle">Speak to me and I'll respond!</p>
+        </header>
+        
+        <div class="ai-container">
+            <div class="ai-face">
+                <div class="face">🤖</div>
+                <div class="status">Ready to listen</div>
+            </div>
+            
+            <div class="chat-area">
+                <div class="response-box">
+                    <div class="user-query">You: </div>
+                    <div class="ai-response">AI: Hello! Click the microphone button and ask me anything. Try asking about the time or who created me.</div>
+                </div>
+                
+                <div class="controls">
+                    <button id="startBtn">
+                        <span class="mic-icon">🎤</span>
+                        Start Listening
+                    </button>
+                    <button id="timeBtn">
+                        <span>⏰</span>
+                        Ask Time
+                    </button>
+                </div>
+                
+                <div class="commands">
+                    <h3>Try saying:</h3>
+                    <div class="command-list">
+                        <div class="command">"Hello" or "Hi"</div>
+                        <div class="command">"What time is it in the US?"</div>
+                        <div class="command">"What's the time in the UK?"</div>
+                        <div class="command">"Time in Georgia"</div>
+                        <div class="command">"Who created you?"</div>
+                        <div class="command">"How are you?"</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Created by Gvaska | Voice AI Assistant</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startBtn = document.getElementById('startBtn');
+            const timeBtn = document.getElementById('timeBtn');
+            const responseBox = document.querySelector('.response-box');
+            const status = document.querySelector('.status');
+            const aiFace = document.querySelector('.ai-face');
+            const micIcon = document.querySelector('.mic-icon');
+            
+            let recognition;
+            let isListening = false;
+            
+            // Check if browser supports speech recognition
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.lang = 'en-US';
+                
+                recognition.onstart = function() {
+                    isListening = true;
+                    status.textContent = "Listening...";
+                    aiFace.classList.add('listening');
+                    micIcon.textContent = "🔴";
+                    startBtn.innerHTML = '<span class="mic-icon">🔴</span> Stop Listening';
+                };
+                
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    displayUserQuery(transcript);
+                    processQuery(transcript);
+                };
+                
+                recognition.onend = function() {
+                    isListening = false;
+                    status.textContent = "Ready to listen";
+                    aiFace.classList.remove('listening');
+                    micIcon.textContent = "🎤";
+                    startBtn.innerHTML = '<span class="mic-icon">🎤</span> Start Listening';
+                };
+                
+                recognition.onerror = function(event) {
+                    console.error('Speech recognition error', event.error);
+                    status.textContent = "Error: " + event.error;
+                    aiFace.classList.remove('listening');
+                    isListening = false;
+                    micIcon.textContent = "🎤";
+                    startBtn.innerHTML = '<span class="mic-icon">🎤</span> Start Listening';
+                };
+            } else {
+                startBtn.disabled = true;
+                status.textContent = "Speech recognition not supported";
+                responseBox.innerHTML += '<div class="ai-response">Sorry, your browser does not support speech recognition. Please try Chrome or Edge.</div>';
+            }
+            
+            // Start/stop listening when button is clicked
+            startBtn.addEventListener('click', function() {
+                if (!isListening) {
+                    recognition.start();
+                } else {
+                    recognition.stop();
+                }
+            });
+            
+            // Time button - directly ask for time
+            timeBtn.addEventListener('click', function() {
+                displayUserQuery("What time is it?");
+                askForTime();
+            });
+            
+            // Display user query in the chat
+            function displayUserQuery(query) {
+                responseBox.innerHTML += `<div class="user-query">You: ${query}</div>`;
+                responseBox.scrollTop = responseBox.scrollHeight;
+            }
+            
+            // Display AI response in the chat
+            function displayAIResponse(response) {
+                responseBox.innerHTML += `<div class="ai-response">AI: ${response}</div>`;
+                responseBox.scrollTop = responseBox.scrollHeight;
+            }
+            
+            // Process the user's query
+            function processQuery(query) {
+                const lowerQuery = query.toLowerCase();
+                
+                if (lowerQuery.includes('time')) {
+                    askForTime();
+                } 
+                else if (lowerQuery.includes('who') && lowerQuery.includes('create')) {
+                    speakResponse("Gvaska is my creator. He made me to assist you with information and conversation.");
+                }
+                else if (lowerQuery.includes('hello') || lowerQuery.includes('hi')) {
+                    speakResponse("Hello there! How can I help you today?");
+                }
+                else if (lowerQuery.includes('how are you')) {
+                    speakResponse("I'm functioning perfectly, thank you for asking! How are you doing?");
+                }
+                else if (lowerQuery.includes('your name')) {
+                    speakResponse("I'm your AI assistant. You can call me Gvaska's Assistant.");
+                }
+                else {
+                    speakResponse("I'm not sure how to answer that. You can ask me about the time or who created me.");
+                }
+            }
+            
+            // Get and speak the current time in different locations
+            function askForTime() {
+                const times = getTimeInTimezones();
+                const timeResponse = `Here are the current times: In the US it's ${times.us}, in the UK it's ${times.uk}, and in Georgia it's ${times.georgia}.`;
+                speakResponse(timeResponse);
+            }
+            
+            // Get current time in different timezones
+            function getTimeInTimezones() {
+                const now = new Date();
+                
+                // US Eastern Time
+                const usTime = now.toLocaleString('en-US', { 
+                    timeZone: 'America/New_York',
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    hour12: true 
+                });
+                
+                // UK Time
+                const ukTime = now.toLocaleString('en-US', { 
+                    timeZone: 'Europe/London',
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    hour12: true 
+                });
+                
+                // Georgia Time (Country)
+                const georgiaTime = now.toLocaleString('en-US', { 
+                    timeZone: 'Asia/Tbilisi',
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    hour12: true 
+                });
+                
+                return {
+                    us: usTime,
+                    uk: ukTime,
+                    georgia: georgiaTime
+                };
+            }
+            
+            // Make the AI speak the response
+            function speakResponse(text) {
+                displayAIResponse(text);
+                
+                // Update status to speaking
+                status.textContent = "Speaking...";
+                aiFace.classList.add('speaking');
+                
+                // Create speech synthesis
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+                
+                utterance.onend = function() {
+                    status.textContent = "Ready to listen";
+                    aiFace.classList.remove('speaking');
+                };
+                
+                // Speak the text
+                window.speechSynthesis.speak(utterance);
+            }
+        });
+    </script>
+</body>
+</html>
