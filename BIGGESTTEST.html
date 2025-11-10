@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voice-Activated AI Assistant</title>
+    <title>Advanced Talking AI Assistant</title>
     <style>
         * {
             margin: 0;
@@ -24,7 +24,7 @@
         
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             background: rgba(0, 0, 0, 0.7);
             border-radius: 20px;
             overflow: hidden;
@@ -78,6 +78,7 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             position: relative;
             overflow: hidden;
+            animation: float 6s ease-in-out infinite;
         }
         
         .face::after {
@@ -97,6 +98,7 @@
             border-radius: 30px;
             background: rgba(255, 255, 255, 0.1);
             margin-top: 10px;
+            transition: all 0.3s;
         }
         
         .listening .status {
@@ -120,21 +122,41 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             padding: 20px;
-            min-height: 200px;
+            min-height: 300px;
             margin-bottom: 20px;
             overflow-y: auto;
-            max-height: 300px;
+            max-height: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
         
-        .user-query {
-            color: #fdbb2d;
-            margin-bottom: 10px;
-            font-weight: bold;
+        .message {
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 0.5s ease;
         }
         
-        .ai-response {
-            color: white;
-            line-height: 1.5;
+        .user-message {
+            align-self: flex-end;
+            background: rgba(253, 187, 45, 0.2);
+            border-radius: 15px 15px 0 15px;
+            padding: 12px 18px;
+            max-width: 80%;
+        }
+        
+        .ai-message {
+            align-self: flex-start;
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 15px 15px 15px 0;
+            padding: 12px 18px;
+            max-width: 80%;
+        }
+        
+        .message-sender {
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+            opacity: 0.7;
         }
         
         .controls {
@@ -201,6 +223,13 @@
             padding: 10px;
             border-radius: 8px;
             font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .command:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
         }
         
         footer {
@@ -217,6 +246,17 @@
             100% { opacity: 0.7; }
         }
         
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         /* Responsive design */
         @media (max-width: 768px) {
             .ai-container {
@@ -231,14 +271,18 @@
             h1 {
                 font-size: 2rem;
             }
+            
+            .controls {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Voice-Activated AI Assistant</h1>
-            <p class="subtitle">Speak to me and I'll respond!</p>
+            <h1>Advanced Talking AI Assistant</h1>
+            <p class="subtitle">Now with human-like conversations and intelligent responses!</p>
         </header>
         
         <div class="ai-container">
@@ -248,9 +292,11 @@
             </div>
             
             <div class="chat-area">
-                <div class="response-box">
-                    <div class="user-query">You: </div>
-                    <div class="ai-response">AI: Hello! Click the microphone button and ask me anything. Try asking about the time or who created me.</div>
+                <div class="response-box" id="responseBox">
+                    <div class="message">
+                        <div class="message-sender">AI Assistant</div>
+                        <div class="ai-message">Hello there! I'm your advanced AI assistant. I can have natural conversations, answer questions, tell you the time, and much more. How can I help you today?</div>
+                    </div>
                 </div>
                 
                 <div class="controls">
@@ -258,42 +304,49 @@
                         <span class="mic-icon">🎤</span>
                         Start Listening
                     </button>
-                    <button id="timeBtn">
-                        <span>⏰</span>
-                        Ask Time
+                    <button id="clearBtn">
+                        <span>🗑️</span>
+                        Clear Chat
                     </button>
                 </div>
                 
                 <div class="commands">
-                    <h3>Try saying:</h3>
+                    <h3>Try asking me:</h3>
                     <div class="command-list">
-                        <div class="command">"Hello" or "Hi"</div>
-                        <div class="command">"What time is it in the US?"</div>
-                        <div class="command">"What's the time in the UK?"</div>
-                        <div class="command">"Time in Georgia"</div>
-                        <div class="command">"Who created you?"</div>
-                        <div class="command">"How are you?"</div>
+                        <div class="command" data-command="What's your name?">What's your name?</div>
+                        <div class="command" data-command="Tell me a joke">Tell me a joke</div>
+                        <div class="command" data-command="What time is it in the US?">What time is it in the US?</div>
+                        <div class="command" data-command="How does weather work?">How does weather work?</div>
+                        <div class="command" data-command="Who created you?">Who created you?</div>
+                        <div class="command" data-command="What can you do?">What can you do?</div>
+                        <div class="command" data-command="Tell me about space">Tell me about space</div>
+                        <div class="command" data-command="What is artificial intelligence?">What is artificial intelligence?</div>
                     </div>
                 </div>
             </div>
         </div>
         
         <footer>
-            <p>Created by Gvaska | Voice AI Assistant</p>
+            <p>Created by Gvaska | Advanced Voice AI Assistant</p>
         </footer>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const startBtn = document.getElementById('startBtn');
-            const timeBtn = document.getElementById('timeBtn');
-            const responseBox = document.querySelector('.response-box');
+            const clearBtn = document.getElementById('clearBtn');
+            const responseBox = document.getElementById('responseBox');
             const status = document.querySelector('.status');
             const aiFace = document.querySelector('.ai-face');
             const micIcon = document.querySelector('.mic-icon');
+            const commandElements = document.querySelectorAll('.command');
             
             let recognition;
             let isListening = false;
+            let conversationHistory = [];
+            
+            // Initialize with a greeting
+            addMessage("AI Assistant", "Hello there! I'm your advanced AI assistant. I can have natural conversations, answer questions, tell you the time, and much more. How can I help you today?", "ai");
             
             // Check if browser supports speech recognition
             if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
@@ -313,7 +366,7 @@
                 
                 recognition.onresult = function(event) {
                     const transcript = event.results[0][0].transcript;
-                    displayUserQuery(transcript);
+                    addMessage("You", transcript, "user");
                     processQuery(transcript);
                 };
                 
@@ -332,11 +385,15 @@
                     isListening = false;
                     micIcon.textContent = "🎤";
                     startBtn.innerHTML = '<span class="mic-icon">🎤</span> Start Listening';
+                    
+                    if (event.error === 'not-allowed') {
+                        addMessage("AI Assistant", "I don't have permission to use your microphone. Please allow microphone access and try again.", "ai");
+                    }
                 };
             } else {
                 startBtn.disabled = true;
                 status.textContent = "Speech recognition not supported";
-                responseBox.innerHTML += '<div class="ai-response">Sorry, your browser does not support speech recognition. Please try Chrome or Edge.</div>';
+                addMessage("AI Assistant", "Sorry, your browser doesn't support speech recognition. Please try Chrome or Edge.", "ai");
             }
             
             // Start/stop listening when button is clicked
@@ -348,53 +405,169 @@
                 }
             });
             
-            // Time button - directly ask for time
-            timeBtn.addEventListener('click', function() {
-                displayUserQuery("What time is it?");
-                askForTime();
+            // Clear chat history
+            clearBtn.addEventListener('click', function() {
+                responseBox.innerHTML = '';
+                conversationHistory = [];
+                addMessage("AI Assistant", "Chat history cleared. How can I help you?", "ai");
             });
             
-            // Display user query in the chat
-            function displayUserQuery(query) {
-                responseBox.innerHTML += `<div class="user-query">You: ${query}</div>`;
+            // Add click handlers for command examples
+            commandElements.forEach(command => {
+                command.addEventListener('click', function() {
+                    const commandText = this.getAttribute('data-command');
+                    addMessage("You", commandText, "user");
+                    processQuery(commandText);
+                });
+            });
+            
+            // Add a message to the chat
+            function addMessage(sender, text, type) {
+                const messageElement = document.createElement('div');
+                messageElement.className = 'message';
+                
+                const senderElement = document.createElement('div');
+                senderElement.className = 'message-sender';
+                senderElement.textContent = sender;
+                
+                const textElement = document.createElement('div');
+                textElement.className = type === 'user' ? 'user-message' : 'ai-message';
+                textElement.textContent = text;
+                
+                messageElement.appendChild(senderElement);
+                messageElement.appendChild(textElement);
+                responseBox.appendChild(messageElement);
+                
+                // Scroll to bottom
                 responseBox.scrollTop = responseBox.scrollHeight;
+                
+                // Add to conversation history
+                conversationHistory.push({sender, text, type});
             }
             
-            // Display AI response in the chat
-            function displayAIResponse(response) {
-                responseBox.innerHTML += `<div class="ai-response">AI: ${response}</div>`;
-                responseBox.scrollTop = responseBox.scrollHeight;
-            }
-            
-            // Process the user's query
+            // Process the user's query with more intelligent responses
             function processQuery(query) {
                 const lowerQuery = query.toLowerCase();
+                let response = "";
                 
-                if (lowerQuery.includes('time')) {
-                    askForTime();
-                } 
-                else if (lowerQuery.includes('who') && lowerQuery.includes('create')) {
-                    speakResponse("Gvaska is my creator. He made me to assist you with information and conversation.");
+                // Greetings
+                if (lowerQuery.includes('hello') || lowerQuery.includes('hi') || lowerQuery.includes('hey')) {
+                    response = getRandomResponse([
+                        "Hello there! It's nice to talk with you. What's on your mind today?",
+                        "Hi! How are you doing today? I'm here and ready to help with anything you need.",
+                        "Hey! Great to hear from you. What can I do for you today?"
+                    ]);
                 }
-                else if (lowerQuery.includes('hello') || lowerQuery.includes('hi')) {
-                    speakResponse("Hello there! How can I help you today?");
+                
+                // Name questions
+                else if (lowerQuery.includes('your name') || lowerQuery.includes('who are you')) {
+                    response = getRandomResponse([
+                        "I'm an AI assistant created by Gvaska. You can think of me as your helpful digital companion!",
+                        "I'm Gvaska's AI assistant, designed to help answer questions and have conversations. What would you like to call me?",
+                        "I don't have a proper name, but I was created by Gvaska. You can call me whatever you'd like!"
+                    ]);
                 }
+                
+                // Creator questions
+                else if (lowerQuery.includes('who created you') || lowerQuery.includes('who made you') || lowerQuery.includes('who built you')) {
+                    response = getRandomResponse([
+                        "Gvaska is my creator. He's quite talented if I do say so myself!",
+                        "I was created by Gvaska. He programmed me to be helpful and conversational.",
+                        "A developer named Gvaska built me. I owe my existence to his coding skills!"
+                    ]);
+                }
+                
+                // Time questions
+                else if (lowerQuery.includes('time')) {
+                    const times = getTimeInTimezones();
+                    
+                    if (lowerQuery.includes('us') || lowerQuery.includes('usa') || lowerQuery.includes('america')) {
+                        response = `The current time in the US (Eastern Time) is ${times.us}.`;
+                    } else if (lowerQuery.includes('uk') || lowerQuery.includes('britain') || lowerQuery.includes('england')) {
+                        response = `The current time in the UK is ${times.uk}.`;
+                    } else if (lowerQuery.includes('georgia')) {
+                        response = `The current time in Georgia (the country) is ${times.georgia}.`;
+                    } else {
+                        response = `Here are the current times: In the US it's ${times.us}, in the UK it's ${times.uk}, and in Georgia it's ${times.georgia}.`;
+                    }
+                }
+                
+                // Joke requests
+                else if (lowerQuery.includes('joke') || lowerQuery.includes('funny')) {
+                    response = getRandomResponse([
+                        "Why don't scientists trust atoms? Because they make up everything!",
+                        "What do you call a fake noodle? An impasta!",
+                        "Why did the scarecrow win an award? Because he was outstanding in his field!",
+                        "What do you call a bear with no teeth? A gummy bear!",
+                        "Why don't eggs tell jokes? They'd crack each other up!"
+                    ]);
+                }
+                
+                // Capabilities
+                else if (lowerQuery.includes('what can you do') || lowerQuery.includes('what do you do') || lowerQuery.includes('help')) {
+                    response = getRandomResponse([
+                        "I can answer questions, tell you the time in different places, share interesting facts, tell jokes, and have conversations. What would you like to try?",
+                        "I'm here to chat, answer questions, provide information, and keep you company. Is there something specific you'd like to know?",
+                        "I can do quite a lot! I can tell you about various topics, give you the current time, share jokes, or just have a friendly conversation. What interests you?"
+                    ]);
+                }
+                
+                // How are you
                 else if (lowerQuery.includes('how are you')) {
-                    speakResponse("I'm functioning perfectly, thank you for asking! How are you doing?");
+                    response = getRandomResponse([
+                        "I'm functioning perfectly, thanks for asking! How are you doing today?",
+                        "I'm doing great! It's always nice to chat with someone. How about you?",
+                        "I'm running smoothly and ready to help. How are things with you?"
+                    ]);
                 }
-                else if (lowerQuery.includes('your name')) {
-                    speakResponse("I'm your AI assistant. You can call me Gvaska's Assistant.");
+                
+                // Weather questions
+                else if (lowerQuery.includes('weather')) {
+                    response = getRandomResponse([
+                        "I don't have access to real-time weather data, but I can tell you that weather is caused by atmospheric conditions like temperature, humidity, and air pressure. Did you know that lightning is hotter than the surface of the sun?",
+                        "While I can't check current weather conditions, I can tell you that weather patterns are fascinating! For example, the wind is caused by differences in atmospheric pressure. Is there a specific weather phenomenon you're curious about?",
+                        "I'm not connected to weather services, but I find meteorology interesting! Did you know that the highest temperature ever recorded was 134°F (56.7°C) in Death Valley, California?"
+                    ]);
                 }
+                
+                // Space questions
+                else if (lowerQuery.includes('space') || lowerQuery.includes('planet') || lowerQuery.includes('universe')) {
+                    response = getRandomResponse([
+                        "Space is incredibly fascinating! Did you know that a day on Venus is longer than a year on Venus? That's because it takes Venus longer to rotate once on its axis than to orbit the Sun.",
+                        "The universe is full of wonders! For example, neutron stars are so dense that a teaspoon of neutron star material would weigh about 10 million tons. Isn't that amazing?",
+                        "Space exploration has taught us so much! The footprints on the Moon will stay there for millions of years because there's no wind or water to erase them."
+                    ]);
+                }
+                
+                // AI questions
+                else if (lowerQuery.includes('artificial intelligence') || lowerQuery.includes(' ai ') || lowerQuery.includes('machine learning')) {
+                    response = getRandomResponse([
+                        "Artificial intelligence is a fascinating field! It's about creating systems that can perform tasks that normally require human intelligence, like understanding language or recognizing patterns.",
+                        "AI is the simulation of human intelligence in machines. I'm an example of a narrow AI, designed for specific tasks like conversation. General AI, which would have human-like reasoning abilities, is still a work in progress.",
+                        "Machine learning is a subset of AI where systems learn from data rather than being explicitly programmed. It's how many modern AI systems, including speech recognition, work!"
+                    ]);
+                }
+                
+                // Default response for unknown queries
                 else {
-                    speakResponse("I'm not sure how to answer that. You can ask me about the time or who created me.");
+                    response = getRandomResponse([
+                        "That's an interesting question. I'm not sure I have the perfect answer, but I'm always learning! Could you try asking something else?",
+                        "Hmm, I'm not certain about that one. I'm better at general knowledge, time questions, and casual conversation. Want to try a different topic?",
+                        "I don't have information about that specific topic right now. I'm most helpful with general knowledge, time zones, jokes, and casual chats. What else can I help with?",
+                        "I'm still learning about that subject. Maybe we could talk about something else? I can tell you the time, share a joke, or discuss various topics."
+                    ]);
                 }
+                
+                // Add a small delay to make it feel more natural
+                setTimeout(() => {
+                    addMessage("AI Assistant", response, "ai");
+                    speakResponse(response);
+                }, 1000);
             }
             
-            // Get and speak the current time in different locations
-            function askForTime() {
-                const times = getTimeInTimezones();
-                const timeResponse = `Here are the current times: In the US it's ${times.us}, in the UK it's ${times.uk}, and in Georgia it's ${times.georgia}.`;
-                speakResponse(timeResponse);
+            // Get a random response from an array
+            function getRandomResponse(responses) {
+                return responses[Math.floor(Math.random() * responses.length)];
             }
             
             // Get current time in different timezones
@@ -434,8 +607,6 @@
             
             // Make the AI speak the response
             function speakResponse(text) {
-                displayAIResponse(text);
-                
                 // Update status to speaking
                 status.textContent = "Speaking...";
                 aiFace.classList.add('speaking');
@@ -446,6 +617,17 @@
                 utterance.pitch = 1;
                 utterance.volume = 1;
                 
+                // Use a more natural voice if available
+                const voices = window.speechSynthesis.getVoices();
+                const englishVoice = voices.find(voice => 
+                    voice.lang.startsWith('en') && 
+                    (voice.name.includes('Natural') || voice.name.includes('Google') || voice.name.includes('Samantha'))
+                );
+                
+                if (englishVoice) {
+                    utterance.voice = englishVoice;
+                }
+                
                 utterance.onend = function() {
                     status.textContent = "Ready to listen";
                     aiFace.classList.remove('speaking');
@@ -454,6 +636,11 @@
                 // Speak the text
                 window.speechSynthesis.speak(utterance);
             }
+            
+            // Load voices when they become available
+            window.speechSynthesis.onvoiceschanged = function() {
+                // Voices are now loaded
+            };
         });
     </script>
 </body>
